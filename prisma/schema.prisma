@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+// https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/mongodb/creating-the-prisma-schema-typescript-mongodb
+
+model User {
+  id            String    @id @default(cuid())
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @default(now()) @map(name: "updated_at")
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  coins         Float     @default(0)
+
+  accounts   Account[]
+  businesses Business[]
+
+  @@map(name: "users")
+}
+
+model Business {
+  id        String   @id @default(cuid())
+  name      String
+  cost      Float
+  revenue   Float
+  owned     Int      @default(0)
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+  player    User?    @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  playerId  String?
+
+  @@index([playerId])
+  @@map(name: "business")
+}
+
+model Account {
+  id                 String   @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  oauth_token        String?
+  oauth_token_secret String?
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+  createdAt          DateTime @default(now()) @map(name: "created_at")
+  updatedAt          DateTime @default(now()) @map(name: "updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+  @@map(name: "accounts")
+}
