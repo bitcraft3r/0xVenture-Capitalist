@@ -46,3 +46,10 @@ npm install next-auth @prisma/client @next-auth/prisma/adapter
 ```
 
 Then setup `PrismaClient` in `@/app/libs/prismadb.ts`, and `PrismaAdapter` in `@/pages/api/auth/[...nextauth].ts`: https://authjs.dev/reference/adapter/prisma.
+
+
+## References
+
+1. [The Math of Idle Games part 1](https://blog.kongregate.com/the-math-of-idle-games-part-i/)
+
+![formula](https://user-images.githubusercontent.com/8282076/235336622-6ce21750-a825-48fe-b390-a821c7c03bfc.png)
