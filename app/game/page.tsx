@@ -1,3 +1,5 @@
+import getCurrentUser from "../actions/getCurrentUser"
+import StartButton from "./StartButton"
 import BusinessCard from "./BusinessCard"
 
 interface BusinessCardProps {
@@ -14,29 +16,27 @@ interface BusinessCardProps {
     id: number,
 }
 
-const Game = () => {
+const Game = async () => {
+    const currentUser = await getCurrentUser();
+
     return (
         <div className="flex flex-col justify-center items-center text-center">
             <h1 className="text-2xl font-extrabold mb-[2rem]">Blockchain Billionaire</h1>
-            <div className="w-[80vw]">
-                <div className="border h-[5vh] mb-[1rem]">COINS</div>
-                <div className="border h-[70vh] flex">
-                    <div className="flex-1">
-                        {businesses.map((business) => {
-                            if (business.id <= 5) return (
+            {currentUser ? (
+                <div className="w-[80vw]">
+                    <div className="border h-[5vh] mb-[1rem]">COINS</div>
+                    <div className="border h-[70vh] flex">
+                        <div className="flex-1">
+                            {businesses.map((business) => (
                                 <BusinessCard {...business} />
                             )
-                        })}
-                    </div>
-                    <div className="flex-1">
-                        {businesses.map((business) => {
-                            if (business.id > 5) return (
-                                <BusinessCard {...business} />
-                            )
-                        })}
+                            )}
+                        </div>
                     </div>
                 </div>
-            </div>
+            ) : (
+                <StartButton />
+            )}
         </div>
     )
 }
