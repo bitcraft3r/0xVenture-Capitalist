@@ -10,6 +10,7 @@ interface BusinessCardProps {
     managerCost: number,
     playerId: string,
     id: number,
+    currentUser?: any
 }
 
 const BusinessCard: React.FC<BusinessCardProps> = ({
@@ -23,7 +24,8 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
     managerName,
     managerCost,
     playerId,
-    id
+    id,
+    currentUser,
 }) => {
     return (
         <>
@@ -41,10 +43,13 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
                     <div className="w-3/4">
                         <div className="border">Progress bar + Revenue</div>
                         <div className="flex">
-                            <div className="border w-3/5 flex justify-between">
+
+                            {/* BUY BUTTON */}
+                            <div className="border w-3/5 flex justify-between hover:cursor-pointer">
                                 <div>Buy<br />x1</div>
                                 <div className="text-xl">${(cost * (((multiplier ** owned) * (multiplier ** 1 - 1)) / (multiplier - 1))).toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
                             </div>
+
                             <div className="border w-2/5">Timer</div>
                         </div>
                     </div>
