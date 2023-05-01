@@ -3,6 +3,8 @@
 import Image from "next/image"
 import { toast } from "react-hot-toast";
 
+import { useStore } from "@/app/store/GameStore"
+
 interface QuantityProps {
     name: string,
     image: string,
@@ -13,6 +15,12 @@ interface QuantityProps {
 }
 
 const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantity, userId, }) => {
+
+    const [addCoins] = useStore(
+        (state) => [
+            state.addCoins
+        ]
+    )
 
     const collectHandler = async () => {
         // console.log(`Clicked ${name}`)
@@ -43,6 +51,8 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
                 // console.log(`updated coins to:`, data.coins)
                 // console.log(`Collected $${revenue * quantity} from ${name}!`)
                 toast.success(`Collected $${revenue * quantity} from ${name}! New balance is $${data.coins}.`)
+
+                addCoins(revenue * quantity)
 
             } else {
                 toast.error(data.error)

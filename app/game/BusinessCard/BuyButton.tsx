@@ -2,6 +2,8 @@
 
 import { toast } from "react-hot-toast"
 
+import { useStore } from "@/app/store/GameStore"
+
 interface BuyButtonProps {
     id: string,
     name: string,
@@ -13,6 +15,12 @@ interface BuyButtonProps {
 }
 
 const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quantity, userId, coins }) => {
+
+    const [addCoins] = useStore(
+        (state) => [
+            state.addCoins
+        ]
+    )
 
     const currentPrice = (cost * (((multiplier ** quantity) * (multiplier ** 1 - 1)) / (multiplier - 1)))
 
@@ -31,6 +39,8 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
 
 
             const response = await fetch(`/api/player/business/buy/${userId}?quantity=${1}&amount=${priceFormatted}&businessId=${id}`)
+
+            addCoins(-currentPrice)
 
 
             toast(`Purchased 1 ${name}!`, {
