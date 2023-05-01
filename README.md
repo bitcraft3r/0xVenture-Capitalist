@@ -6,7 +6,7 @@ A game inspired by AdVenture Capitalist.
 - [TypeScript](https://www.typescriptlang.org/)
 - [Tailwind CSS](https://tailwindcss.com/docs/guides/nextjs)
 - [Prisma](https://www.prisma.io/mongodb)
-- [PlanetScale](https://planetscale.com/)
+- [MongoDB](https://www.mongodb.com/)
 - [Auth.js](https://authjs.dev/)
 - [Framer Motion](https://www.framer.com/motion/)
 - [Radix UI](https://www.radix-ui.com/)
@@ -21,7 +21,7 @@ A game inspired by AdVenture Capitalist.
 1. Create app
    `npx create-next-app@latest --experimental-app`
 
-2. Prisma with Planetscale (MySQL)
+2. Prisma with MongoDB
 
 ```
 npm install prisma --save-dev
@@ -33,9 +33,9 @@ npx prisma db push
 # new collections should now appear in db
 ```
 
-Run `npx prisma db push` whenever new changes made to `schema.prisma`.
+Whenever Prisma schema is changed, need to manually invoke `npx prisma db push` in order to accomodate the changes in the Prisma Client API.
 
-https://www.prisma.io/docs/guides/database/planetscale
+https://www.prisma.io/docs/guides/database/mongodb
 
 For vercel setup: https://www.prisma.io/docs/guides/other/troubleshooting-orm/help-articles/vercel-caching-issue.
 
@@ -46,7 +46,6 @@ npm install next-auth @prisma/client @next-auth/prisma/adapter
 ```
 
 Then setup `PrismaClient` in `@/app/libs/prismadb.ts`, and `PrismaAdapter` in `@/pages/api/auth/[...nextauth].ts`: https://authjs.dev/reference/adapter/prisma.
-
 
 ## References
 

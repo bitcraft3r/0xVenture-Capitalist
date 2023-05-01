@@ -24,7 +24,7 @@ const StartButton: React.FC<StartButtonProps> = ({ userId }) => {
         try {
             setIsFetching(true);
 
-            const response = await fetch(`/api/player/start/${userId}`, { method: 'GET' })
+            const response = await fetch(`/api/player/business/seed/${userId}`, { method: 'GET' })
             console.log(`res`, response)
 
             const data = await response.json()
@@ -43,15 +43,7 @@ const StartButton: React.FC<StartButtonProps> = ({ userId }) => {
             console.log(error)
         }
 
-        // if user not logged in
-        // button will show SIGN UP
 
-
-        // if userId exists == user is logged in
-        // and this component only show if user also has no businesses
-        // ==> button will show START
-        // when button clicked, 
-        // add starter businesses objects to the player's businesses[] array
     }
 
     return (

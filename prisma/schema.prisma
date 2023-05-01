@@ -1,22 +1,21 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/mongodb/creating-the-prisma-schema-typescript-mongodb
+
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider     = "mysql"
-  url          = env("DATABASE_URL")
-  relationMode = "prisma"
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
 }
 
-// https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/mongodb/creating-the-prisma-schema-typescript-mongodb
-
 model User {
-  id            String    @id @default(cuid())
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @default(now()) @map(name: "updated_at")
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
   name          String?
   email         String?   @unique
   emailVerified DateTime?
@@ -25,12 +24,12 @@ model User {
 
   accounts   Account[]
   businesses Business[]
-
-  @@map(name: "users")
 }
 
 model Business {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   name        String
   image       String
   cost        Float
@@ -39,36 +38,32 @@ model Business {
   multiplier  Float
   managerName String
   managerCost Float
-  owned       Int      @default(0)
-  updatedAt   DateTime @default(now()) @map(name: "updated_at")
-  player      User     @relation(fields: [playerId], references: [id], onDelete: Cascade)
-  playerId    String
 
-  @@index([playerId])
-  @@map(name: "business")
+  user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String  @db.ObjectId
+  quantity     Int     @default(0)
+  managerOwned Boolean @default(false)
 }
 
 model Account {
-  id                 String   @id @default(cuid())
-  userId             String
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String   @db.ObjectId
   type               String
   provider           String
   providerAccountId  String
   oauth_token        String?
   oauth_token_secret String?
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
+  refresh_token      String?  @db.String
+  access_token       String?  @db.String
   expires_at         Int?
   token_type         String?
   scope              String?
-  id_token           String?  @db.Text
+  id_token           String?  @db.String
   session_state      String?
-  createdAt          DateTime @default(now()) @map(name: "created_at")
-  updatedAt          DateTime @default(now()) @map(name: "updated_at")
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
-  @@index([userId])
-  @@map(name: "accounts")
 }

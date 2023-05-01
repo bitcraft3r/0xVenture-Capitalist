@@ -4,10 +4,14 @@ import prisma from '@/app/libs/prismadb';
 
 export async function GET(request: Request, { params }: { params: { id: string }}) {
 
-    // get the user from users db by id
-    console.log(`params.id: ${params.id}`)
-    const id = params.id
+    // Used to seed the initial 10 businesses for a new player
+    // TODO: Add check for if user already has businesses initialized, then this will should not proceed.
 
+    // get the userId sent via params
+    console.log(`params.id: ${params.id}`)
+    const userId = params.id
+
+    // create the seed businesses data
     const businesses = [
         {
             name: "Lemonade Stand",
@@ -16,9 +20,10 @@ export async function GET(request: Request, { params }: { params: { id: string }
             revenue: 1,
             time: 0.5,
             multiplier: 1.07,
-            owned: 1,
             managerName: "Sam Lemman",
             managerCost: 1_000,
+            quantity: 1,
+            managerOwned: false,
         },
         {
             name: "Mining Rig",
@@ -27,9 +32,10 @@ export async function GET(request: Request, { params }: { params: { id: string }
             revenue: 60,
             time: 3,
             multiplier: 1.15,
-            owned: 0,
             managerName: "Wuhan Ji",
             managerCost: 15_000,
+            quantity: 0,
+            managerOwned: false,
         },
         {
             name: "Tuxedo Tailor",
@@ -38,9 +44,10 @@ export async function GET(request: Request, { params }: { params: { id: string }
             revenue: 540,
             time: 6,
             multiplier: 1.14,
-            owned: 0,
             managerName: "Cuck Marbeles",
             managerCost: 100_000,
+            quantity: 0,
+            managerOwned: false,
         },
         {
             name: "Vegetable Farm",
@@ -49,9 +56,10 @@ export async function GET(request: Request, { params }: { params: { id: string }
             revenue: 4320,
             time: 12,
             multiplier: 1.13,
-            owned: 0,
             managerName: "Arthur Hays",
             managerCost: 500_000,
+            quantity: 0,
+            managerOwned: false,
         },
         {
             name: "Ramen Store",
@@ -60,9 +68,10 @@ export async function GET(request: Request, { params }: { params: { id: string }
             revenue: 51_840,
             time: 24,
             multiplier: 1.12,
-            owned: 0,
             managerName: "Ko Dwon",
             managerCost: 1_200_000,
+            quantity: 0,
+            managerOwned: false,
         },
         {
             name: "Shrimp Boat",
@@ -71,9 +80,10 @@ export async function GET(request: Request, { params }: { params: { id: string }
             revenue: 622_080,
             time: 96,
             multiplier: 1.11,
-            owned: 0,
             managerName: "Suzie Krylebaby",
             managerCost: 10_000_000,
+            quantity: 0,
+            managerOwned: false,
         },
         {
             name: "eSports Team",
@@ -82,9 +92,10 @@ export async function GET(request: Request, { params }: { params: { id: string }
             revenue: 7_464_960,
             time: 384,
             multiplier: 1.1,
-            owned: 0,
             managerName: "Justina San",
             managerCost: 111_111_111,
+            quantity: 0,
+            managerOwned: false,
         },
         {
             name: "Cryptocurrency Exchange",
@@ -93,9 +104,10 @@ export async function GET(request: Request, { params }: { params: { id: string }
             revenue: 89_579_520,
             time: 1536,
             multiplier: 1.09,
-            owned: 0,
             managerName: "Chao Zi Pang",
             managerCost: 555_555_555,
+            quantity: 0,
+            managerOwned: false,
         },
         {
             name: "Metaverse Company",
@@ -104,9 +116,10 @@ export async function GET(request: Request, { params }: { params: { id: string }
             revenue: 1_074_954_240,
             time: 6144,
             multiplier: 1.08,
-            owned: 0,
             managerName: "Bear Shillbert",
             managerCost: 10_000_000_000,
+            quantity: 0,
+            managerOwned: false,
         },
         {
             name: "Blockchain Currency",
@@ -115,67 +128,24 @@ export async function GET(request: Request, { params }: { params: { id: string }
             revenue: 29_668_737_024,
             time: 36864,
             multiplier: 1.07,
-            owned: 0,
             managerName: "Carlos Matos",
             managerCost: 100_000_000_000,
+            quantity: 0,
+            managerOwned: false,
         }
     ]
 
+    // update the seed businesses data with the userId
+    const finalBusinessesData = businesses.map((business) => ({
+        ...business,
+        userId,
+    }))
 
-    for (const business of businesses) {
-        const newBusinesses = await prisma.business.create({
-            data: {
-                ...business,
-                player: {
-                    connect: { id: id }
-                }
-            }
-        }) 
-    }
-
-    // no changes are made to the player!!
-    // const updatedPlayer = await prisma.user.findUnique({
-    //     where: {
-    //         id: id
-    //     }
-    // });
-    // console.log(`updatedPlayer`, updatedPlayer)
-
-    // business table has 10 new businesses added, each linked to the user's id (playerId)
-    
-    // for all the items in business table that has playerId === id, return all of them in an array
-
-    const businessesByPlayerId = await prisma.business.findMany({
-        where: {
-            playerId: id
-        }
+    // create the businesses in the db
+    const createdBusinesses = await prisma.business.createMany({
+        data: finalBusinessesData,
     })
 
-    
-
-
-    // return updatedPlayer as a json
-    return NextResponse.json(businessesByPlayerId);
+    // return createdBusinesses as a json
+    return NextResponse.json(createdBusinesses);
 }
-
-// export async function POST(request: Request, { params }: { params: { playerId: string }}) {
-
-//     const playerId = params.playerId;
-
-//     const player = await prisma.user.update({
-//         where: {
-//             id: playerId
-//         },
-//         data: {
-//             businesses: {
-//                 create: {
-//                     name: 'Lemonade Stand',
-//                     owned: 1,
-//                 }
-//             }
-//         }
-//     });
-
-//     return NextResponse.redirect(`/game?playerId=${player.id}`);
-                        
-// }
