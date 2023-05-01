@@ -38,7 +38,7 @@ const Game = async () => {
                     <div className="border h-[5vh] mb-[1rem]">{currentUser.coins} coins</div>
                     <div className="border h-[70vh] flex">
                         <div className="flex-1">
-                            {playerBusinesses.map((business) => (
+                            {playerBusinesses.map((business: any) => (
                                 <BusinessCard {...business} currentUser={currentUser} key={business.name} />
                             )
                             )}
