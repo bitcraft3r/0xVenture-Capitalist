@@ -8,13 +8,13 @@ A game inspired by AdVenture Capitalist.
 - [Prisma](https://www.prisma.io/mongodb)
 - [MongoDB](https://www.mongodb.com/)
 - [Auth.js](https://authjs.dev/)
+- [Zustand](https://docs.pmnd.rs/zustand/getting-started/introduction)
 - [Framer Motion](https://www.framer.com/motion/)
 - [Radix UI](https://www.radix-ui.com/)
 - [Radix Icons](https://icons.radix-ui.com/)
 - [React Icons](https://react-icons.github.io/react-icons/)
 - [React Hot Toast](https://react-hot-toast.com/)
 - [ESLint](https://eslint.org/)
-- State Management: React Query / Zustand ?
 
 ## Setup
 
