@@ -63,7 +63,10 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
                 </div>
                 {/* Right */}
                 <div className="w-3/4">
-                    <RevenueProgressBar revenue={revenue} />
+                    <RevenueProgressBar
+                        revenue={revenue}
+                        quantity={quantity}
+                    />
                     <div className="flex">
 
                         {/* BUY BUTTON */}

@@ -1,10 +1,17 @@
 interface RevenueProgressBarProps {
-    revenue: number
+    revenue: number,
+    quantity: number,
 }
 
-const RevenueProgressBar: React.FC<RevenueProgressBarProps> = ({ revenue }) => {
+const RevenueProgressBar: React.FC<RevenueProgressBarProps> = ({ revenue, quantity }) => {
     return (
-        <div className="border">Revenue: {revenue}</div>
+        <div className="border">
+            {quantity === 0 ? (
+                <>-</>
+            ) : (
+                <>Revenue: {revenue * quantity}</>
+            )}
+        </div>
     )
 }
 
