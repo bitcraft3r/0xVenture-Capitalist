@@ -2,15 +2,15 @@ import { NextResponse } from "next/server";
 
 import prisma from '@/app/libs/prismadb';
 
-export async function GET(request: Request, { params }: { params: { id: string }}) {
+export async function GET(request: Request, { params }: { params: { userId: string }}) {
     // get the userId sent via params
-    console.log(`params.id in getBusiness: ${params.id}`)
-    const id = params.id
+    console.log(`params.id in getBusiness: ${params.userId}`)
+    const userId = params.userId
     
     // get all the businesses for the player
     const businessesByPlayerId = await prisma.business.findMany({
         where: {
-            userId: id
+            userId: userId
         }
     })
 
