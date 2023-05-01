@@ -133,7 +133,7 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
         <div
             onClick={() => purchaseHandler()}
             className={`
-                border w-3/5 flex justify-between
+                border flex justify-between h-full
                 ${userCoins >= currentPrice ? (
                     'bg-orange-200 hover:cursor-pointer hover:bg-orange-400'
                 ) : (

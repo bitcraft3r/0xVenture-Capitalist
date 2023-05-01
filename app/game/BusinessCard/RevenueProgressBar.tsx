@@ -4,11 +4,12 @@ import { useStore } from "@/app/store/GameStore"
 
 interface RevenueProgressBarProps {
     revenue: number,
+    time: number,
     quantity: number,
     index: number,
 }
 
-const RevenueProgressBar: React.FC<RevenueProgressBarProps> = ({ revenue, quantity, index }) => {
+const RevenueProgressBar: React.FC<RevenueProgressBarProps> = ({ revenue, time, quantity, index }) => {
     const [
         biz1Quantity,
         biz2Quantity,

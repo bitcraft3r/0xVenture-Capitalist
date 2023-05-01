@@ -5,6 +5,7 @@ import { toast } from "react-hot-toast";
 
 import { useStore } from "@/app/store/GameStore"
 import { useEffect, useState, MouseEventHandler } from "react";
+import RevenueProgressBar from "./RevenueProgressBar";
 
 interface QuantityProps {
     name: string,
@@ -12,10 +13,11 @@ interface QuantityProps {
     revenue: number,
     time: number,
     quantity: number,
+    index: number,
     userId: string,
 }
 
-const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantity, userId, }) => {
+const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantity, index, userId, }) => {
 
     const [
         addCoins,
@@ -138,36 +140,50 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
 
 
     return (
-        <div
-            onClick={!disabled ? collectHandler : undefined}
-            className={`
-                ${disabled ? (
-                    'hover:cursor-not-allowed'
-                ) : (
-                    ''
-                )}
+        <div className="flex">
+            {/* COLLECT BUTTON */}
+            <div
+                onClick={!disabled ? collectHandler : undefined}
+                className={`
+                    flex flex-col w-1/5
+                    ${disabled ? (
+                        'hover:cursor-not-allowed'
+                    ) : (
+                        ''
+                    )}
 
-                ${quantity > 0 && !disabled ? (
-                    'bg-emerald-100 hover:bg-emerald-300 hover:cursor-pointer'
-                ) : (
-                    'bg-gray-200 hover:cursor-not-allowed hover:bg-gray-300'
-                )}
-            `}
-        >
-            <div className="flex justify-center">
-                <Image src={image} alt={name} width={50} height={50} />
+                    ${quantity > 0 && !disabled ? (
+                        'bg-emerald-100 hover:bg-emerald-300 hover:cursor-pointer'
+                    ) : (
+                        'bg-gray-200 hover:cursor-not-allowed hover:bg-gray-300'
+                    )}
+                `}
+            >
+                <div className="flex justify-center">
+                    <Image src={image} alt={name} width={50} height={50} />
+                </div>
+                <div className="border">
+                    {name === 'Lemonade Stand' && (biz1Quantity)}
+                    {name === 'Mining Rig' && (biz2Quantity)}
+                    {name === 'Tuxedo Tailor' && (biz3Quantity)}
+                    {name === 'Vegetable Farm' && (biz4Quantity)}
+                    {name === 'Ramen Store' && (biz5Quantity)}
+                    {name === 'Shrimp Boat' && (biz6Quantity)}
+                    {name === 'eSports Team' && (biz7Quantity)}
+                    {name === 'Cryptocurrency Exchange' && (biz8Quantity)}
+                    {name === 'Metaverse Company' && (biz9Quantity)}
+                    {name === 'Blockchain Currency' && (biz10Quantity)} Owned
+                </div>
             </div>
-            <div className="border">
-                {name === 'Lemonade Stand' && (biz1Quantity)}
-                {name === 'Mining Rig' && (biz2Quantity)}
-                {name === 'Tuxedo Tailor' && (biz3Quantity)}
-                {name === 'Vegetable Farm' && (biz4Quantity)}
-                {name === 'Ramen Store' && (biz5Quantity)}
-                {name === 'Shrimp Boat' && (biz6Quantity)}
-                {name === 'eSports Team' && (biz7Quantity)}
-                {name === 'Cryptocurrency Exchange' && (biz8Quantity)}
-                {name === 'Metaverse Company' && (biz9Quantity)}
-                {name === 'Blockchain Currency' && (biz10Quantity)} Owned
+            {/* PROGRESS BARS */}
+            <div className="flex flex-col w-4/5">
+                <RevenueProgressBar
+                    revenue={revenue}
+                    time={time}
+                    quantity={quantity}
+                    index={index}
+                />
+                <div>Timer: {time}</div>
             </div>
         </div>
     )
