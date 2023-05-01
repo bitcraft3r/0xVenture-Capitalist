@@ -15,7 +15,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
     const businesses = [
         {
             name: "Lemonade Stand",
-            image: "",
+            image: "https://user-images.githubusercontent.com/8282076/235407980-8f0661ce-1285-48da-b2c5-f7ce217b9423.png",
             cost: 3.738,
             revenue: 1,
             time: 0.5,
@@ -27,7 +27,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
         },
         {
             name: "Mining Rig",
-            image: "",
+            image: "https://user-images.githubusercontent.com/8282076/235407954-8f96bb0b-b2b8-471f-b89a-38dfd826cb32.png",
             cost: 60,
             revenue: 60,
             time: 3,
@@ -39,7 +39,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
         },
         {
             name: "Tuxedo Tailor",
-            image: "",
+            image: "https://user-images.githubusercontent.com/8282076/235407956-1883bc4d-a8e0-451e-937b-b0d7b0225af6.png",
             cost: 720,
             revenue: 540,
             time: 6,
@@ -51,7 +51,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
         },
         {
             name: "Vegetable Farm",
-            image: "",
+            image: "https://user-images.githubusercontent.com/8282076/235407958-22e297b9-3492-4b4d-b864-8e6bb448ee07.png",
             cost: 8640,
             revenue: 4320,
             time: 12,
@@ -63,7 +63,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
         },
         {
             name: "Ramen Store",
-            image: "",
+            image: "https://user-images.githubusercontent.com/8282076/235407960-d86ab9f5-0fe2-442b-aae5-0fe3ca4ab28b.png",
             cost: 103_680,
             revenue: 51_840,
             time: 24,
@@ -75,7 +75,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
         },
         {
             name: "Shrimp Boat",
-            image: "",
+            image: "https://user-images.githubusercontent.com/8282076/235407961-6c41678c-d9f8-425f-8306-e0a2c1c631a6.png",
             cost: 1_244_160,
             revenue: 622_080,
             time: 96,
@@ -87,7 +87,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
         },
         {
             name: "eSports Team",
-            image: "",
+            image: "https://user-images.githubusercontent.com/8282076/235407963-68c676c6-13b4-4d82-a397-8cc421b9b5ed.png",
             cost: 14_929_920,
             revenue: 7_464_960,
             time: 384,
@@ -99,7 +99,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
         },
         {
             name: "Cryptocurrency Exchange",
-            image: "",
+            image: "https://user-images.githubusercontent.com/8282076/235407965-b18ee7f7-a38f-4abb-a271-559f708c7194.png",
             cost: 179_159_040,
             revenue: 89_579_520,
             time: 1536,
@@ -111,7 +111,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
         },
         {
             name: "Metaverse Company",
-            image: "",
+            image: "https://user-images.githubusercontent.com/8282076/235407966-bc7f0d0c-17a4-4b9b-86ff-bc1fee0f5b31.png",
             cost: 2_149_908_480,
             revenue: 1_074_954_240,
             time: 6144,
@@ -123,7 +123,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
         },
         {
             name: "Blockchain Currency",
-            image: "",
+            image: "https://user-images.githubusercontent.com/8282076/235407968-161510fa-500e-464e-8592-4318d52ae043.png",
             cost: 25_798_901_760,
             revenue: 29_668_737_024,
             time: 36864,
