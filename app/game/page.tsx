@@ -16,7 +16,7 @@ const Game = async () => {
 
             playerBusinesses = await getPlayerBusinesses(currentUser?.id)
 
-            console.log(`player has ${playerBusinesses.length} businesses`)
+            // console.log(`player has ${playerBusinesses.length} businesses`)
 
         } catch (error) {
 

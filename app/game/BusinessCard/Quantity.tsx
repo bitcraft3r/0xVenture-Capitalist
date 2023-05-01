@@ -81,11 +81,25 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
 
 
         // TODO: add `revenue * quantity` to `coins` in User model via prisma
-        console.log(`userId in Quantity component is ${userId}`)
+        // console.log(`userId in Quantity component is ${userId}`)
         // if player owns at least one of this business, and passes all other checks, then collect revenue
 
         try {
-            const response = await fetch(`/api/player/business/collect/${userId}?amount=${revenue * quantity}`)
+
+            let finalRevenue = 0;
+
+            if (name === 'Lemonade Stand') finalRevenue = revenue * biz1Quantity
+            else if (name === 'Mining Rig') finalRevenue = revenue * biz2Quantity
+            else if (name === 'Tuxedo Tailor') finalRevenue = revenue * biz3Quantity
+            else if (name === 'Vegetable Farm') finalRevenue = revenue * biz4Quantity
+            else if (name === 'Ramen Store') finalRevenue = revenue * biz5Quantity
+            else if (name === 'Shrimp Boat') finalRevenue = revenue * biz6Quantity
+            else if (name === 'eSports Team') finalRevenue = revenue * biz7Quantity
+            else if (name === 'Cryptocurrency Exchange') finalRevenue = revenue * biz8Quantity
+            else if (name === 'Oil Company') finalRevenue = revenue * biz9Quantity
+            else if (name === 'Space Rocket') finalRevenue = revenue * biz10Quantity
+
+            const response = await fetch(`/api/player/business/collect/${userId}?amount=${finalRevenue}`)
             const data = await response.json()
 
             if (data.coins) {
@@ -93,9 +107,9 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
                 // console.log(`data`, data)
                 // console.log(`updated coins to:`, data.coins)
                 // console.log(`Collected $${revenue * quantity} from ${name}!`)
-                toast.success(`Collected $${revenue * quantity} from ${name}! New balance is $${data.coins}.`)
+                addCoins(finalRevenue)
+                toast.success(`Collected $${finalRevenue} from ${name}! New balance is $${data.coins}.`)
 
-                addCoins(revenue * quantity)
 
             } else {
                 toast.error(data.error)
@@ -137,8 +151,7 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
             <div className="flex justify-center">
                 <Image src={image} alt={name} width={50} height={50} />
             </div>
-            <div className="border">{quantity} Owned</div>
-            <div>
+            <div className="border">
                 {name === 'Lemonade Stand' && (biz1Quantity)}
                 {name === 'Mining Rig' && (biz2Quantity)}
                 {name === 'Tuxedo Tailor' && (biz3Quantity)}

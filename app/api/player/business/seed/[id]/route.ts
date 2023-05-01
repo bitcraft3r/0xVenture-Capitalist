@@ -8,7 +8,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
     // TODO: Add check for if user already has businesses initialized, then this will should not proceed.
 
     // get the userId sent via params
-    console.log(`params.id: ${params.id}`)
+    // console.log(`params.id: ${params.id}`)
     const userId = params.id
 
     // create the seed businesses data

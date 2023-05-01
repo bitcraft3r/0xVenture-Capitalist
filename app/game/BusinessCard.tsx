@@ -68,6 +68,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
                     <RevenueProgressBar
                         revenue={revenue}
                         quantity={quantity}
+                        index={index}
                     />
                     <div className="flex">
 
