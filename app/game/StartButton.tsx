@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from "react"
+import { useState, useTransition } from "react"
+import { useRouter } from 'next/navigation';
 import RegisterModal from "../components/navbar/RegisterModal"
 
 interface StartButtonProps {
@@ -8,16 +9,20 @@ interface StartButtonProps {
 }
 
 const StartButton: React.FC<StartButtonProps> = ({ userId }) => {
+    const router = useRouter();
 
-    const [loading, setLoading] = useState(false)
+    const [isPending, startTransition] = useTransition();
+    const [isFetching, setIsFetching] = useState(false);
 
+    // Create inline loading UI
+    const isMutating = isFetching || isPending;
 
 
     const handleStart = async () => {
         console.log(`userId in StartButton comp: ${userId}`)
 
         try {
-            setLoading(true)
+            setIsFetching(true);
 
             const response = await fetch(`/api/player/start/${userId}`, { method: 'GET' })
             console.log(`res`, response)
@@ -25,7 +30,15 @@ const StartButton: React.FC<StartButtonProps> = ({ userId }) => {
             const data = await response.json()
             console.log(`data rcvd in StartButton comp: ${data}`)
 
-            setLoading(false)
+            setIsFetching(false);
+
+            startTransition(() => {
+                // refresh current route
+                // https://beta.nextjs.org/docs/data-fetching/mutating
+                router.refresh();
+            })
+
+
         } catch (error) {
             console.log(error)
         }
@@ -47,6 +60,7 @@ const StartButton: React.FC<StartButtonProps> = ({ userId }) => {
                 <button
                     onClick={() => handleStart()}
                     className="border rounded-xl px-4 py-2 font-bold text-xl shadow-md hover:bg-emerald-500 hover:shadow-xl"
+                    disabled={isMutating}
                 >
                     Start
                 </button>
