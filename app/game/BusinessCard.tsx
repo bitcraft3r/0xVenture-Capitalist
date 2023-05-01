@@ -37,7 +37,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
                     {/* Left */}
                     <div className="border w-1/4">
                         <div className="h-[50px]">Logo ({id})</div>
-                        <div className="border"># Purchased</div>
+                        <div className="border">{owned} Purchased</div>
                     </div>
                     {/* Right */}
                     <div className="w-3/4">

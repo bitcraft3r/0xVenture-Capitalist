@@ -30,17 +30,19 @@ model User {
 }
 
 model Business {
-  id         Int      @id @default(autoincrement())
-  name       String
-  image      String
-  cost       Float
-  revenue    Float
-  time       Float
-  multiplier Float
-  owned      Int      @default(0)
-  updatedAt  DateTime @default(now()) @map(name: "updated_at")
-  player     User?    @relation(fields: [playerId], references: [id], onDelete: Cascade)
-  playerId   String?
+  id          Int      @id @default(autoincrement())
+  name        String
+  image       String
+  cost        Float
+  revenue     Float
+  time        Float
+  multiplier  Float
+  managerName String
+  managerCost Float
+  owned       Int      @default(0)
+  updatedAt   DateTime @default(now()) @map(name: "updated_at")
+  player      User     @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  playerId    String
 
   @@index([playerId])
   @@map(name: "business")

@@ -19,11 +19,12 @@ interface BusinessCardProps {
 const Game = async () => {
     const currentUser = await getCurrentUserFull();
     console.log(`currentUser in game page`, currentUser)
+    console.log(`currentUser.id in game page`, currentUser?.id)
 
     return (
         <div className="flex flex-col justify-center items-center text-center">
             <h1 className="text-2xl font-extrabold mb-[2rem]">Blockchain Billionaire</h1>
-            {currentUser ? (
+            {currentUser && currentUser.businesses === null ? (
                 <div className="w-[80vw]">
                     <div className="border h-[5vh] mb-[1rem]">{currentUser.coins} coins</div>
                     <div className="border h-[70vh] flex">
@@ -36,7 +37,7 @@ const Game = async () => {
                     </div>
                 </div>
             ) : (
-                <StartButton />
+                <StartButton userId={currentUser?.id} />
             )}
         </div>
     )
