@@ -4,7 +4,7 @@ import Image from "next/image"
 import { toast } from "react-hot-toast";
 
 import { useStore } from "@/app/store/GameStore"
-import { useEffect } from "react";
+import { useEffect, useState, MouseEventHandler } from "react";
 
 interface QuantityProps {
     name: string,
@@ -65,59 +65,60 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
         ]
     )
 
-    const collectHandler = async () => {
-        // console.log(`Clicked ${name}`)
+    const [disabled, setDisabled] = useState(false)
 
+    const collectHandler: MouseEventHandler<HTMLDivElement> = async () => {
         // if player doesn't own any of this business, return
         if (quantity < 1) {
-            // console.log(`You must own at least one ${name}!`)
             toast.error(`You must own at least one ${name}!`)
             return
         }
 
-        // TODO: Add other checks here, like if `lastCollected` is less than `time` seconds ago, return
+
+        // TODO: Add a timer of `time` seconds before executing the collect function, and while the timer is running, disable the button
+        setDisabled(true)
+
+        setTimeout(async () => {
+
+            try {
+
+                let finalRevenue = 0;
+
+                if (name === 'Lemonade Stand') finalRevenue = revenue * biz1Quantity
+                else if (name === 'Mining Rig') finalRevenue = revenue * biz2Quantity
+                else if (name === 'Tuxedo Tailor') finalRevenue = revenue * biz3Quantity
+                else if (name === 'Vegetable Farm') finalRevenue = revenue * biz4Quantity
+                else if (name === 'Ramen Store') finalRevenue = revenue * biz5Quantity
+                else if (name === 'Shrimp Boat') finalRevenue = revenue * biz6Quantity
+                else if (name === 'eSports Team') finalRevenue = revenue * biz7Quantity
+                else if (name === 'Cryptocurrency Exchange') finalRevenue = revenue * biz8Quantity
+                else if (name === 'Oil Company') finalRevenue = revenue * biz9Quantity
+                else if (name === 'Space Rocket') finalRevenue = revenue * biz10Quantity
+
+                const response = await fetch(`/api/player/business/collect/${userId}?amount=${finalRevenue}`)
+                const data = await response.json()
+
+                if (data.coins) {
+                    // success!
+                    // console.log(`data`, data)
+                    // console.log(`updated coins to:`, data.coins)
+                    // console.log(`Collected $${revenue * quantity} from ${name}!`)
+                    addCoins(finalRevenue)
+                    toast.success(`Collected $${finalRevenue} from ${name}! New balance is $${data.coins}.`)
 
 
+                } else {
+                    toast.error(data.error)
+                }
 
-
-        // TODO: add `revenue * quantity` to `coins` in User model via prisma
-        // console.log(`userId in Quantity component is ${userId}`)
-        // if player owns at least one of this business, and passes all other checks, then collect revenue
-
-        try {
-
-            let finalRevenue = 0;
-
-            if (name === 'Lemonade Stand') finalRevenue = revenue * biz1Quantity
-            else if (name === 'Mining Rig') finalRevenue = revenue * biz2Quantity
-            else if (name === 'Tuxedo Tailor') finalRevenue = revenue * biz3Quantity
-            else if (name === 'Vegetable Farm') finalRevenue = revenue * biz4Quantity
-            else if (name === 'Ramen Store') finalRevenue = revenue * biz5Quantity
-            else if (name === 'Shrimp Boat') finalRevenue = revenue * biz6Quantity
-            else if (name === 'eSports Team') finalRevenue = revenue * biz7Quantity
-            else if (name === 'Cryptocurrency Exchange') finalRevenue = revenue * biz8Quantity
-            else if (name === 'Oil Company') finalRevenue = revenue * biz9Quantity
-            else if (name === 'Space Rocket') finalRevenue = revenue * biz10Quantity
-
-            const response = await fetch(`/api/player/business/collect/${userId}?amount=${finalRevenue}`)
-            const data = await response.json()
-
-            if (data.coins) {
-                // success!
-                // console.log(`data`, data)
-                // console.log(`updated coins to:`, data.coins)
-                // console.log(`Collected $${revenue * quantity} from ${name}!`)
-                addCoins(finalRevenue)
-                toast.success(`Collected $${finalRevenue} from ${name}! New balance is $${data.coins}.`)
-
-
-            } else {
-                toast.error(data.error)
+            } catch (error) {
+                console.log(error)
+            } finally {
+                setDisabled(false)
             }
 
-        } catch (error) {
-            console.log(error)
-        }
+        }, time * 1000)
+
     }
 
 
@@ -138,10 +139,15 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
 
     return (
         <div
-            onClick={() => collectHandler()}
+            onClick={!disabled ? collectHandler : undefined}
             className={`
+                ${disabled ? (
+                    'hover:cursor-not-allowed'
+                ) : (
+                    ''
+                )}
 
-                ${quantity > 0 ? (
+                ${quantity > 0 && !disabled ? (
                     'bg-emerald-100 hover:bg-emerald-300 hover:cursor-pointer'
                 ) : (
                     'bg-gray-200 hover:cursor-not-allowed hover:bg-gray-300'
