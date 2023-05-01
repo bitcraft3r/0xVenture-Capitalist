@@ -29,7 +29,7 @@ const Game = async () => {
     return (
         <div className="flex flex-col justify-center items-center text-center">
             <h1 className="text-2xl font-extrabold mb-[2rem]">Blockchain Billionaire</h1>
-            {currentUser && playerBusinesses.length === 10 ? (
+            {currentUser && playerBusinesses?.length === 10 ? (
                 // Logged in & has all businesses
                 <div className="w-[80vw]">
                     {/* => show player's coin balances */}

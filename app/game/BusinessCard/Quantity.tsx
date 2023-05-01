@@ -4,6 +4,7 @@ import Image from "next/image"
 import { toast } from "react-hot-toast";
 
 import { useStore } from "@/app/store/GameStore"
+import { useEffect } from "react";
 
 interface QuantityProps {
     name: string,
@@ -16,9 +17,51 @@ interface QuantityProps {
 
 const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantity, userId, }) => {
 
-    const [addCoins] = useStore(
+    const [
+        addCoins,
+        biz1Quantity,
+        biz2Quantity,
+        biz3Quantity,
+        biz4Quantity,
+        biz5Quantity,
+        biz6Quantity,
+        biz7Quantity,
+        biz8Quantity,
+        biz9Quantity,
+        biz10Quantity,
+        addBiz1Quantity,
+        addBiz2Quantity,
+        addBiz3Quantity,
+        addBiz4Quantity,
+        addBiz5Quantity,
+        addBiz6Quantity,
+        addBiz7Quantity,
+        addBiz8Quantity,
+        addBiz9Quantity,
+        addBiz10Quantity,
+    ] = useStore(
         (state) => [
-            state.addCoins
+            state.addCoins,
+            state.biz1Quantity,
+            state.biz2Quantity,
+            state.biz3Quantity,
+            state.biz4Quantity,
+            state.biz5Quantity,
+            state.biz6Quantity,
+            state.biz7Quantity,
+            state.biz8Quantity,
+            state.biz9Quantity,
+            state.biz10Quantity,
+            state.addBiz1Quantity,
+            state.addBiz2Quantity,
+            state.addBiz3Quantity,
+            state.addBiz4Quantity,
+            state.addBiz5Quantity,
+            state.addBiz6Quantity,
+            state.addBiz7Quantity,
+            state.addBiz8Quantity,
+            state.addBiz9Quantity,
+            state.addBiz10Quantity,
         ]
     )
 
@@ -61,9 +104,23 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
         } catch (error) {
             console.log(error)
         }
-
-
     }
+
+
+    useEffect(() => {
+        if (name === 'Lemonade Stand') addBiz1Quantity(quantity)
+        if (name === 'Mining Rig') addBiz2Quantity(quantity)
+        if (name === 'Tuxedo Tailor') addBiz3Quantity(quantity)
+        if (name === 'Vegetable Farm') addBiz4Quantity(quantity)
+        if (name === 'Ramen Store') addBiz5Quantity(quantity)
+        if (name === 'Shrimp Boat') addBiz6Quantity(quantity)
+        if (name === 'eSports Team') addBiz7Quantity(quantity)
+        if (name === 'Cryptocurrency Exchange') addBiz8Quantity(quantity)
+        if (name === 'Metaverse Company') addBiz9Quantity(quantity)
+        if (name === 'Blockchain Currency') addBiz10Quantity(quantity)
+
+    }, [])
+
 
     return (
         <div
@@ -81,6 +138,18 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
                 <Image src={image} alt={name} width={50} height={50} />
             </div>
             <div className="border">{quantity} Owned</div>
+            <div>
+                {name === 'Lemonade Stand' && (biz1Quantity)}
+                {name === 'Mining Rig' && (biz2Quantity)}
+                {name === 'Tuxedo Tailor' && (biz3Quantity)}
+                {name === 'Vegetable Farm' && (biz4Quantity)}
+                {name === 'Ramen Store' && (biz5Quantity)}
+                {name === 'Shrimp Boat' && (biz6Quantity)}
+                {name === 'eSports Team' && (biz7Quantity)}
+                {name === 'Cryptocurrency Exchange' && (biz8Quantity)}
+                {name === 'Metaverse Company' && (biz9Quantity)}
+                {name === 'Blockchain Currency' && (biz10Quantity)} Owned
+            </div>
         </div>
     )
 }
