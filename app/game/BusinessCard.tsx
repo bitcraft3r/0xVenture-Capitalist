@@ -1,5 +1,8 @@
 import Image from 'next/image';
 
+import Quantity from './BusinessCard/Quantity';
+import RevenueProgressBar from './BusinessCard/RevenueProgressBar';
+
 interface BusinessCardProps {
     name: string,
     image: string,
@@ -30,7 +33,6 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
     currentUser,
 }) => {
 
-
     // console.log(`things in business card`, name, cost, multiplier, quantity, userId)
     // console.log(`currentUser in business card`, currentUser)
 
@@ -38,7 +40,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
     return (
         <>
             <div>{name}</div>
-            {quantity < 1 ? (
+            {quantity > 1 ? (
                 <div className="flex justify-center items-center content-center">
                     <Image src={image} alt={name} width={50} height={50} />
                     <div className="mb-[2rem]">BUY: ${(cost * (((multiplier ** quantity) * (multiplier ** 1 - 1)) / (multiplier - 1))).toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
@@ -47,14 +49,18 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
                 <div className="border flex m-[1rem] p-[1rem]">
                     {/* Left */}
                     <div className="border w-1/4">
-                        <div className="flex justify-center">
-                            <Image src={image} alt={name} width={50} height={50} />
-                        </div>
-                        <div className="border">{quantity} Purchased</div>
+                        <Quantity
+                            name={name}
+                            image={image}
+                            revenue={revenue}
+                            time={time}
+                            quantity={quantity}
+                            userId={userId}
+                        />
                     </div>
                     {/* Right */}
                     <div className="w-3/4">
-                        <div className="border">Progress bar + Revenue</div>
+                        <RevenueProgressBar revenue={revenue} />
                         <div className="flex">
 
                             {/* BUY BUTTON */}
