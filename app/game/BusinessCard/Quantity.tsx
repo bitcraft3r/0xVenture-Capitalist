@@ -14,12 +14,12 @@ interface QuantityProps {
 
 const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantity, userId, }) => {
 
-    const collectHandler = () => {
-        console.log(`Clicked ${name}`)
+    const collectHandler = async () => {
+        // console.log(`Clicked ${name}`)
 
         // if player doesn't own any of this business, return
         if (quantity < 1) {
-            console.log(`You must own at least one ${name}!`)
+            // console.log(`You must own at least one ${name}!`)
             toast.error(`You must own at least one ${name}!`)
             return
         }
@@ -28,12 +28,30 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
 
 
 
-        // if player owns at least one of this business, and passes all other checks, then collect revenue
-        console.log(`Collected $${revenue * quantity} from ${name}!`)
-        toast.success(`Collected $${revenue * quantity} from ${name}!`)
 
         // TODO: add `revenue * quantity` to `coins` in User model via prisma
         console.log(`userId in Quantity component is ${userId}`)
+        // if player owns at least one of this business, and passes all other checks, then collect revenue
+
+        try {
+            const response = await fetch(`/api/player/business/collect/${userId}?amount=${revenue * quantity}`)
+            const data = await response.json()
+
+            if (data.coins) {
+                // success!
+                // console.log(`data`, data)
+                // console.log(`updated coins to:`, data.coins)
+                // console.log(`Collected $${revenue * quantity} from ${name}!`)
+                toast.success(`Collected $${revenue * quantity} from ${name}! New balance is $${data.coins}.`)
+
+            } else {
+                toast.error(data.error)
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+
 
     }
 
