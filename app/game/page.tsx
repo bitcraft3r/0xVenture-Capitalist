@@ -2,6 +2,7 @@ import getCurrentUserFull from "../actions/getCurrentUserFull"
 import getPlayerBusinesses from "../actions/getPlayerBusinesses"
 import StartButton from "./StartButton"
 import BusinessCard from "./BusinessCard"
+import Balances from "./Balances"
 
 const Game = async () => {
     const currentUser = await getCurrentUserFull();
@@ -30,8 +31,10 @@ const Game = async () => {
             <h1 className="text-2xl font-extrabold mb-[2rem]">Blockchain Billionaire</h1>
             {currentUser && playerBusinesses.length === 10 ? (
                 // Logged in & has all businesses
-                // => show all businesses
                 <div className="w-[80vw]">
+                    {/* => show player's coin balances */}
+                    <Balances coins={currentUser.coins} />
+                    {/* => show all businesses */}
                     {playerBusinesses.map((business: any) => (
                         <BusinessCard {...business} currentUser={currentUser} key={business.name} />
                     ))}
