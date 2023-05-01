@@ -4,7 +4,7 @@ import prisma from '@/app/libs/prismadb';
 
 export async function GET(request: Request, { params }: { params: { userId: string }}) {
     // get the userId sent via params
-    console.log(`params.id in getBusiness: ${params.userId}`)
+    // console.log(`params.id in getBusiness: ${params.userId}`)
     const userId = params.userId
     
     // get all the businesses for the player
