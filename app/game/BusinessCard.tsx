@@ -15,6 +15,7 @@ interface BusinessCardProps {
     quantity: number,
     managerName: string,
     managerCost: number,
+    index: number,
     userId: string,
 
     currentUser?: any
@@ -31,6 +32,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
     quantity,
     managerName,
     managerCost,
+    index,
     userId,
 
     currentUser,
@@ -76,6 +78,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
                             cost={cost}
                             multiplier={multiplier}
                             quantity={quantity}
+                            index={index}
                             userId={userId}
                             coins={currentUser.coins}
                         />

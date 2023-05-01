@@ -10,13 +10,14 @@ interface BuyButtonProps {
     cost: number,
     multiplier: number,
     quantity: number,
+    index: number,
     userId: string,
     coins: number,
 }
 
-const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quantity, userId, coins }) => {
 
     const [addCoins] = useStore(
+const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quantity, index, userId, coins }) => {
         (state) => [
             state.addCoins
         ]

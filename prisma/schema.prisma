@@ -38,6 +38,7 @@ model Business {
   multiplier  Float
   managerName String
   managerCost Float
+  index       Int
 
   user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String  @db.ObjectId
