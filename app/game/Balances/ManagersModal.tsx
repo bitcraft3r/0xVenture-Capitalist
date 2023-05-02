@@ -72,11 +72,10 @@ const ManagersModal = ({ children, playerBusinesses, userCoins, currentUser }: {
                                     py-2 px-5 border rounded-xl text-xl
                                     ${business.managerOwned
                                         ? 'disabled bg-emerald-200 hover:cursor-not-allowed'
-                                        : 'bg-sky-200 hover:bg-sky-400'
-                                    }
-                                    ${userCoins < business.managerCost
-                                        ? 'disabled hover:cursor-not-allowed bg-gray-300 hover:bg-gray-400'
-                                        : ''
+                                        : userCoins < business.managerCost
+                                            ? 'disabled hover:cursor-not-allowed bg-gray-300 hover:bg-gray-400'
+                                            : 'bg-sky-200 hover:bg-sky-400'
+
                                     }
                                 `}
                             >
