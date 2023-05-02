@@ -6,6 +6,7 @@ import { toast } from "react-hot-toast";
 import { useStore } from "@/app/store/GameStore"
 import { useEffect, useState, MouseEventHandler } from "react";
 import RevenueProgressBar from "./RevenueProgressBar";
+import ProgressBar from "./ProgressBar";
 
 interface QuantityProps {
     name: string,
@@ -68,6 +69,7 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
     )
 
     const [disabled, setDisabled] = useState(false)
+    const [buttonClicked, setButtonClicked] = useState(false)
 
     const collectHandler: MouseEventHandler<HTMLDivElement> = async () => {
         // if player doesn't own any of this business, return
@@ -79,6 +81,7 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
 
         // TODO: Add a timer of `time` seconds before executing the collect function, and while the timer is running, disable the button
         setDisabled(true)
+        setButtonClicked(true)
 
         setTimeout(async () => {
 
@@ -106,7 +109,7 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
                     // console.log(`updated coins to:`, data.coins)
                     // console.log(`Collected $${revenue * quantity} from ${name}!`)
                     addCoins(finalRevenue)
-                    toast.success(`Collected $${finalRevenue} from ${name}! New balance is $${data.coins}.`)
+                    toast.success(`Collected ${finalRevenue.toLocaleString("en", { style: "currency", currency: "USD", maximumFractionDigits: 0 })} from ${name}! New balance is ${(data.coins).toLocaleString("en-US", { style: "currency", currency: "USD" })}.`)
 
 
                 } else {
@@ -117,6 +120,7 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
                 console.log(error)
             } finally {
                 setDisabled(false)
+                setButtonClicked(false)
             }
 
         }, time * 1000)
@@ -176,15 +180,18 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
                 </div>
             </div>
             {/* PROGRESS BARS */}
-            <div className="flex flex-col w-4/5">
-                <RevenueProgressBar
-                    revenue={revenue}
-                    time={time}
-                    quantity={quantity}
-                    index={index}
-                />
-                <div>Timer: {time}</div>
-            </div>
+            {quantity > 0 &&
+                <div className="flex flex-col w-4/5 items-center">
+                    <RevenueProgressBar
+                        revenue={revenue}
+                        time={time}
+                        quantity={quantity}
+                        index={index}
+                    />
+                    <div>Timer: {time}</div>
+                    {buttonClicked && <ProgressBar time={time} />}
+                </div>
+            }
         </div>
     )
 }

@@ -44,7 +44,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
             <div>{name}</div>
             <div className="border flex m-[1rem] p-[1rem]">
                 {/* Left */}
-                <div className="border w-2/3">
+                <div className="border w-3/5">
                     <Quantity
                         name={name}
                         image={image}
@@ -56,7 +56,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
                     />
                 </div>
                 {/* Right */}
-                <div className="w-1/3">
+                <div className="w-2/5">
                     {/* BUY BUTTON */}
                     <BuyButton
                         id={id}
