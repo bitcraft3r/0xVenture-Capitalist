@@ -69,7 +69,7 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
     )
 
     useEffect(() => {
-        console.log(`userCoins has changed to ${userCoins}`)
+        // console.log(`userCoins has changed to ${userCoins}`)
     }, [userCoins])
 
 
