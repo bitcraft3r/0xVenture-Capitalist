@@ -12,6 +12,7 @@ interface BusinessCardProps {
     quantity: number,
     managerName: string,
     managerCost: number,
+    managerOwned: boolean,
     index: number,
     userId: string,
 
@@ -29,6 +30,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
     quantity,
     managerName,
     managerCost,
+    managerOwned,
     index,
     userId,
 
@@ -53,6 +55,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
                         quantity={quantity}
                         index={index}
                         userId={userId}
+                        managerOwned={managerOwned}
                     />
                 </div>
                 {/* Right */}

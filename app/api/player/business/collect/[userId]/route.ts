@@ -14,7 +14,7 @@ export async function GET(request: Params, { params }: { params: { userId: strin
     // console.log(`amount via params`, amount)
 
     // if no url params sent for amount, return error msg
-    if (amount === 0) return NextResponse.json({ error: "Amount is 0." });
+    // if (amount === 0) return NextResponse.json({ error: "Amount is 0." });
     if (amount === null || amount === undefined) return NextResponse.json({ error: "Amount is null or undefined." });
     
     // get the user id sent via params

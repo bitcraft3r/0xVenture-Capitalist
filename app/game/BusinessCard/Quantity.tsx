@@ -14,11 +14,12 @@ interface QuantityProps {
     revenue: number,
     time: number,
     quantity: number,
+    managerOwned: boolean,
     index: number,
     userId: string,
 }
 
-const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantity, index, userId, }) => {
+const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantity, managerOwned, index, userId, }) => {
 
     const [
         addCoins,
@@ -70,6 +71,7 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
 
     const [disabled, setDisabled] = useState(false)
     const [buttonClicked, setButtonClicked] = useState(false)
+    const [hasManager, setHasManager] = useState(false)
 
     const collectHandler: MouseEventHandler<HTMLDivElement> = async () => {
         // if player doesn't own any of this business, return
@@ -97,8 +99,8 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
                 else if (name === 'Shrimp Boat') finalRevenue = revenue * biz6Quantity
                 else if (name === 'eSports Team') finalRevenue = revenue * biz7Quantity
                 else if (name === 'Cryptocurrency Exchange') finalRevenue = revenue * biz8Quantity
-                else if (name === 'Oil Company') finalRevenue = revenue * biz9Quantity
-                else if (name === 'Space Rocket') finalRevenue = revenue * biz10Quantity
+                else if (name === 'Metaverse Company') finalRevenue = revenue * biz9Quantity
+                else if (name === 'Blockchain Currency') finalRevenue = revenue * biz10Quantity
 
                 const response = await fetch(`/api/player/business/collect/${userId}?amount=${finalRevenue}`)
                 const data = await response.json()
@@ -140,7 +142,65 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
         if (name === 'Metaverse Company') addBiz9Quantity(quantity)
         if (name === 'Blockchain Currency') addBiz10Quantity(quantity)
 
+
+
     }, [])
+
+    useEffect(() => {
+        if (managerOwned) setDisabled(true)
+
+        setHasManager(managerOwned)
+
+        if (managerOwned) {
+            // automatically collect revenue every `time` seconds
+            const collectRevenue = async () => {
+                try {
+
+                    setButtonClicked(true)
+
+                    let finalRevenue = 0;
+
+                    if (name === 'Lemonade Stand') finalRevenue = revenue * biz1Quantity
+                    else if (name === 'Mining Rig') finalRevenue = revenue * biz2Quantity
+                    else if (name === 'Tuxedo Tailor') finalRevenue = revenue * biz3Quantity
+                    else if (name === 'Vegetable Farm') finalRevenue = revenue * biz4Quantity
+                    else if (name === 'Ramen Store') finalRevenue = revenue * biz5Quantity
+                    else if (name === 'Shrimp Boat') finalRevenue = revenue * biz6Quantity
+                    else if (name === 'eSports Team') finalRevenue = revenue * biz7Quantity
+                    else if (name === 'Cryptocurrency Exchange') finalRevenue = revenue * biz8Quantity
+                    else if (name === 'Metaverse Company') finalRevenue = revenue * biz9Quantity
+                    else if (name === 'Blockchain Currency') finalRevenue = revenue * biz10Quantity
+
+                    const response = await fetch(`/api/player/business/collect/${userId}?amount=${finalRevenue}`)
+                    const data = await response.json()
+
+                    if (data.coins) {
+                        addCoins(finalRevenue)
+                        // toast.success(`Collected ${finalRevenue.toLocaleString("en", { style: "currency", currency: "USD", maximumFractionDigits: 0 })} from ${name}! New balance is ${(data.coins).toLocaleString("en-US", { style: "currency", currency: "USD" })}.`)
+                        setButtonClicked(false);
+                    } else {
+                        toast.error(data.error)
+                    }
+
+
+                } catch (error) {
+                    console.log(error);
+                } finally {
+                    // setDisabled(false);
+                    setButtonClicked(false);
+                }
+            }
+
+            const interval = setInterval(collectRevenue, time * 1000);
+
+            // stop automatic collection when the player clicks the button
+            // setTimeout(() => {
+            //     clearInterval(interval);
+            // }, 5000);
+
+        }
+    }, [managerOwned, biz1Quantity, biz2Quantity])
+
 
 
     return (
@@ -161,6 +221,8 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
                     ) : (
                         'bg-gray-200 hover:cursor-not-allowed hover:bg-gray-300'
                     )}
+
+                    ${managerOwned ? ('bg-green-400 hover:bg-green-500') : ('')}
                 `}
             >
                 <div className="flex justify-center">
@@ -189,7 +251,8 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
                         index={index}
                     />
                     <div>Timer: {time}</div>
-                    {buttonClicked && <ProgressBar time={time} />}
+                    {buttonClicked || managerOwned && <ProgressBar time={time} />}
+                    {buttonClicked && !managerOwned && <ProgressBar time={time} />}
                 </div>
             }
         </div>
