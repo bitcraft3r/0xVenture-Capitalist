@@ -104,7 +104,7 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
 
             const response = await fetch(`/api/player/business/buy/${userId}?quantity=${1}&amount=${priceFormatted}&businessId=${id}`)
 
-            addCoins(-currentPrice)
+            addCoins(-priceFormatted)
 
             if (index === 0) addBiz1Quantity(1)
             else if (index === 1) addBiz2Quantity(1)
