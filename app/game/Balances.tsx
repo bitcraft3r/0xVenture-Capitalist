@@ -3,12 +3,14 @@
 import { useStore } from "@/app/store/GameStore"
 import Image from "next/image"
 import { useEffect } from "react"
+import ManagersModal from "./Balances/ManagersModal"
 
 interface BalancesProps {
-    coins: number
+    coins: number,
+    playerBusinesses: any[]
 }
 
-const Balances: React.FC<BalancesProps> = ({ coins }) => {
+const Balances: React.FC<BalancesProps> = ({ coins, playerBusinesses }) => {
 
     const [userCoins, addCoins] = useStore(
         (state) => [
@@ -27,7 +29,9 @@ const Balances: React.FC<BalancesProps> = ({ coins }) => {
                 <Image src="/images/mascot.png" alt="mascot" height="120" width="120" />
                 <div className="text-3xl font-bold">${userCoins?.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
                 <div className="flex flex-col">
-                    <button className="border rounded-lg px-4 py-1 mr-[1rem] my-1">Managers</button>
+                    <ManagersModal playerBusinesses={playerBusinesses} userCoins={userCoins}>
+                        <button className="border rounded-lg px-4 py-1 mr-[1rem] my-1">Managers</button>
+                    </ManagersModal>
                     <button className="border rounded-lg px-4 py-1 mr-[1rem] my-1">Upgrades</button>
 
                 </div>

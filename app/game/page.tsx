@@ -33,7 +33,7 @@ const Game = async () => {
                 // Logged in & has all businesses
                 <div className="w-[80vw]">
                     {/* => show player's coin balances */}
-                    <Balances coins={currentUser.coins} />
+                    <Balances coins={currentUser.coins} playerBusinesses={playerBusinesses} />
                     {/* => show all businesses */}
                     {playerBusinesses.map((business: any) => (
                         <BusinessCard {...business} currentUser={currentUser} key={business.name} />
