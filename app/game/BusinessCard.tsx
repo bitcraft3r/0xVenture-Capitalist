@@ -1,4 +1,4 @@
-import Quantity from './BusinessCard/Quantity';
+import Collect from './BusinessCard/Collect';
 import BuyButton from './BusinessCard/BuyButton';
 
 interface BusinessCardProps {
@@ -47,7 +47,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
             <div className="border flex m-[1rem] p-[1rem]">
                 {/* Left */}
                 <div className="border w-3/5">
-                    <Quantity
+                    <Collect
                         name={name}
                         image={image}
                         revenue={revenue}

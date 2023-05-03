@@ -10,7 +10,7 @@ import ProgressBar from "./ProgressBar";
 import ProgressBarManaged from "./ProgressBarManaged";
 import QuantityBar from "./QuantityBar";
 
-interface QuantityProps {
+interface CollectProps {
     name: string,
     image: string,
     revenue: number,
@@ -21,7 +21,7 @@ interface QuantityProps {
     userId: string,
 }
 
-const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantity, managerOwned, index, userId, }) => {
+const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity, managerOwned, index, userId, }) => {
 
     const [
         addCoins,
@@ -172,4 +172,4 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
     )
 }
 
-export default Quantity
+export default Collect
