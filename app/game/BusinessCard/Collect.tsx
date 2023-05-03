@@ -140,7 +140,7 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
                         ) : (
                             bizQuantities[index] > 0
                                 ? disabled
-                                    ? 'bg-green-200 hover:bg-green-400'
+                                    ? 'bg-green-200 hover:bg-green-400 hover:cursor-not-allowed'
                                     : 'bg-cyan-600 hover:bg-sky-500 hover:cursor-pointer'
                                 : 'hover:cursor-not-allowed bg-gray-400 hover:bg-gray-600'
                         )}

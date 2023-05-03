@@ -30,7 +30,7 @@ const RevenueProgressBar: React.FC<RevenueProgressBarProps> = ({ revenue, time, 
     )
 
     return (
-        <div className="border">
+        <div>
             {quantity === 0
                 ? (
                     <>-</>
