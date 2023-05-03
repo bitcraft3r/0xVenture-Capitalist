@@ -8,6 +8,7 @@ import { useEffect, useState, MouseEventHandler } from "react";
 import RevenueProgressBar from "./RevenueProgressBar";
 import ProgressBar from "./ProgressBar";
 import ProgressBarManaged from "./ProgressBarManaged";
+import QuantityBar from "./QuantityBar";
 
 interface QuantityProps {
     name: string,
@@ -127,33 +128,28 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
             <div
                 onClick={!disabled ? collectHandler : undefined}
                 className={`
-                    flex flex-col w-1/5
-                    ${disabled ? (
-                        'hover:cursor-not-allowed'
-                    ) : (
-                        ''
-                    )}
-
-                    ${managerOwned ? ('bg-green-400 hover:bg-green-500 disabled hover:cursor-not-allowed') : ('')}
-
-                    ${bizQuantities[index] > 0 && !disabled ? (
-                        managerOwned ? (
-                            'bg-emerald-100 hover:bg-emerald-300 disabled hover:cursor-not-allowed'
-                        ) : (
-                            'bg-emerald-100 hover:bg-emerald-300  hover:cursor-pointer'
-                        )
-                    ) : (
-                        'bg-gray-200 hover:cursor-not-allowed hover:bg-gray-300'
-                    )}
-
-                    
+                    flex flex-col justify-center items-center
                 `}
             >
-                <div className="flex justify-center">
-                    <Image src={image} alt={name} width={50} height={50} />
-                </div>
-                <div className="border">
-                    {bizQuantities[index]} Owned
+                <Image
+                    src={image} alt={name} width={75} height={75}
+                    className={`
+                        rounded-full  p-3 m-1 border-slate-700 border-4 hover:border-slate-500
+                        ${managerOwned ? (
+                            'hover:cursor-not-allowed bg-green-400 hover:bg-green-500'
+                        ) : (
+                            bizQuantities[index] > 0
+                                ? disabled
+                                    ? 'bg-green-200 hover:bg-green-400'
+                                    : 'bg-cyan-600 hover:bg-sky-500 hover:cursor-pointer'
+                                : 'hover:cursor-not-allowed bg-gray-400 hover:bg-gray-600'
+                        )}
+                        
+                        
+                    `} />
+                <QuantityBar index={index} />
+                <div className="w-[100%] text-white -mt-6 font-bold z-10">
+                    {bizQuantities[index]}
                 </div>
             </div>
             {/* PROGRESS BARS */}
@@ -166,8 +162,10 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
                         index={index}
                     />
                     <div>Timer: {time}</div>
-                    {managerOwned && <ProgressBarManaged time={time} index={index} revenue={revenue} userId={userId} />}
-                    {buttonClicked && !managerOwned && <ProgressBar time={time} />}
+                    <div className="w-[100%] flex justify-center">
+                        {managerOwned && <ProgressBarManaged time={time} index={index} revenue={revenue} userId={userId} />}
+                        {buttonClicked && !managerOwned && <ProgressBar time={time} />}
+                    </div>
                 </div>
             }
         </div>

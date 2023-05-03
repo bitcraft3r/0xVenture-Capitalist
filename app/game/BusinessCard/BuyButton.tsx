@@ -72,8 +72,8 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
 
     const purchaseHandler = async () => {
 
-        console.log(`userCoins`, userCoins)
-        console.log(`currentPrice`, currentPrice)
+        // console.log(`userCoins`, userCoins)
+        // console.log(`currentPrice`, currentPrice)
 
         // if player doesn't have enough coins, return
         if (userCoins < currentPrice) {
