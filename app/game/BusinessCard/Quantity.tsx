@@ -7,6 +7,7 @@ import { useStore } from "@/app/store/GameStore"
 import { useEffect, useState, MouseEventHandler } from "react";
 import RevenueProgressBar from "./RevenueProgressBar";
 import ProgressBar from "./ProgressBar";
+import ProgressBarManaged from "./ProgressBarManaged";
 
 interface QuantityProps {
     name: string,
@@ -87,6 +88,12 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
             return
         }
 
+        // if player owns a manager for this business, return
+        if (managerOwned) {
+            toast.error(`You already have a manager running ${name}!`)
+            return
+        }
+
         // TODO: Add a timer of `time` seconds before executing the collect function, and while the timer is running, disable the button
         setDisabled(true)
         setButtonClicked(true)
@@ -114,34 +121,6 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
         }, time * 1000)
     }
 
-    useEffect(() => {
-
-        if (managerOwned) {
-            setDisabled(true);
-
-            const intervalId = setInterval(async () => {
-                try {
-                    let finalRevenue = revenue * bizQuantities[index];
-                    const response = await fetch(`/api/player/business/collect/${userId}?amount=${finalRevenue}`)
-                    const data = await response.json()
-
-                    if (data.coins) {
-                        addCoins(finalRevenue)
-                        // console.log(`success auto collect ${finalRevenue} from ${name}`)
-                    } else console.log(`Something went wrong.`)
-
-                } catch (error) {
-                    console.log(error)
-                }
-            }, time * 1000)
-
-            return () => clearInterval(intervalId)
-        }
-
-    }, [managerOwned, bizQuantities[index], quantity])
-
-
-
     return (
         <div className="flex">
             {/* COLLECT BUTTON */}
@@ -155,13 +134,19 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
                         ''
                     )}
 
+                    ${managerOwned ? ('bg-green-400 hover:bg-green-500 disabled hover:cursor-not-allowed') : ('')}
+
                     ${bizQuantities[index] > 0 && !disabled ? (
-                        'bg-emerald-100 hover:bg-emerald-300 hover:cursor-pointer'
+                        managerOwned ? (
+                            'bg-emerald-100 hover:bg-emerald-300 disabled hover:cursor-not-allowed'
+                        ) : (
+                            'bg-emerald-100 hover:bg-emerald-300  hover:cursor-pointer'
+                        )
                     ) : (
                         'bg-gray-200 hover:cursor-not-allowed hover:bg-gray-300'
                     )}
 
-                    ${managerOwned ? ('bg-green-400 hover:bg-green-500') : ('')}
+                    
                 `}
             >
                 <div className="flex justify-center">
@@ -181,7 +166,7 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
                         index={index}
                     />
                     <div>Timer: {time}</div>
-                    {managerOwned && <ProgressBar time={time} />}
+                    {managerOwned && <ProgressBarManaged time={time} index={index} revenue={revenue} userId={userId} />}
                     {buttonClicked && !managerOwned && <ProgressBar time={time} />}
                 </div>
             }
