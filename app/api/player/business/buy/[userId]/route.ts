@@ -26,9 +26,25 @@ export async function GET(request: Params, { params }: { params: { userId: strin
     // console.log(`params.id in getBusiness: ${params.userId}`)
     const userId = params.userId
 
+    try {
+        // get player's coins
+        const checkPlayerCoins: { coins: number } | null | undefined = await prisma.user.findUnique({
+            where: {
+                id: userId
+            },
+            select: {
+                coins: true
+            }
+        })
 
+        // if coins < cost, return error
+        if (checkPlayerCoins && checkPlayerCoins?.coins < amount) return NextResponse.json({ error: "Not enough coins" })
 
+    } catch (error) {
+        console.log(error)
+    }
 
+    // if all checks pass, continue to purchase business
     try {
         // update the player's `coins` in User model
         const updateCoinsOfPlayer = await prisma.user.update({
@@ -56,8 +72,9 @@ export async function GET(request: Params, { params }: { params: { userId: strin
         // console.log(`updatedBusiness`, updatedBusiness.quantity)
 
 
-
-        return NextResponse.json(updatedBusiness);
+        if (updateCoinsOfPlayer && updatedBusiness) {
+            return NextResponse.json(updatedBusiness);
+        } else return NextResponse.json({ error: "Something went wrong."})
         
     } catch (error) {
         return NextResponse.json(error);

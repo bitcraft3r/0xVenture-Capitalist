@@ -15,11 +15,11 @@ const ManagersModal = ({ children, playerBusinesses, userCoins, currentUser }: {
         ]
     )
 
-    const purchaseHandler = async (businessId: string, managerCost: number, userCoins: number, managerOwned: boolean) => {
+    const purchaseHandler = async (businessId: string, managerCost: number, userCoins: number, managerOwned: boolean, businessQuantity: number) => {
         console.log(`purchaseHandler`)
 
         try {
-            fetch(`/api/player/business/manager/${currentUser.id}?businessId=${businessId}&managerCost=${managerCost}&userCoins=${userCoins}&managerOwned=${managerOwned}`, { method: 'GET' })
+            fetch(`/api/player/business/manager/${currentUser.id}?businessId=${businessId}&managerCost=${managerCost}&userCoins=${userCoins}&managerOwned=${managerOwned}&businessQuantity=${businessQuantity}`, { method: 'GET' })
                 .then((response) => response.json())
                 .then((data) => {
                     // console.log(data);
@@ -67,12 +67,12 @@ const ManagersModal = ({ children, playerBusinesses, userCoins, currentUser }: {
                                 </div>
                             </div>
                             <button
-                                onClick={() => purchaseHandler(business.id, business.managerCost, userCoins, business.managerOwned)}
+                                onClick={() => purchaseHandler(business.id, business.managerCost, userCoins, business.managerOwned, business.quantity)}
                                 className={`
                                     py-2 px-5 border rounded-xl text-xl
                                     ${business.managerOwned
                                         ? 'disabled bg-emerald-200 hover:cursor-not-allowed'
-                                        : userCoins < business.managerCost
+                                        : userCoins < business.managerCost || business.quantity === 0
                                             ? 'disabled hover:cursor-not-allowed bg-gray-300 hover:bg-gray-400'
                                             : 'bg-sky-200 hover:bg-sky-400'
 

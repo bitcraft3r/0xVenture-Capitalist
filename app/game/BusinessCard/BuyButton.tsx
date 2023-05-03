@@ -3,7 +3,7 @@
 import { toast } from "react-hot-toast"
 
 import { useStore } from "@/app/store/GameStore"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 interface BuyButtonProps {
     id: string,
@@ -21,76 +21,59 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
     const [
         userCoins,
         addCoins,
-        biz1Quantity,
-        biz2Quantity,
-        biz3Quantity,
-        biz4Quantity,
-        biz5Quantity,
-        biz6Quantity,
-        biz7Quantity,
-        biz8Quantity,
-        biz9Quantity,
-        biz10Quantity,
-        addBiz1Quantity,
-        addBiz2Quantity,
-        addBiz3Quantity,
-        addBiz4Quantity,
-        addBiz5Quantity,
-        addBiz6Quantity,
-        addBiz7Quantity,
-        addBiz8Quantity,
-        addBiz9Quantity,
-        addBiz10Quantity,
+        bizQuantities,
+        addBizQuantities,
     ] = useStore(
         (state) => [
             state.userCoins,
             state.addCoins,
-            state.biz1Quantity,
-            state.biz2Quantity,
-            state.biz3Quantity,
-            state.biz4Quantity,
-            state.biz5Quantity,
-            state.biz6Quantity,
-            state.biz7Quantity,
-            state.biz8Quantity,
-            state.biz9Quantity,
-            state.biz10Quantity,
-            state.addBiz1Quantity,
-            state.addBiz2Quantity,
-            state.addBiz3Quantity,
-            state.addBiz4Quantity,
-            state.addBiz5Quantity,
-            state.addBiz6Quantity,
-            state.addBiz7Quantity,
-            state.addBiz8Quantity,
-            state.addBiz9Quantity,
-            state.addBiz10Quantity,
+            [
+                state.biz1Quantity,
+                state.biz2Quantity,
+                state.biz3Quantity,
+                state.biz4Quantity,
+                state.biz5Quantity,
+                state.biz6Quantity,
+                state.biz7Quantity,
+                state.biz8Quantity,
+                state.biz9Quantity,
+                state.biz10Quantity,
+            ],
+            [
+                state.addBiz1Quantity,
+                state.addBiz2Quantity,
+                state.addBiz3Quantity,
+                state.addBiz4Quantity,
+                state.addBiz5Quantity,
+                state.addBiz6Quantity,
+                state.addBiz7Quantity,
+                state.addBiz8Quantity,
+                state.addBiz9Quantity,
+                state.addBiz10Quantity,
+            ],
         ]
     )
 
+    const [currentPrice, setCurrentPrice] = useState(0);
+    const [currentQuantity, setCurrentQuantity] = useState(0)
+
+
     useEffect(() => {
         // console.log(`userCoins has changed to ${userCoins}`)
-    }, [userCoins])
+        setCurrentQuantity(bizQuantities[index])
+
+        const currentPrice = (cost * (((multiplier ** currentQuantity) * (multiplier ** 1 - 1)) / (multiplier - 1)))
+        setCurrentPrice(Number(currentPrice.toFixed(2)))
 
 
-    let thisQuantity = 1;
+    }, [userCoins, quantity, bizQuantities[index]])
 
-    if (index === 0) thisQuantity = biz1Quantity
-    else if (index === 1) thisQuantity = biz2Quantity
-    else if (index === 2) thisQuantity = biz3Quantity
-    else if (index === 3) thisQuantity = biz4Quantity
-    else if (index === 4) thisQuantity = biz5Quantity
-    else if (index === 5) thisQuantity = biz6Quantity
-    else if (index === 6) thisQuantity = biz7Quantity
-    else if (index === 7) thisQuantity = biz8Quantity
-    else if (index === 8) thisQuantity = biz9Quantity
-    else if (index === 9) thisQuantity = biz10Quantity
 
-    const currentPrice = (cost * (((multiplier ** thisQuantity) * (multiplier ** 1 - 1)) / (multiplier - 1)))
-
-    const priceFormatted = Number(currentPrice.toFixed(2))
 
     const purchaseHandler = async () => {
+
+        console.log(`userCoins`, userCoins)
+        console.log(`currentPrice`, currentPrice)
 
         // if player doesn't have enough coins, return
         if (userCoins < currentPrice) {
@@ -102,20 +85,10 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
         try {
 
 
-            const response = await fetch(`/api/player/business/buy/${userId}?quantity=${1}&amount=${priceFormatted}&businessId=${id}`)
+            const response = await fetch(`/api/player/business/buy/${userId}?quantity=${1}&amount=${currentPrice}&businessId=${id}`)
 
-            addCoins(-priceFormatted)
-
-            if (index === 0) addBiz1Quantity(1)
-            else if (index === 1) addBiz2Quantity(1)
-            else if (index === 2) addBiz3Quantity(1)
-            else if (index === 3) addBiz4Quantity(1)
-            else if (index === 4) addBiz5Quantity(1)
-            else if (index === 5) addBiz6Quantity(1)
-            else if (index === 6) addBiz7Quantity(1)
-            else if (index === 7) addBiz8Quantity(1)
-            else if (index === 8) addBiz9Quantity(1)
-            else if (index === 9) addBiz10Quantity(1)
+            addCoins(-currentPrice)
+            addBizQuantities[index](1)
 
             toast(`Purchased 1 ${name}!`, {
                 icon: '🛒',
@@ -142,7 +115,7 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
             `}
         >
             <div>Buy<br />x1</div>
-            <div className="text-xl">${priceFormatted.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
+            <div className="text-xl">${currentPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
         </div>
     )
 }

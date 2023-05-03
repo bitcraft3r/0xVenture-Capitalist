@@ -14,11 +14,13 @@ export async function GET(request: Params, { params }: { params: { userId: strin
     const managerCost = Number(searchParams.get("managerCost"));
     const userCoins = Number(searchParams.get("userCoins"));
     const managerOwned = searchParams.get("managerOwned");
+    const businessQuantity = Number(searchParams.get("businessQuantity"));
 
-    // console.log(userId, businessId, managerCost, userCoins, managerOwned)
+    // console.log(userId, businessId, managerCost, userCoins, managerOwned, businessQuantity)
 
     if (managerOwned === 'true') return NextResponse.json({ error: "Already own a manager" })
     if (userCoins < managerCost) return NextResponse.json({ error: "Not enough coins" })
+    if (businessQuantity < 1) return NextResponse.json({ error: "Must have at least 1 of this business" }) 
 
     // if all checks pass, continue to purchase manager
     try {

@@ -27,6 +27,16 @@ type Actions = {
     addBiz8Quantity: (quantity: number) => void;
     addBiz9Quantity: (quantity: number) => void;
     addBiz10Quantity: (quantity: number) => void;
+    setBiz1Quantity: (quantity: number) => void;
+    setBiz2Quantity: (quantity: number) => void;
+    setBiz3Quantity: (quantity: number) => void;
+    setBiz4Quantity: (quantity: number) => void;
+    setBiz5Quantity: (quantity: number) => void;
+    setBiz6Quantity: (quantity: number) => void;
+    setBiz7Quantity: (quantity: number) => void;
+    setBiz8Quantity: (quantity: number) => void;
+    setBiz9Quantity: (quantity: number) => void;
+    setBiz10Quantity: (quantity: number) => void;
 
 }
 
@@ -54,5 +64,15 @@ export const useStore = create<Store & Actions>((set) => ({
     addBiz8Quantity: (quantity) => set((state) => ({ biz8Quantity: state.biz8Quantity + quantity })),
     addBiz9Quantity: (quantity) => set((state) => ({ biz9Quantity: state.biz9Quantity + quantity })),
     addBiz10Quantity: (quantity) => set((state) => ({ biz10Quantity: state.biz10Quantity + quantity })),
+    setBiz1Quantity: (quantity) => set(() => ({ biz1Quantity: quantity })),
+    setBiz2Quantity: (quantity) => set(() => ({ biz2Quantity: quantity })),
+    setBiz3Quantity: (quantity) => set(() => ({ biz3Quantity: quantity })),
+    setBiz4Quantity: (quantity) => set(() => ({ biz4Quantity: quantity })),
+    setBiz5Quantity: (quantity) => set(() => ({ biz5Quantity: quantity })),
+    setBiz6Quantity: (quantity) => set(() => ({ biz6Quantity: quantity })),
+    setBiz7Quantity: (quantity) => set(() => ({ biz7Quantity: quantity })),
+    setBiz8Quantity: (quantity) => set(() => ({ biz8Quantity: quantity })),
+    setBiz9Quantity: (quantity) => set(() => ({ biz9Quantity: quantity })),
+    setBiz10Quantity: (quantity) => set(() => ({ biz10Quantity: quantity })),
 
 }))
