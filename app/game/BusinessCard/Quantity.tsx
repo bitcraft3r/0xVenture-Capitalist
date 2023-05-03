@@ -82,7 +82,7 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
 
     const collectHandler: MouseEventHandler<HTMLDivElement> = async () => {
         // if player doesn't own any of this business, return
-        if (quantity < 1) {
+        if (bizQuantities[index] < 1) {
             toast.error(`You must own at least one ${name}!`)
             return
         }
@@ -168,16 +168,16 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
                     <Image src={image} alt={name} width={50} height={50} />
                 </div>
                 <div className="border">
-                    {thisQuantity} Owned
+                    {bizQuantities[index]} Owned
                 </div>
             </div>
             {/* PROGRESS BARS */}
-            {quantity > 0 &&
+            {bizQuantities[index] > 0 &&
                 <div className="flex flex-col w-4/5 items-center">
                     <RevenueProgressBar
                         revenue={revenue}
                         time={time}
-                        quantity={thisQuantity}
+                        quantity={bizQuantities[index]}
                         index={index}
                     />
                     <div>Timer: {time}</div>
