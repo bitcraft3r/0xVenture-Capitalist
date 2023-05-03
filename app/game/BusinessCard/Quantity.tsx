@@ -72,6 +72,11 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
     const [hasManager, setHasManager] = useState(false)
 
     useEffect(() => {
+        setBizQuantities[index](quantity);
+        setHasManager(managerOwned)
+    }, [])
+
+    useEffect(() => {
         setThisQuantity(bizQuantities[index]);
     }, [bizQuantities[index]])
 
@@ -109,10 +114,7 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
         }, time * 1000)
     }
 
-
     useEffect(() => {
-        setBizQuantities[index](quantity);
-        setHasManager(managerOwned)
 
         if (managerOwned) {
             setDisabled(true);
@@ -125,7 +127,7 @@ const Quantity: React.FC<QuantityProps> = ({ name, image, revenue, time, quantit
 
                     if (data.coins) {
                         addCoins(finalRevenue)
-                        console.log(`success auto collect ${finalRevenue} from ${name}`)
+                        // console.log(`success auto collect ${finalRevenue} from ${name}`)
                     } else console.log(`Something went wrong.`)
 
                 } catch (error) {
