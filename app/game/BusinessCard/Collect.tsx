@@ -161,7 +161,6 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
                         quantity={bizQuantities[index]}
                         index={index}
                     />
-                    <div>Timer: {time}</div>
                     <div className="w-[100%] flex justify-center">
                         {managerOwned && <ProgressBarManaged time={time} index={index} revenue={revenue} userId={userId} />}
                         {buttonClicked && !managerOwned && <ProgressBar time={time} />}
