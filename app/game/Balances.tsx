@@ -39,7 +39,7 @@ const Balances: React.FC<BalancesProps> = ({ coins, playerBusinesses, currentUse
                     <UpgradesModal playerUpgrades={playerUpgrades} userCoins={userCoins} currentUser={currentUser}>
                         <button className="border rounded-lg px-4 py-1 mr-[1rem] my-1">Upgrades</button>
                     </UpgradesModal>
-                    <UnlocksModal playerBusinesses={playerBusinesses} currentUser={currentUser}>
+                    <UnlocksModal playerBusinesses={playerBusinesses} >
                         <button className="border rounded-lg px-4 py-1 mr-[1rem] my-1">Unlocks</button>
                     </UnlocksModal>
                 </div>

@@ -1,8 +1,10 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
-import UnlocksGalleryModal from './UnlocksGalleryModal';
+import { useRouter } from 'next/navigation';
 
-const UnlocksModal = ({ children, playerBusinesses }: { children: React.ReactNode, playerBusinesses: any[] }) => {
+const UnlocksGalleryModal = ({ children, name, quantity }: { children: React.ReactNode, name: string, quantity: number }) => {
+
+    const router = useRouter();
 
     // map playerBusinesses, if business quantity is less than the tier, show the name of business + next tier's unlock message e.g. "Lemonade Stand \n 2x Speed". also show the next tier's quantity.
 
@@ -43,6 +45,11 @@ const UnlocksModal = ({ children, playerBusinesses }: { children: React.ReactNod
         { quantityMin: 4750, quantityMax: 5000, unlock: "5x Revenue" },
     ]
 
+    const unlocks = [
+        { business: "Lemonade Stand" }
+    ]
+
+
     return (
         <Dialog.Root>
             <Dialog.Trigger asChild>
@@ -52,47 +59,31 @@ const UnlocksModal = ({ children, playerBusinesses }: { children: React.ReactNod
                 <Dialog.Overlay className="bg-blackA9 data-[state=open]:animate-overlayShow fixed inset-0 z-20" />
                 <Dialog.Content className="data-[state=open]:animate-contentShow fixed top-[50%] left-[50%] max-h-[85vh] w-[80vw] max-w-[80vw] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none z-30 overflow-y-auto">
                     <Dialog.Title className="text-mauve12 m-0 text-[17px] font-medium">
-                        Unlocks
+                        Unlocks Gallery ({name})
                     </Dialog.Title>
                     <Dialog.Description className="text-mauve11 mt-[10px] mb-5 text-[15px] leading-normal">
-                        <span className="font-mono font-semibold">Want to maximize profits?</span>
+                        <span className="font-mono font-semibold">Looking to maximize your profits?</span>
                         <br />
-                        Look no further! Get your investments to these quotas to unlock sweet profit bonuses! It's Recursiveriffic!
+                        Look no further! Purchase investments and unlock these achievements for sweet sweet profit bonuses!
                     </Dialog.Description>
-                    {playerBusinesses.map(business => (
-                        <div key={business.id} className="flex justify-between items-center border-b border-gray-200 py-2">
-                            <div className="flex flex-col items-center">
-                                <img src={business.image} alt={business.name} className="h-[50px] w-[50px] mr-[10px]" />
-                            </div>
-                            <div className="flex items-center flex-col text-center">
-                                <div className="font-bold text-lg">{business.name}</div>
-                                <div className="font-strong">
-                                    {tiers.map((tier, index) => (
-                                        <div key={index} className="flex flex-col">
-                                            {business.quantity >= tier.quantityMin && business.quantity < tier.quantityMax && (
-                                                <>
-                                                    <div>Next unlock: {tier.quantityMax}</div>
-                                                    <div>Next bonus: {tier.unlock}</div>
-                                                </>
-                                            )}
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
 
-                            <UnlocksGalleryModal name={business.name} quantity={business.quantity}>
-                                <button
-                                    className={`
-                                    py-2 px-5 border rounded-xl text-xl hover:bg-emerald-200
-                          
-                                        `}
-                                >
-                                    View
-                                </button>
-                            </UnlocksGalleryModal>
-
-                        </div>
-                    ))}
+                    <div className="flex flex-wrap">
+                        {tiers.map((tier, index) => (
+                            <div
+                                key={index}
+                                className={`
+                                    flex flex-col m-1 p-1 w-[75px] h-[75px] border text-center
+                                    ${quantity >= tier.quantityMax
+                                        ? "border-4 border-emerald-500"
+                                        : ""
+                                    }
+                                `}
+                            >
+                                <div>{tier.quantityMax}</div>
+                                <div>{quantity >= tier.quantityMax ? "✅" : "🔒"}</div>
+                            </div>
+                        ))}
+                    </div>
                     <Dialog.Close asChild>
                         <button
                             className="text-black hover:bg-gray-200 absolute top-[10px] right-[10px] inline-flex h-[25px] w-[25px] appearance-none items-center justify-center rounded-full"
@@ -107,4 +98,4 @@ const UnlocksModal = ({ children, playerBusinesses }: { children: React.ReactNod
     );
 }
 
-export default UnlocksModal;
+export default UnlocksGalleryModal;
