@@ -1,10 +1,7 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
-import { useRouter } from 'next/navigation';
 
 const UnlocksGalleryModal = ({ children, name, quantity }: { children: React.ReactNode, name: string, quantity: number }) => {
-
-    const router = useRouter();
 
     // map playerBusinesses, if business quantity is less than the tier, show the name of business + next tier's unlock message e.g. "Lemonade Stand \n 2x Speed". also show the next tier's quantity.
 
