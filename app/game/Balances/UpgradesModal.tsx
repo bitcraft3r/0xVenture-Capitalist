@@ -51,7 +51,7 @@ const UpgradesModal = ({ children, playerUpgrades, userCoins, currentUser }: { c
                     <Dialog.Description className="text-mauve11 mt-[10px] mb-5 text-[15px] leading-normal">
                         <span className="font-mono font-semibold">You gotta spend money to make money!</span>
                         <br />
-                        Purchase these fine quality upgrades to give your businses a boost.
+                        Purchase these fine quality upgrades to give your business a boost.
                     </Dialog.Description>
                     {playerUpgrades?.map(upgrade => (
                         <div key={upgrade.id} className="flex justify-between items-center border-b border-gray-200 py-2">
