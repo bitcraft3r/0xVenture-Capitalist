@@ -15,15 +15,15 @@ interface BalancesProps {
 
 const Balances: React.FC<BalancesProps> = ({ coins, playerBusinesses, currentUser, playerUpgrades }) => {
 
-    const [userCoins, addCoins] = useStore(
+    const [userCoins, setCoins] = useStore(
         (state) => [
             state.userCoins,
-            state.addCoins,
+            state.setCoins,
         ]
     )
 
     useEffect(() => {
-        addCoins(coins)
+        setCoins(coins)
     }, [])
 
     return (

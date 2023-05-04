@@ -37,6 +37,7 @@ type Store = {
 
 type Actions = {
     addCoins: (coins: number) => void;
+    setCoins: (coins: number) => void;
     addBiz1Quantity: (quantity: number) => void;
     addBiz2Quantity: (quantity: number) => void;
     addBiz3Quantity: (quantity: number) => void;
@@ -114,6 +115,7 @@ export const useStore = create<Store & Actions>((set) => ({
     biz10Revenue: 0,
 
     addCoins: (amount) => set((state) => ({ userCoins: state.userCoins + amount })),
+    setCoins: (amount) => set(() => ({ userCoins: amount })),
     addBiz1Quantity: (quantity) => set((state) => ({ biz1Quantity: state.biz1Quantity + quantity })),
     addBiz2Quantity: (quantity) => set((state) => ({ biz2Quantity: state.biz2Quantity + quantity })),
     addBiz3Quantity: (quantity) => set((state) => ({ biz3Quantity: state.biz3Quantity + quantity })),
