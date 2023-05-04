@@ -1,5 +1,6 @@
 import getCurrentUserFull from "../actions/getCurrentUserFull"
 import getPlayerBusinesses from "../actions/getPlayerBusinesses"
+import getPlayerUpgrades from "../actions/getPlayerUpgrades"
 import StartButton from "./StartButton"
 import BusinessCard from "./BusinessCard"
 import Balances from "./Balances"
@@ -8,6 +9,7 @@ const Game = async () => {
     const currentUser = await getCurrentUserFull();
 
     let playerBusinesses = [];
+    let playerUpgrades = [];
 
 
     if (currentUser) {
@@ -15,8 +17,10 @@ const Game = async () => {
         try {
 
             playerBusinesses = await getPlayerBusinesses(currentUser?.id)
+            playerUpgrades = await getPlayerUpgrades(currentUser?.id)
 
             // console.log(`player has ${playerBusinesses.length} businesses`)
+            // console.log(`player has ${playerUpgrades.length} upgrades`)
 
         } catch (error) {
 
@@ -33,7 +37,7 @@ const Game = async () => {
                 // Logged in & has all businesses
                 <div className="w-[80vw]">
                     {/* => show player's coin balances */}
-                    <Balances coins={currentUser.coins} playerBusinesses={playerBusinesses} currentUser={currentUser} />
+                    <Balances coins={currentUser.coins} playerBusinesses={playerBusinesses} currentUser={currentUser} playerUpgrades={playerUpgrades} />
                     {/* => show all businesses */}
                     {playerBusinesses.map((business: any) => (
                         <BusinessCard {...business} currentUser={currentUser} key={business.name} />

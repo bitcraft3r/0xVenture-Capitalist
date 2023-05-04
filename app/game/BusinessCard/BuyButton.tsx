@@ -114,7 +114,7 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
         // console.log(`userCoins has changed to ${userCoins}`)
         setCurrentQuantity(bizQuantities[index])
 
-        const currentPrice = (cost * (((multiplier ** currentQuantity) * (multiplier ** 1 - 1)) / (multiplier - 1)))
+        const currentPrice = (cost * (((multiplier ** bizQuantities[index]) * (multiplier ** 1 - 1)) / (multiplier - 1)))
         setCurrentPrice(Number(currentPrice.toFixed(2)))
 
 

@@ -156,6 +156,176 @@ export async function GET(request: Request, { params }: { params: { id: string }
         data: finalBusinessesData,
     })
 
+
+    // create the upgrades data
+    const upgrades = [
+        {
+            name: "Little Umbrellas",
+            business: "Lemonade Stand",
+            price: 250_000,
+            description: "Lemonade Stand Profits x3",
+            purchased: false,
+        },
+        {
+            name: "Overclocked CPU",
+            business: "Mining Rig",
+            price: 500_000,
+            description: "Mining Rig Profits x3",
+            purchased: false,
+        },
+        {
+            name: "Sewing Machine",
+            business: "Tuxedo Tailor",
+            price: 1_000_000,
+            description: "Tuxedo Tailor Profits x3",
+            purchased: false,
+        },
+        {
+            name: "Auto Sprinklers",
+            business: "Vegetable Farm",
+            price: 5_000_000,
+            description: "Vegetable Farm Profits x3",
+            purchased: false,
+        },
+        {
+            name: "Pre-packaged Ramen",
+            business: "Ramen Store",
+            price: 10_000_000,
+            description: "Ramen Store Profits x3",
+            purchased: false,
+        },
+        {
+            name: "Shrimp Satellite",
+            business: "Shrimp Boat",
+            price: 25_000_000,
+            description: "Shrimp Boat Profits x3",
+            purchased: false,
+        },
+        {
+            name: "Gaming Equipment",
+            business: "eSports Team",
+            price: 500_000_000,
+            description: "eSports Team Profits x3",
+            purchased: false,
+        },
+        {
+            name: "Market Making Team",
+            business: "Cryptocurrency Exchange",
+            price: 10_000_000_000,
+            description: "Cryptocurrency Exchange Profits x3",
+            purchased: false,
+        },
+        {
+            name: "Land Sale",
+            business: "Metaverse Company",
+            price: 50_000_000_000,
+            description: "Metaverse Company Profits x3",
+            purchased: false,
+        },
+        {
+            name: "Proof of Stake",
+            business: "Blockchain Currency",
+            price: 250_000_000_000,
+            description: "Blockchain Currency Profits x3",
+            purchased: false,
+        },
+        {
+            name: "Monopoly",
+            business: "All Businesses",
+            price: 1_000_000_000_000,
+            description: "All Profits x3",
+            purchased: false,
+        },
+        {
+            name: "Novelty Straws",
+            business: "Lemonade Stand",
+            price: 20_000_000_000_000,
+            description: "Lemonade Stand Profits x3",
+            purchased: false,
+        },
+        {
+            name: "ASIC Upgrade",
+            business: "Mining Rig",
+            price: 50_000_000_000_000,
+            description: "Mining Rig Profits x3",
+            purchased: false,
+        },
+        {
+            name: "Robot Tailors",
+            business: "Tuxedo Tailor",
+            price: 100_000_000_000_000,
+            description: "Tuxedo Tailor Profits x3",
+            purchased: false,
+        },
+        {
+            name: "Automatic Weeders",
+            business: "Vegetable Farm",
+            price: 500_000_000_000_000,
+            description: "Vegetable Farm Profits x3",
+            purchased: false,
+        },
+        {
+            name: "Truffle & Caviar",
+            business: "Ramen Store",
+            price: 1_000_000_000_000_000,
+            description: "Ramen Store Profits x3",
+            purchased: false,
+        },
+        {
+            name: "Shrimp Magnets",
+            business: "Shrimp Boat",
+            price: 2_000_000_000_000_000,
+            description: "Shrimp Boat Profits x3",
+            purchased: false,
+        },
+        {
+            name: "Energy Drink Sponsors",
+            business: "eSports Team",
+            price: 5_000_000_000_000_000,
+            description: "eSports Team Profits x3",
+            purchased: false,
+        },
+        {
+            name: "Launch Blockchain",
+            business: "Cryptocurrency Exchange",
+            price: 10_000_000_000_000_000,
+            description: "Cryptocurrency Exchange Profits x3",
+            purchased: false,
+        },
+        {
+            name: "VR Integration",
+            business: "Metaverse Company",
+            price: 20_000_000_000_000_000,
+            description: "Metaverse Company Profits x3",
+            purchased: false,
+        },
+        {
+            name: "Deflationary Tokenomics",
+            business: "Blockchain Currency",
+            price: 50_000_000_000_000_000,
+            description: "Blockchain Currency Profits x3",
+            purchased: false,
+        },
+        {
+            name: "Monopsony",
+            business: "All Businesses",
+            price: 100_000_000_000_000_000,
+            description: "All Profits x3",
+            purchased: false,
+        },
+    ]
+
+    // update the upgrades data with the userId
+    const finalUpgradesData = upgrades.map((upgrade) => ({
+        ...upgrade,
+        userId,
+    }))
+
+    // create the upgrades in the db
+    const createdUpgrades = await prisma.upgrade.createMany({
+        data: finalUpgradesData,
+    })
+
     // return createdBusinesses as a json
     return NextResponse.json(createdBusinesses);
 }

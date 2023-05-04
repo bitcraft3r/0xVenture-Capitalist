@@ -4,14 +4,16 @@ import { useStore } from "@/app/store/GameStore"
 import Image from "next/image"
 import { useEffect } from "react"
 import ManagersModal from "./Balances/ManagersModal"
+import UpgradesModal from "./Balances/UpgradesModal"
 
 interface BalancesProps {
     coins: number,
     playerBusinesses: any[],
-    currentUser: any
+    currentUser: any,
+    playerUpgrades: any[],
 }
 
-const Balances: React.FC<BalancesProps> = ({ coins, playerBusinesses, currentUser }) => {
+const Balances: React.FC<BalancesProps> = ({ coins, playerBusinesses, currentUser, playerUpgrades }) => {
 
     const [userCoins, addCoins] = useStore(
         (state) => [
@@ -33,8 +35,10 @@ const Balances: React.FC<BalancesProps> = ({ coins, playerBusinesses, currentUse
                     <ManagersModal playerBusinesses={playerBusinesses} userCoins={userCoins} currentUser={currentUser}>
                         <button className="border rounded-lg px-4 py-1 mr-[1rem] my-1">Managers</button>
                     </ManagersModal>
-                    <button className="border rounded-lg px-4 py-1 mr-[1rem] my-1">Upgrades</button>
-
+                    <button className="border rounded-lg px-4 py-1 mr-[1rem] my-1">Unlocks</button>
+                    <UpgradesModal playerUpgrades={playerUpgrades} userCoins={userCoins} currentUser={currentUser}>
+                        <button className="border rounded-lg px-4 py-1 mr-[1rem] my-1">Upgrades</button>
+                    </UpgradesModal>
                 </div>
             </div>
         </div>

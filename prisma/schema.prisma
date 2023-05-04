@@ -24,6 +24,7 @@ model User {
 
   accounts   Account[]
   businesses Business[]
+  upgrades   Upgrade[]
 }
 
 model Business {
@@ -44,6 +45,20 @@ model Business {
   userId       String  @db.ObjectId
   quantity     Int     @default(0)
   managerOwned Boolean @default(false)
+}
+
+model Upgrade {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String
+  business    String
+  price       Int
+  description String
+
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String  @db.ObjectId
+  purchased Boolean
 }
 
 model Account {
