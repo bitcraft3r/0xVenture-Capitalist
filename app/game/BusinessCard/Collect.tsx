@@ -28,6 +28,10 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
         bizQuantities,
         addBizQuantities,
         setBizQuantities,
+        bizTime,
+        setBizTime,
+        bizRevenue,
+        setBizRevenue,
     ] = useStore((state) => [
         state.addCoins,
         [
@@ -66,9 +70,59 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
             state.setBiz9Quantity,
             state.setBiz10Quantity,
         ],
+        [
+            state.biz1Time,
+            state.biz2Time,
+            state.biz3Time,
+            state.biz4Time,
+            state.biz5Time,
+            state.biz6Time,
+            state.biz7Time,
+            state.biz8Time,
+            state.biz9Time,
+            state.biz10Time,
+        ],
+        [
+            state.setBiz1Time,
+            state.setBiz2Time,
+            state.setBiz3Time,
+            state.setBiz4Time,
+            state.setBiz5Time,
+            state.setBiz6Time,
+            state.setBiz7Time,
+            state.setBiz8Time,
+            state.setBiz9Time,
+            state.setBiz10Time,
+        ],
+        [
+            state.biz1Revenue,
+            state.biz2Revenue,
+            state.biz3Revenue,
+            state.biz4Revenue,
+            state.biz5Revenue,
+            state.biz6Revenue,
+            state.biz7Revenue,
+            state.biz8Revenue,
+            state.biz9Revenue,
+            state.biz10Revenue,
+        ],
+        [
+            state.setBiz1Revenue,
+            state.setBiz2Revenue,
+            state.setBiz3Revenue,
+            state.setBiz4Revenue,
+            state.setBiz5Revenue,
+            state.setBiz6Revenue,
+            state.setBiz7Revenue,
+            state.setBiz8Revenue,
+            state.setBiz9Revenue,
+            state.setBiz10Revenue,
+        ],
     ])
 
     const [thisQuantity, setThisQuantity] = useState(bizQuantities[index])
+    const [thisTime, setThisTime] = useState(bizTime[index])
+    const [thisRevenue, setThisRevenue] = useState(bizRevenue[index])
     const [disabled, setDisabled] = useState(false)
     const [buttonClicked, setButtonClicked] = useState(false)
     const [hasManager, setHasManager] = useState(false)
@@ -76,11 +130,15 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
     useEffect(() => {
         setBizQuantities[index](quantity);
         setHasManager(managerOwned)
+        setBizTime[index](time);
+        setBizRevenue[index](revenue);
     }, [])
 
     useEffect(() => {
         setThisQuantity(bizQuantities[index]);
-    }, [bizQuantities[index]])
+        setThisTime(bizTime[index]);
+        setThisRevenue(bizRevenue[index]);
+    }, [bizQuantities[index], bizTime[index], bizRevenue[index]])
 
     const collectHandler: MouseEventHandler<HTMLDivElement> = async () => {
         // if player doesn't own any of this business, return
@@ -119,7 +177,7 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
                 setDisabled(false)
                 setButtonClicked(false)
             }
-        }, time * 1000)
+        }, bizTime[index] * 1000)
     }
 
     return (
@@ -157,13 +215,13 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
                 <div className="flex flex-col w-4/5 items-center">
                     <RevenueProgressBar
                         revenue={revenue}
-                        time={time}
+                        time={bizTime[index]}
                         quantity={bizQuantities[index]}
                         index={index}
                     />
                     <div className="w-[100%] flex justify-center">
-                        {managerOwned && <ProgressBarManaged time={time} index={index} revenue={revenue} userId={userId} />}
-                        {buttonClicked && !managerOwned && <ProgressBar time={time} />}
+                        {managerOwned && <ProgressBarManaged time={bizTime[index]} index={index} revenue={revenue} userId={userId} />}
+                        {buttonClicked && !managerOwned && <ProgressBar time={bizTime[index]} />}
                     </div>
                 </div>
             }

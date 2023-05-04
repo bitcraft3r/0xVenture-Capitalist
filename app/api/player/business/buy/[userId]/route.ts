@@ -71,6 +71,57 @@ export async function GET(request: Params, { params }: { params: { userId: strin
         })
         // console.log(`updatedBusiness`, updatedBusiness.quantity)
 
+        // console.log(`latest quantity updatedBusiness`, updatedBusiness.quantity)
+        // console.log(`gonna try to upgrade business`)
+
+        if (updatedBusiness.quantity === 25 || updatedBusiness.quantity === 50 || updatedBusiness.quantity === 100 || updatedBusiness.quantity === 200 || updatedBusiness.quantity === 300 || updatedBusiness.quantity === 400) {
+            // profit speed doubled
+            const updatedSpeed = await prisma.business.update({
+                where: {
+                    id: businessId
+                },
+                data: {
+                    time: { divide: 2 }
+                }
+            })
+            return NextResponse.json(updatedSpeed);
+        }
+        else if (updatedBusiness.quantity === 500 || updatedBusiness.quantity === 600 || updatedBusiness.quantity === 700 || updatedBusiness.quantity === 800 || updatedBusiness.quantity === 900 || updatedBusiness.quantity === 1100 || updatedBusiness.quantity === 1200 || updatedBusiness.quantity === 1300 || updatedBusiness.quantity === 1400 || updatedBusiness.quantity === 1500 || updatedBusiness.quantity === 1600 || updatedBusiness.quantity === 1700 || updatedBusiness.quantity === 1800 || updatedBusiness.quantity === 1900) {
+            // revenue x4
+            const updatedRevenue = await prisma.business.update({
+                where: {
+                    id: businessId
+                },
+                data: {
+                    revenue: { multiply: 4 }
+                }
+            })
+            return NextResponse.json(updatedRevenue);
+        }
+        else if (updatedBusiness.quantity === 2250 || updatedBusiness.quantity === 2500 || updatedBusiness.quantity === 2750 || updatedBusiness.quantity === 3250 || updatedBusiness.quantity === 3500 || updatedBusiness.quantity === 3750 || updatedBusiness.quantity === 4250 || updatedBusiness.quantity === 4500 || updatedBusiness.quantity === 4750) {
+            // revenue x2
+            const updatedRevenue = await prisma.business.update({
+                where: {
+                    id: businessId
+                },
+                data: {
+                    revenue: { multiply: 2 }
+                }
+            })
+            return NextResponse.json(updatedRevenue);
+        }
+        else if (updatedBusiness.quantity === 1000 || updatedBusiness.quantity === 2000 || updatedBusiness.quantity === 3000 || updatedBusiness.quantity === 4000 || updatedBusiness.quantity === 5000) {
+            // revenue x5
+            const updatedRevenue = await prisma.business.update({
+                where: {
+                    id: businessId
+                },
+                data: {
+                    revenue: { multiply: 5 }
+                }
+            })
+            return NextResponse.json(updatedRevenue);
+        }
 
         if (updateCoinsOfPlayer && updatedBusiness) {
             return NextResponse.json(updatedBusiness);
@@ -79,18 +130,5 @@ export async function GET(request: Params, { params }: { params: { userId: strin
     } catch (error) {
         return NextResponse.json(error);
     }
-
-    // update the business of id userId, with `quantity` to `quantity + 1`
-    // const updatedUser = await prisma.user.update({
-    //     where: {
-    //         id: userId
-    //     },
-    //     data: {
-    //         coins: { increment: -1 }
-    //     }
-    // })
-
-    // return updatedUser as a json
-    return NextResponse.json(userId);
 
 }
