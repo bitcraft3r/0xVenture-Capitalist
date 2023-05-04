@@ -5,6 +5,7 @@ import Image from "next/image"
 import { useEffect } from "react"
 import ManagersModal from "./Balances/ManagersModal"
 import UpgradesModal from "./Balances/UpgradesModal"
+import UnlocksModal from "./Balances/UnlocksModal"
 
 interface BalancesProps {
     coins: number,
@@ -35,10 +36,12 @@ const Balances: React.FC<BalancesProps> = ({ coins, playerBusinesses, currentUse
                     <ManagersModal playerBusinesses={playerBusinesses} userCoins={userCoins} currentUser={currentUser}>
                         <button className="border rounded-lg px-4 py-1 mr-[1rem] my-1">Managers</button>
                     </ManagersModal>
-                    <button className="border rounded-lg px-4 py-1 mr-[1rem] my-1">Unlocks</button>
                     <UpgradesModal playerUpgrades={playerUpgrades} userCoins={userCoins} currentUser={currentUser}>
                         <button className="border rounded-lg px-4 py-1 mr-[1rem] my-1">Upgrades</button>
                     </UpgradesModal>
+                    <UnlocksModal playerBusinesses={playerBusinesses} currentUser={currentUser}>
+                        <button className="border rounded-lg px-4 py-1 mr-[1rem] my-1">Unlocks</button>
+                    </UnlocksModal>
                 </div>
             </div>
         </div>
