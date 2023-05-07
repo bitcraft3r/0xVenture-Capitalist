@@ -32,6 +32,7 @@ type Store = {
     biz8Revenue: number;
     biz9Revenue: number;
     biz10Revenue: number;
+    buyQuantity: number;
 
 }
 
@@ -78,6 +79,7 @@ type Actions = {
     setBiz8Revenue: (revenue: number) => void;
     setBiz9Revenue: (revenue: number) => void;
     setBiz10Revenue: (revenue: number) => void;
+    setBuyQuantity: (revenue: number) => void;
 
 }
 
@@ -113,6 +115,7 @@ export const useStore = create<Store & Actions>((set) => ({
     biz8Revenue: 0,
     biz9Revenue: 0,
     biz10Revenue: 0,
+    buyQuantity: 1,
 
     addCoins: (amount) => set((state) => ({ userCoins: state.userCoins + amount })),
     setCoins: (amount) => set(() => ({ userCoins: amount })),
@@ -156,5 +159,6 @@ export const useStore = create<Store & Actions>((set) => ({
     setBiz8Revenue: (revenue) => set(() => ({ biz8Revenue: revenue })),
     setBiz9Revenue: (revenue) => set(() => ({ biz9Revenue: revenue })),
     setBiz10Revenue: (revenue) => set(() => ({ biz10Revenue: revenue })),
+    setBuyQuantity: (quantity) => set(() => ({ buyQuantity: quantity })),
 
 }))

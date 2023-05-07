@@ -27,6 +27,7 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
         setBizTime,
         bizRevenue,
         setBizRevenue,
+        buyQuantity,
     ] = useStore(
         (state) => [
             state.userCoins,
@@ -103,6 +104,7 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
                 state.setBiz9Revenue,
                 state.setBiz10Revenue,
             ],
+            state.buyQuantity,
         ]
     )
 
@@ -114,11 +116,11 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
         // console.log(`userCoins has changed to ${userCoins}`)
         setCurrentQuantity(bizQuantities[index])
 
-        const currentPrice = (cost * (((multiplier ** bizQuantities[index]) * (multiplier ** 1 - 1)) / (multiplier - 1)))
+        const currentPrice = (cost * (((multiplier ** bizQuantities[index]) * (multiplier ** buyQuantity - 1)) / (multiplier - 1)))
         setCurrentPrice(Number(currentPrice.toFixed(2)))
 
 
-    }, [userCoins, quantity, bizQuantities[index]])
+    }, [userCoins, quantity, bizQuantities[index], buyQuantity])
 
 
 
@@ -137,7 +139,7 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
         try {
 
 
-            const response = await fetch(`/api/player/business/buy/${userId}?quantity=${1}&amount=${currentPrice}&businessId=${id}`)
+            const response = await fetch(`/api/player/business/buy/${userId}?quantity=${buyQuantity}&amount=${currentPrice}&businessId=${id}`)
 
             // console.log(`bizQuantities[index] before`, bizQuantities[index])            
             if (bizQuantities[index] === 24 || bizQuantities[index] === 49 || bizQuantities[index] === 99 || bizQuantities[index] === 199 || bizQuantities[index] === 299 || bizQuantities[index] === 399) {
@@ -162,9 +164,9 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
             }
 
             addCoins(-currentPrice)
-            addBizQuantities[index](1)
+            addBizQuantities[index](buyQuantity)
 
-            toast(`Purchased 1 ${name}!`, {
+            toast(`Purchased ${buyQuantity} ${name}!`, {
                 icon: '🛒',
             })
 
@@ -188,7 +190,7 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
                 )}
             `}
         >
-            <div>Buy<br />x1</div>
+            <div>Buy<br />x{buyQuantity}</div>
             <div className="text-xl">${currentPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
         </div>
     )

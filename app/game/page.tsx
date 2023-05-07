@@ -4,6 +4,7 @@ import getPlayerUpgrades from "../actions/getPlayerUpgrades"
 import StartButton from "./StartButton"
 import BusinessCard from "./BusinessCard"
 import Balances from "./Balances"
+import BuyQuantity from "./BuyQuantity"
 
 const Game = async () => {
     const currentUser = await getCurrentUserFull();
@@ -33,6 +34,7 @@ const Game = async () => {
     return (
         <div className="flex flex-col justify-center items-center text-center">
             <h1 className="text-2xl font-extrabold mb-[2rem]">Blockchain Billionaire</h1>
+            <BuyQuantity />
             {currentUser && playerBusinesses?.length === 10 ? (
                 // Logged in & has all businesses
                 <div className="w-[80vw]">
