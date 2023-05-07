@@ -139,25 +139,79 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
         try {
 
 
-            const response = await fetch(`/api/player/business/buy/${userId}?quantity=${buyQuantity}&amount=${currentPrice}&businessId=${id}`)
+            const response = await fetch(`/api/player/business/buy/${userId}?quantity=${buyQuantity}&amount=${currentPrice}&businessId=${id}&quantityBefore=${bizQuantities[index]}`)
 
-            // console.log(`bizQuantities[index] before`, bizQuantities[index])            
-            if (bizQuantities[index] === 24 || bizQuantities[index] === 49 || bizQuantities[index] === 99 || bizQuantities[index] === 199 || bizQuantities[index] === 299 || bizQuantities[index] === 399) {
+            let quantityBefore = bizQuantities[index]
+            let quantityAfter = quantityBefore + buyQuantity
+
+            // console.log(quantityBefore, quantityAfter)
+
+            if (
+                quantityBefore < 25 && quantityAfter >= 25
+            ) {
                 toast.success(`2x speed on your ${name}!`)
                 // set store's bizTime[index] to x0.5
                 setBizTime[index](bizTime[index] / 2)
             }
-            if (bizQuantities[index] === 499 || bizQuantities[index] === 599 || bizQuantities[index] === 699 || bizQuantities[index] === 799 || bizQuantities[index] === 899 || bizQuantities[index] === 1099 || bizQuantities[index] === 1199 || bizQuantities[index] === 1299 || bizQuantities[index] === 1399 || bizQuantities[index] === 1499 || bizQuantities[index] === 1599 || bizQuantities[index] === 1699 || bizQuantities[index] === 1799 || bizQuantities[index] === 1899) {
+            if (
+                quantityBefore < 50 && quantityAfter >= 50
+            ) {
+                toast.success(`2x speed on your ${name}!`)
+                // set store's bizTime[index] to x0.5
+                setBizTime[index](bizTime[index] / 2)
+            }
+            if (
+                quantityBefore < 100 && quantityAfter >= 100 ||
+                quantityBefore < 200 && quantityAfter >= 200 ||
+                quantityBefore < 300 && quantityAfter >= 300 ||
+                quantityBefore < 400 && quantityAfter >= 400
+            ) {
+                toast.success(`2x speed on your ${name}!`)
+                // set store's bizTime[index] to x0.5
+                setBizTime[index](bizTime[index] / 2)
+            }
+            if (
+                quantityBefore < 500 && quantityAfter >= 500 ||
+                quantityBefore < 600 && quantityAfter >= 600 ||
+                quantityBefore < 700 && quantityAfter >= 700 ||
+                quantityBefore < 800 && quantityAfter >= 800 ||
+                quantityBefore < 900 && quantityAfter >= 900 ||
+                quantityBefore < 1100 && quantityAfter >= 1100 ||
+                quantityBefore < 1200 && quantityAfter >= 1200 ||
+                quantityBefore < 1300 && quantityAfter >= 1300 ||
+                quantityBefore < 1400 && quantityAfter >= 1400 ||
+                quantityBefore < 1500 && quantityAfter >= 1500 ||
+                quantityBefore < 1600 && quantityAfter >= 1600 ||
+                quantityBefore < 1700 && quantityAfter >= 1700 ||
+                quantityBefore < 1800 && quantityAfter >= 1800 ||
+                quantityBefore < 1900 && quantityAfter >= 1900
+            ) {
                 toast.success(`4x revenue on your ${name}!`)
                 // set store's bizRevenue[index] to x4
                 setBizRevenue[index](bizRevenue[index] * 4)
             }
-            if (bizQuantities[index] === 2249 || bizQuantities[index] === 2499 || bizQuantities[index] === 2749 || bizQuantities[index] === 3249 || bizQuantities[index] === 3499 || bizQuantities[index] === 3749 || bizQuantities[index] === 4249 || bizQuantities[index] === 4499 || bizQuantities[index] === 4749) {
+            if (
+                quantityBefore < 2250 && quantityAfter >= 2250 ||
+                quantityBefore < 2500 && quantityAfter >= 2500 ||
+                quantityBefore < 2750 && quantityAfter >= 2750 ||
+                quantityBefore < 3250 && quantityAfter >= 3250 ||
+                quantityBefore < 3500 && quantityAfter >= 3500 ||
+                quantityBefore < 3750 && quantityAfter >= 3750 ||
+                quantityBefore < 4250 && quantityAfter >= 4250 ||
+                quantityBefore < 4500 && quantityAfter >= 4500 ||
+                quantityBefore < 4750 && quantityAfter >= 4750
+            ) {
                 toast.success(`2x revenue on your ${name}!`)
                 // set store's bizRevenue[index] to x2
                 setBizRevenue[index](bizRevenue[index] * 2)
             }
-            if (bizQuantities[index] === 999 || bizQuantities[index] === 1999 || bizQuantities[index] === 2999 || bizQuantities[index] === 3999 || bizQuantities[index] === 4999) {
+            if (
+                quantityBefore < 1000 && quantityAfter >= 1000 ||
+                quantityBefore < 2000 && quantityAfter >= 2000 ||
+                quantityBefore < 3000 && quantityAfter >= 3000 ||
+                quantityBefore < 4000 && quantityAfter >= 4000 ||
+                quantityBefore < 5000 && quantityAfter >= 5000
+            ) {
                 toast.success(`5x revenue on your ${name}!`)
                 // set store's bizRevenue[index] to x5
                 setBizRevenue[index](bizRevenue[index] * 2)

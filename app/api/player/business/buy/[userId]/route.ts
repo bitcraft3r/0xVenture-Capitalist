@@ -21,6 +21,7 @@ export async function GET(request: Params, { params }: { params: { userId: strin
     const amount = Number(searchParams.get("amount"));
     // console.log(`amount via params`, amount)
     const businessId = searchParams.get("businessId");
+    const quantityBefore = searchParams.get("quantityBefore");
 
     // get the user id sent via params
     // console.log(`params.id in getBusiness: ${params.userId}`)
@@ -74,7 +75,38 @@ export async function GET(request: Params, { params }: { params: { userId: strin
         // console.log(`latest quantity updatedBusiness`, updatedBusiness.quantity)
         // console.log(`gonna try to upgrade business`)
 
-        if (updatedBusiness.quantity === 25 || updatedBusiness.quantity === 50 || updatedBusiness.quantity === 100 || updatedBusiness.quantity === 200 || updatedBusiness.quantity === 300 || updatedBusiness.quantity === 400) {
+        if (
+            quantityBefore < 25 && updatedBusiness.quantity >= 25
+        ) {
+            // profit speed doubled
+            const updatedSpeed = await prisma.business.update({
+                where: {
+                    id: businessId
+                },
+                data: {
+                    time: { divide: 2 }
+                }
+            })
+        }
+        if (
+            quantityBefore < 50 && updatedBusiness.quantity >= 50
+        ) {
+            // profit speed doubled
+            const updatedSpeed = await prisma.business.update({
+                where: {
+                    id: businessId
+                },
+                data: {
+                    time: { divide: 2 }
+                }
+            })
+        }
+        if (
+            quantityBefore < 100 && updatedBusiness.quantity >= 100 || 
+            quantityBefore < 200 && updatedBusiness.quantity >= 200 || 
+            quantityBefore < 300 && updatedBusiness.quantity >= 300 || 
+            quantityBefore < 400 && updatedBusiness.quantity >= 400
+        ) {
             // profit speed doubled
             const updatedSpeed = await prisma.business.update({
                 where: {
@@ -86,7 +118,22 @@ export async function GET(request: Params, { params }: { params: { userId: strin
             })
             return NextResponse.json(updatedSpeed);
         }
-        else if (updatedBusiness.quantity === 500 || updatedBusiness.quantity === 600 || updatedBusiness.quantity === 700 || updatedBusiness.quantity === 800 || updatedBusiness.quantity === 900 || updatedBusiness.quantity === 1100 || updatedBusiness.quantity === 1200 || updatedBusiness.quantity === 1300 || updatedBusiness.quantity === 1400 || updatedBusiness.quantity === 1500 || updatedBusiness.quantity === 1600 || updatedBusiness.quantity === 1700 || updatedBusiness.quantity === 1800 || updatedBusiness.quantity === 1900) {
+        else if (
+            quantityBefore < 500 && updatedBusiness.quantity >= 500 || 
+            quantityBefore < 600 && updatedBusiness.quantity >= 600 || 
+            quantityBefore < 700 && updatedBusiness.quantity >= 700 || 
+            quantityBefore < 800 && updatedBusiness.quantity >= 800 || 
+            quantityBefore < 900 && updatedBusiness.quantity >= 900 || 
+            quantityBefore < 1100 && updatedBusiness.quantity >= 1100 || 
+            quantityBefore < 1200 && updatedBusiness.quantity >= 1200 || 
+            quantityBefore < 1300 && updatedBusiness.quantity >= 1300 || 
+            quantityBefore < 1400 && updatedBusiness.quantity >= 1400 || 
+            quantityBefore < 1500 && updatedBusiness.quantity >= 1500 || 
+            quantityBefore < 1600 && updatedBusiness.quantity >= 1600 || 
+            quantityBefore < 1700 && updatedBusiness.quantity >= 1700 || 
+            quantityBefore < 1800 && updatedBusiness.quantity >= 1800 || 
+            quantityBefore < 1900 && updatedBusiness.quantity >= 1900
+        ) {
             // revenue x4
             const updatedRevenue = await prisma.business.update({
                 where: {
@@ -98,7 +145,17 @@ export async function GET(request: Params, { params }: { params: { userId: strin
             })
             return NextResponse.json(updatedRevenue);
         }
-        else if (updatedBusiness.quantity === 2250 || updatedBusiness.quantity === 2500 || updatedBusiness.quantity === 2750 || updatedBusiness.quantity === 3250 || updatedBusiness.quantity === 3500 || updatedBusiness.quantity === 3750 || updatedBusiness.quantity === 4250 || updatedBusiness.quantity === 4500 || updatedBusiness.quantity === 4750) {
+        else if (
+            quantityBefore < 2250 && updatedBusiness.quantity >= 2250 || 
+            quantityBefore < 2500 && updatedBusiness.quantity >= 2500 || 
+            quantityBefore < 2750 && updatedBusiness.quantity >= 2750 || 
+            quantityBefore < 3250 && updatedBusiness.quantity >= 3250 || 
+            quantityBefore < 3500 && updatedBusiness.quantity >= 3500 || 
+            quantityBefore < 3750 && updatedBusiness.quantity >= 3750 || 
+            quantityBefore < 4250 && updatedBusiness.quantity >= 4250 || 
+            quantityBefore < 4500 && updatedBusiness.quantity >= 4500 || 
+            quantityBefore < 4750 && updatedBusiness.quantity >= 4750
+        ) {
             // revenue x2
             const updatedRevenue = await prisma.business.update({
                 where: {
@@ -110,7 +167,13 @@ export async function GET(request: Params, { params }: { params: { userId: strin
             })
             return NextResponse.json(updatedRevenue);
         }
-        else if (updatedBusiness.quantity === 1000 || updatedBusiness.quantity === 2000 || updatedBusiness.quantity === 3000 || updatedBusiness.quantity === 4000 || updatedBusiness.quantity === 5000) {
+        else if (
+            quantityBefore < 1000 && updatedBusiness.quantity >= 1000 || 
+            quantityBefore < 2000 && updatedBusiness.quantity >= 2000 || 
+            quantityBefore < 3000 && updatedBusiness.quantity >= 3000 || 
+            quantityBefore < 4000 && updatedBusiness.quantity >= 4000 || 
+            quantityBefore < 5000 && updatedBusiness.quantity >= 5000
+        ) {
             // revenue x5
             const updatedRevenue = await prisma.business.update({
                 where: {
