@@ -49,7 +49,7 @@ export async function GET(request: Params, { params }: { params: { userId: strin
         if (business && player) {
             // refresh the page
             // return NextResponse.redirect(`/game`);
-            return NextResponse.json({ success: "Manager purchased!" })    
+            return NextResponse.json({ success: "Manager hired!" })    
         }
         
     } catch (error) {
