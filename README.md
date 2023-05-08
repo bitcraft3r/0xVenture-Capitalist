@@ -2,7 +2,7 @@
 
 A game inspired by AdVenture Capitalist.
 
-- [Next.JS v13.3 with `app` directory](https://beta.nextjs.org/docs)
+- [Next.JS v13.4 with `app` directory](https://beta.nextjs.org/docs)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Tailwind CSS](https://tailwindcss.com/docs/guides/nextjs)
 - [Prisma](https://www.prisma.io/mongodb)
@@ -25,7 +25,7 @@ A game inspired by AdVenture Capitalist.
 
 ```
 npm install prisma --save-dev
-npx prisma init --datasource-provider mysql
+npx prisma init --datasource-provider mongodb
 
 # after setup `schema.prisma`, and add `DATABASE_URL` in `.env`:
 npx prisma db push
