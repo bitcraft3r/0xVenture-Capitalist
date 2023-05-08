@@ -26,6 +26,9 @@ const OfflineProfits: React.FC<OfflineProfitsProps> = ({
     }, [])
 
     const collectOfflineProfits = async () => {
+
+        if (offlineProfits === 0) return;
+
         const response = await fetch(`/api/player/business/collect/${userId}?amount=${offlineProfits}`)
         const data = await response.json()
 
