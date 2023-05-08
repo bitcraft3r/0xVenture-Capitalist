@@ -4,7 +4,6 @@ import getPlayerUpgrades from "../actions/getPlayerUpgrades"
 import StartButton from "./StartButton"
 import BusinessCard from "./BusinessCard"
 import Balances from "./Balances"
-import BuyQuantity from "./BuyQuantity"
 import OfflineProfits from "./OfflineProfits"
 
 const Game = async () => {
@@ -59,13 +58,13 @@ const Game = async () => {
             {/* <h1 className="text-2xl font-extrabold mb-[2rem]">Blockchain Billionaire</h1> */}
             {currentUser && playerBusinesses?.length === 10 ? (
                 // Logged in & has all businesses
-                <div className="w-[80vw]">
-                    <BuyQuantity />
+                <div className="w-[90vw]">
+
                     <OfflineProfits offlineProfits={totalOfflineProfits} userId={currentUser.id} />
                     {/* => show player's coin balances */}
                     <Balances coins={currentUser.coins} playerBusinesses={playerBusinesses} currentUser={currentUser} playerUpgrades={playerUpgrades} />
                     {/* => show all businesses */}
-                    <div className="flex">
+                    <div className="flex justify-around">
                         <div>
                             {playerBusinesses.map((business: any) => (
                                 business.index < 5 ? (

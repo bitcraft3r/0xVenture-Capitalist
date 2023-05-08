@@ -252,15 +252,15 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
             className={`
                 border-4 border-slate-700 rounded-md flex justify-between p-[0.5rem] h-[60px]
                 ${userCoins >= currentPrice ? (
-                    'bg-orange-400 hover:cursor-pointer hover:bg-orange-500'
+                    'bg-orange-400 hover:cursor-pointer hover:bg-orange-500 hover:border-slate-600 hover:shadow-xl'
                 ) : (
-                    'bg-[#857d75] hover:cursor-not-allowed hover:bg-gray-300'
+                    'bg-[#857d75] hover:cursor-not-allowed hover:bg-gray-600'
                 )}
             `}
         >
             <div>Buy x{buyQuantity}</div>
             <div className="text-lg">
-                {currentPrice < 1_000_000_000 ? (
+                {currentPrice < 1_000_000 ? (
                     `$${currentPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}`
                 ) : (
                     // show 1.123 Billions or Trillions

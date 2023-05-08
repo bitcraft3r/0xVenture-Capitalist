@@ -6,6 +6,7 @@ import { useEffect } from "react"
 import ManagersModal from "./Balances/ManagersModal"
 import UpgradesModal from "./Balances/UpgradesModal"
 import UnlocksModal from "./Balances/UnlocksModal"
+import BuyQuantity from "./BuyQuantity"
 
 interface BalancesProps {
     coins: number,
@@ -28,20 +29,26 @@ const Balances: React.FC<BalancesProps> = ({ coins, playerBusinesses, currentUse
     }, [])
 
     return (
-        <div className="h-[120px] border mb-[2rem]">
+        <div className="mb-[2rem] bg-[#555046] p-5 rounded-xl shadow-lg">
             <div className="flex justify-between items-center">
-                {/* <Image src="/images/mascot.png" alt="mascot" height="120" width="120" /> */}
+                <div className="flex">
+                    <Image src="/images/mascot.jpeg" alt="mascot" height="135" width="135" className="rounded-lg border-4 border-orange-950 shadow-xl" />
+
+                    <div className="flex flex-col ml-[1rem] justify-around">
+                        <ManagersModal playerBusinesses={playerBusinesses} userCoins={userCoins} currentUser={currentUser}>
+                            <button className="border-4 border-slate-700 rounded-lg px-4 py-1 my-1 bg-neutral-200 text-yellow-950 text-sm font-semibold hover:bg-neutral-300 hover:border-slate-600 hover:shadow-xl">Managers</button>
+                        </ManagersModal>
+                        <UpgradesModal playerUpgrades={playerUpgrades} userCoins={userCoins} currentUser={currentUser}>
+                            <button className="border-4 border-slate-700 rounded-lg px-4 py-1 my-1 bg-neutral-200 text-yellow-950 text-sm font-semibold hover:bg-neutral-300 hover:border-slate-600 hover:shadow-xl">Upgrades</button>
+                        </UpgradesModal>
+                        <UnlocksModal playerBusinesses={playerBusinesses} >
+                            <button className="border-4 border-slate-700 rounded-lg px-4 py-1 my-1 bg-neutral-200 text-yellow-950 text-sm font-semibold hover:bg-neutral-300 hover:border-slate-600 hover:shadow-xl">Unlocks</button>
+                        </UnlocksModal>
+                    </div>
+                </div>
                 <div className="text-3xl font-bold">${userCoins?.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
-                <div className="flex flex-col">
-                    <ManagersModal playerBusinesses={playerBusinesses} userCoins={userCoins} currentUser={currentUser}>
-                        <button className="border rounded-lg px-4 py-1 mr-[1rem] my-1">Managers</button>
-                    </ManagersModal>
-                    <UpgradesModal playerUpgrades={playerUpgrades} userCoins={userCoins} currentUser={currentUser}>
-                        <button className="border rounded-lg px-4 py-1 mr-[1rem] my-1">Upgrades</button>
-                    </UpgradesModal>
-                    <UnlocksModal playerBusinesses={playerBusinesses} >
-                        <button className="border rounded-lg px-4 py-1 mr-[1rem] my-1">Unlocks</button>
-                    </UnlocksModal>
+                <div>
+                    <BuyQuantity />
                 </div>
             </div>
         </div>

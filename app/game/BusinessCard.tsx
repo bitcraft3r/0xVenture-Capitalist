@@ -44,7 +44,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
     return (
         <>
             {/* <div>{name}</div> */}
-            <div className="border flex m-[1rem] p-[1rem] w-[40vw]">
+            <div className="flex m-[1rem] p-[0.5rem] w-[40vw]">
 
                 <div className="w-[100%]">
                     <Collect

@@ -21,9 +21,9 @@ const BuyQuantity = () => {
     return (
         <button
             onClick={() => handleBuyQuantity()}
-            className="px-4 py-2 border rounded-xl"
+            className="px-4 py-2 border-slate-700 border-4 rounded-xl bg-orange-400 hover:bg-orange-500 hover:border-slate-600 hover:shadow-xl"
         >
-            Buy {buyQuantity}x
+            Buy x{buyQuantity}
         </button>
     )
 }

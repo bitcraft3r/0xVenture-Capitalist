@@ -231,21 +231,27 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
                 </div>
                 {/* PROGRESS BARS */}
                 <div className="w-[100%] flex items-center flex-col">
-                    {bizQuantities[index] > 0 &&
-                        <>
-                            <div className="absolute z-10 text-orange-950 font-extrabold">
-                                <RevenueProgressBar
-                                    revenue={revenue}
-                                    time={bizTime[index]}
-                                    quantity={bizQuantities[index]}
-                                    index={index}
-                                />
+                    {bizQuantities[index] > 0 ?
+                        (
+                            <>
+                                <div className="absolute z-10 text-slate-800 font-extrabold">
+                                    <RevenueProgressBar
+                                        revenue={revenue}
+                                        time={bizTime[index]}
+                                        quantity={bizQuantities[index]}
+                                        index={index}
+                                    />
+                                </div>
+                                <div className="w-[100%] flex justify-center">
+                                    {managerOwned && <ProgressBarManaged time={bizTime[index]} index={index} revenue={revenue} userId={userId} />}
+                                    {buttonClicked && !managerOwned && <ProgressBar time={bizTime[index]} />}
+                                </div>
+                            </>
+                        ) : (
+                            <div className="font-bold text-slate-900">
+                                {name}
                             </div>
-                            <div className="w-[100%] flex justify-center">
-                                {managerOwned && <ProgressBarManaged time={bizTime[index]} index={index} revenue={revenue} userId={userId} />}
-                                {buttonClicked && !managerOwned && <ProgressBar time={bizTime[index]} />}
-                            </div>
-                        </>
+                        )
                     }
                 </div>
             </div>
