@@ -1,4 +1,4 @@
-# Blockchain Billionaire
+# 0xVenture Capitalist
 
 A game inspired by AdVenture Capitalist.
 
