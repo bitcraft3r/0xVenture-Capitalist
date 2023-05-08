@@ -16,7 +16,7 @@ const UpgradesModal = ({ children, playerUpgrades, userCoins, currentUser }: { c
     )
 
     const upgradeHandler = async (upgradeId: string, price: number, userCoins: number, purchased: boolean, businessName: string, upgradeDescription: string) => {
-        console.log(`upgradeHandler`)
+        // console.log(`upgradeHandler`)
 
         try {
             fetch(`/api/player/upgrade/buy/${currentUser.id}?upgradeId=${upgradeId}&price=${price}&userCoins=${userCoins}&purchased=${purchased}&businessName=${businessName}&upgradeDescription=${upgradeDescription}`, { method: 'GET' })

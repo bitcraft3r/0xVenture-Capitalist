@@ -16,7 +16,7 @@ const ManagersModal = ({ children, playerBusinesses, userCoins, currentUser }: {
     )
 
     const purchaseHandler = async (businessId: string, managerCost: number, userCoins: number, managerOwned: boolean, businessQuantity: number) => {
-        console.log(`purchaseHandler`)
+        // console.log(`purchaseHandler`)
 
         try {
             fetch(`/api/player/business/manager/${currentUser.id}?businessId=${businessId}&managerCost=${managerCost}&userCoins=${userCoins}&managerOwned=${managerOwned}&businessQuantity=${businessQuantity}`, { method: 'GET' })

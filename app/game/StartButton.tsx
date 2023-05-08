@@ -19,16 +19,16 @@ const StartButton: React.FC<StartButtonProps> = ({ userId }) => {
 
 
     const handleStart = async () => {
-        console.log(`userId in StartButton comp: ${userId}`)
+        // console.log(`userId in StartButton comp: ${userId}`)
 
         try {
             setIsFetching(true);
 
             const response = await fetch(`/api/player/business/seed/${userId}`, { method: 'GET' })
-            console.log(`res`, response)
+            // console.log(`res`, response)
 
             const data = await response.json()
-            console.log(`data rcvd in StartButton comp: ${data}`)
+            // console.log(`data rcvd in StartButton comp: ${data}`)
 
             setIsFetching(false);
 
