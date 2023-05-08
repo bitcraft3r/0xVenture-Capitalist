@@ -109,6 +109,7 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
     )
 
     const [currentPrice, setCurrentPrice] = useState(0);
+    const [currentPriceFormatted, setCurrentPriceFormatted] = useState("");
     const [currentQuantity, setCurrentQuantity] = useState(0)
 
 
@@ -119,14 +120,27 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
         const currentPrice = (cost * (((multiplier ** bizQuantities[index]) * (multiplier ** buyQuantity - 1)) / (multiplier - 1)))
         setCurrentPrice(Number(currentPrice.toFixed(2)))
 
+        let priceAsNumber = Number(currentPrice)
+        let formattedNumber = formatNumber(priceAsNumber)
+        setCurrentPriceFormatted(formattedNumber)
+
 
     }, [userCoins, quantity, bizQuantities[index], buyQuantity])
 
+    const formatNumber = (number: number) => {
+        const suffixes = ["", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion", "octillion", "nonillion", "decillion"];
+        let suffixIndex = 0;
+        while (number >= 1000 && suffixIndex < suffixes.length - 1) {
+            number /= 1000;
+            suffixIndex++;
+        }
+        return `${number.toFixed(3)} ${suffixes[suffixIndex]}`;
+    }
 
 
     const purchaseHandler = async () => {
 
-        // console.log(`userCoins`, userCoins)
+        // console.log(`userCoins`, "userCoins")
         // console.log(`currentPrice`, currentPrice)
 
         // if player doesn't have enough coins, return
@@ -236,16 +250,24 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
         <div
             onClick={() => purchaseHandler()}
             className={`
-                border flex justify-between h-full
+                border-4 border-slate-700 rounded-md flex justify-between p-[0.5rem] h-[60px]
                 ${userCoins >= currentPrice ? (
-                    'bg-orange-200 hover:cursor-pointer hover:bg-orange-400'
+                    'bg-orange-400 hover:cursor-pointer hover:bg-orange-500'
                 ) : (
-                    'bg-gray-200 hover:cursor-not-allowed hover:bg-gray-300'
+                    'bg-[#857d75] hover:cursor-not-allowed hover:bg-gray-300'
                 )}
             `}
         >
-            <div>Buy<br />x{buyQuantity}</div>
-            <div className="text-xl">${currentPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
+            <div>Buy x{buyQuantity}</div>
+            <div className="text-lg">
+                {currentPrice < 1_000_000_000 ? (
+                    `$${currentPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}`
+                ) : (
+                    // show 1.123 Billions or Trillions
+                    `$${currentPriceFormatted}`
+                    // `Billions!`
+                )}
+            </div>
         </div>
     )
 }

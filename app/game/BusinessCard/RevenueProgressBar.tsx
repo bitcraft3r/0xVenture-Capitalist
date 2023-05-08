@@ -35,7 +35,7 @@ const RevenueProgressBar: React.FC<RevenueProgressBarProps> = ({ revenue, time, 
                 ? (
                     <>-</>
                 ) : (
-                    <>Revenue: {revenue * bizQuantity[index]}</>
+                    <>{(revenue * bizQuantity[index]).toLocaleString()}</>
                 )
             }
         </div>

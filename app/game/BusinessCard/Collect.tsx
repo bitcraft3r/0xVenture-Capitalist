@@ -9,6 +9,7 @@ import RevenueProgressBar from "./RevenueProgressBar";
 import ProgressBar from "./ProgressBar";
 import ProgressBarManaged from "./ProgressBarManaged";
 import QuantityBar from "./QuantityBar";
+import BuyButton from "./BuyButton";
 
 interface CollectProps {
     name: string,
@@ -19,9 +20,13 @@ interface CollectProps {
     managerOwned: boolean,
     index: number,
     userId: string,
+    id: string,
+    cost: number,
+    multiplier: number,
+    coins: number,
 }
 
-const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity, managerOwned, index, userId, }) => {
+const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity, managerOwned, index, userId, id, cost, multiplier, coins }) => {
 
     const [
         addCoins,
@@ -186,7 +191,7 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
             <div
                 onClick={!disabled ? collectHandler : undefined}
                 className={`
-                    flex flex-col justify-center items-center
+                    flex flex-col justify-center items-center h-[120px]
                 `}
             >
                 <Image
@@ -210,21 +215,40 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
                     {bizQuantities[index]}
                 </div>
             </div>
-            {/* PROGRESS BARS */}
-            {bizQuantities[index] > 0 &&
-                <div className="flex flex-col w-4/5 items-center">
-                    <RevenueProgressBar
-                        revenue={revenue}
-                        time={bizTime[index]}
-                        quantity={bizQuantities[index]}
+            <div className="flex flex-col w-4/5 items-center">
+                {/* BUY BUTTON */}
+                <div className="w-[100%] px-2 mb-2">
+                    <BuyButton
+                        id={id}
+                        name={name}
+                        cost={cost}
+                        multiplier={multiplier}
+                        quantity={quantity}
                         index={index}
+                        userId={userId}
+                        coins={coins}
                     />
-                    <div className="w-[100%] flex justify-center">
-                        {managerOwned && <ProgressBarManaged time={bizTime[index]} index={index} revenue={revenue} userId={userId} />}
-                        {buttonClicked && !managerOwned && <ProgressBar time={bizTime[index]} />}
-                    </div>
                 </div>
-            }
+                {/* PROGRESS BARS */}
+                <div className="w-[100%] flex items-center flex-col">
+                    {bizQuantities[index] > 0 &&
+                        <>
+                            <div className="absolute z-10 text-orange-950 font-extrabold">
+                                <RevenueProgressBar
+                                    revenue={revenue}
+                                    time={bizTime[index]}
+                                    quantity={bizQuantities[index]}
+                                    index={index}
+                                />
+                            </div>
+                            <div className="w-[100%] flex justify-center">
+                                {managerOwned && <ProgressBarManaged time={bizTime[index]} index={index} revenue={revenue} userId={userId} />}
+                                {buttonClicked && !managerOwned && <ProgressBar time={bizTime[index]} />}
+                            </div>
+                        </>
+                    }
+                </div>
+            </div>
         </div>
     )
 }
