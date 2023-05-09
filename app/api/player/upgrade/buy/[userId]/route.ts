@@ -13,13 +13,24 @@ export async function GET(request: Params, { params }: { params: { userId: strin
     const upgradeId = searchParams.get("upgradeId");
     const price = Number(searchParams.get("price"));
     const userCoins = Number(searchParams.get("userCoins"));
-    const purchased = searchParams.get("purchased");
     const businessName = searchParams.get("businessName");
     const upgradeDescription = searchParams.get("upgradeDescription");
 
-    // console.log(userId, upgradeId, price, userCoins, purchased, businessName)
+    // console.log(userId, upgradeId, price, userCoins, businessName)
 
-    if (purchased === 'true') return NextResponse.json({ error: "Already purchased upgrade" })
+    // get `purchased` from Upgrade db instead of from searchParams to make check more secure
+    const upgrade = await prisma.upgrade.findUnique({
+        where: {
+            id: upgradeId
+        }
+    });
+
+    // if upgrade is already purchased, return error
+    if (upgrade?.purchased === true) return NextResponse.json({ error: "Already purchased upgrade" })
+    
+    // if (purchased === 'true') return NextResponse.json({ error: "Already purchased upgrade" })
+
+    // if user doesn't have enough coins, return error
     if (userCoins < price) return NextResponse.json({ error: "Not enough coins" })
     
     // if all checks pass, continue to purchase upgrade
@@ -36,6 +47,8 @@ export async function GET(request: Params, { params }: { params: { userId: strin
             }
         });
 
+        if (!player) return NextResponse.json({ error: "Error deducting coins." })
+
         // use userId to update Upgrade purchased to true
         const upgrade = await prisma.upgrade.update({
             where: {
@@ -45,7 +58,9 @@ export async function GET(request: Params, { params }: { params: { userId: strin
                 purchased: true
             }
             
-        });    
+        });
+
+        if (!upgrade) return NextResponse.json({ error: "Error updating upgrade.purchased to true." })
 
         if (businessName === "All Businesses") {
             // update all business with userId=userId to update profits x3

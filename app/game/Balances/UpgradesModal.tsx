@@ -4,10 +4,13 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 
 import { useStore } from "@/app/store/GameStore"
+import { useState } from 'react';
 
 const UpgradesModal = ({ children, playerUpgrades, userCoins, currentUser }: { children: React.ReactNode, playerUpgrades: any[], userCoins: number, currentUser: any }) => {
 
     const router = useRouter();
+
+    const [isLoading, setIsLoading] = useState(false)
 
     const [addCoins] = useStore(
         (state) => [
@@ -17,9 +20,10 @@ const UpgradesModal = ({ children, playerUpgrades, userCoins, currentUser }: { c
 
     const upgradeHandler = async (upgradeId: string, price: number, userCoins: number, purchased: boolean, businessName: string, upgradeDescription: string) => {
         // console.log(`upgradeHandler`)
+        setIsLoading(true)
 
         try {
-            fetch(`/api/player/upgrade/buy/${currentUser.id}?upgradeId=${upgradeId}&price=${price}&userCoins=${userCoins}&purchased=${purchased}&businessName=${businessName}&upgradeDescription=${upgradeDescription}`, { method: 'GET' })
+            fetch(`/api/player/upgrade/buy/${currentUser.id}?upgradeId=${upgradeId}&price=${price}&userCoins=${userCoins}&businessName=${businessName}&upgradeDescription=${upgradeDescription}`, { method: 'GET' })
                 .then((response) => response.json())
                 .then((data) => {
                     // console.log(data);
@@ -34,6 +38,7 @@ const UpgradesModal = ({ children, playerUpgrades, userCoins, currentUser }: { c
             console.log(error)
         } finally {
             router.refresh();
+            setIsLoading(false)
         }
     }
 
@@ -76,6 +81,10 @@ const UpgradesModal = ({ children, playerUpgrades, userCoins, currentUser }: { c
                                             ? 'disabled hover:cursor-not-allowed bg-gray-300 hover:bg-gray-400'
                                             : 'bg-sky-200 hover:bg-sky-400'
 
+                                    }
+                                    ${isLoading
+                                        ? 'disabled hover:cursor-not-allowed'
+                                        : ''
                                     }
                                 `}
                             >
