@@ -19,12 +19,12 @@ const UpgradesModal = ({ children, playerUpgrades, currentUser }: { children: Re
         ]
     )
 
-    const upgradeHandler = async (upgradeId: string, price: number, userCoins: number, purchased: boolean, businessName: string, upgradeDescription: string) => {
+    const upgradeHandler = async (upgradeId: string, price: number, businessName: string, upgradeDescription: string) => {
         // console.log(`upgradeHandler`)
         setIsLoading(true)
 
         try {
-            fetch(`/api/player/upgrade/buy/${currentUser.id}?upgradeId=${upgradeId}&price=${price}&userCoins=${userCoins}&businessName=${businessName}&upgradeDescription=${upgradeDescription}`, { method: 'GET' })
+            fetch(`/api/player/upgrade/buy/${currentUser.id}?upgradeId=${upgradeId}&price=${price}&businessName=${businessName}&upgradeDescription=${upgradeDescription}`, { method: 'GET' })
                 .then((response) => response.json())
                 .then((data) => {
                     // console.log(data);
@@ -73,7 +73,7 @@ const UpgradesModal = ({ children, playerUpgrades, currentUser }: { children: Re
                                 </div>
                             </div>
                             <button
-                                onClick={() => upgradeHandler(upgrade.id, upgrade.price, userCoins, upgrade.purchased, upgrade.business, upgrade.description)}
+                                onClick={() => upgradeHandler(upgrade.id, upgrade.price, upgrade.business, upgrade.description)}
                                 disabled={isLoading}
                                 className={`
                                     py-2 px-5 border rounded-xl text-xl

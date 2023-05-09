@@ -12,7 +12,6 @@ export async function GET(request: Params, { params }: { params: { userId: strin
     const { searchParams } = request.nextUrl;
     const upgradeId = searchParams.get("upgradeId");
     const price = Number(searchParams.get("price"));
-    const userCoins = Number(searchParams.get("userCoins"));
     const businessName = searchParams.get("businessName");
     const upgradeDescription = searchParams.get("upgradeDescription");
 
@@ -28,10 +27,15 @@ export async function GET(request: Params, { params }: { params: { userId: strin
     // if upgrade is already purchased, return error
     if (upgrade?.purchased === true) return NextResponse.json({ error: "Already purchased upgrade" })
     
-    // if (purchased === 'true') return NextResponse.json({ error: "Already purchased upgrade" })
+    // get userCoins from db instead of from searchParams to make check more secure
+    const player = await prisma.user.findUnique({
+        where: {
+            id: userId
+        }
+    });
 
     // if user doesn't have enough coins, return error
-    if (userCoins < price) return NextResponse.json({ error: "Not enough coins" })
+    if (player && player?.coins < price) return NextResponse.json({ error: "Not enough coins" })
     
     // if all checks pass, continue to purchase upgrade
     try {
