@@ -5,6 +5,7 @@ import StartButton from "./StartButton"
 import BusinessCard from "./BusinessCard"
 import Balances from "./Balances"
 import OfflineProfits from "./OfflineProfits"
+import OwedRevenueUpdater from "./OwedRevenueUpdater"
 
 const Game = async () => {
     const currentUser = await getCurrentUserFull();
@@ -56,11 +57,14 @@ const Game = async () => {
     return (
         <div className="flex flex-col justify-center items-center text-center">
             {/* <h1 className="text-2xl font-extrabold mb-[2rem]">Blockchain Billionaire</h1> */}
+            {currentUser && totalOfflineProfits > 0 ? (
+                <OfflineProfits offlineProfits={totalOfflineProfits} userId={currentUser.id} />
+            ) : (<></>)}
             {currentUser && playerBusinesses?.length === 10 ? (
                 // Logged in & has all businesses
                 <div className="w-[90vw]">
-
-                    <OfflineProfits offlineProfits={totalOfflineProfits} userId={currentUser.id} />
+                    {/* helper function to aggregate managerOwned profits to update db every 30s instead of for every collection */}
+                    <OwedRevenueUpdater userId={currentUser.id} />
                     {/* => show player's coin balances */}
                     <Balances coins={currentUser.coins} playerBusinesses={playerBusinesses} currentUser={currentUser} playerUpgrades={playerUpgrades} />
                     {/* => show all businesses */}

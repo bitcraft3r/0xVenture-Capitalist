@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useEffect } from 'react';
 import * as Progress from '@radix-ui/react-progress';
 
@@ -17,6 +19,7 @@ const ProgressBarManaged: React.FC<ProgressBarManagedProps> = ({ time, index, re
     const [
         addCoins,
         bizQuantities,
+        addOwedRevenue,
     ] = useStore((state) => [
         state.addCoins,
         [
@@ -31,6 +34,7 @@ const ProgressBarManaged: React.FC<ProgressBarManagedProps> = ({ time, index, re
             state.biz9Quantity,
             state.biz10Quantity,
         ],
+        state.addOwedRevenue,
     ])
 
     let businessDuration = time * 1000
@@ -63,13 +67,28 @@ const ProgressBarManaged: React.FC<ProgressBarManagedProps> = ({ time, index, re
         const collectRevenue = async () => {
             let finalRevenue = revenue * bizQuantities[index];
 
-            const response = await fetch(`/api/player/business/collect/${userId}?amount=${finalRevenue}`)
-            const data = await response.json()
+            if (finalRevenue) {
 
-            if (data.coins) {
-                addCoins(finalRevenue)
-                // console.log(`success auto collect ${finalRevenue} from ${name}`)
-            } else console.log(`Something went wrong.`)
+                // if i add something to Zustand store here, get following error:
+                // Warning: Cannot update a component (`OfflineProfits`) while rendering a different component (`ProgressBarManaged`). To locate the bad setState() call inside `ProgressBarManaged`, follow the stack trace as described in https://reactjs.org/link/setstate-in-render
+                // at ProgressBarManaged (webpack-internal:///(app-client)/./app/game/BusinessCard/ProgressBarManaged.tsx:14:11)
+                // whereas if it is added after my fetch, there is no error (maybe coz there is some delay so they are not trying to render at the exact same time?)
+
+                // ==> add a 0.1s delay before adding to store to avoid error
+                const intervalId = setInterval(() => {
+                    // console.log(`adding ${finalRevenue} to store after 0.1 seconds`)
+
+                    // update coins in store that shows on UI balances
+                    addCoins(finalRevenue)
+
+                    // update revenueOwed in store that is used in OwedRevenueUpdater.tsx to update db every 30s
+                    addOwedRevenue(finalRevenue)
+
+                    clearInterval(intervalId);
+                }, 100)
+
+            }
+
         }
 
         // function to restart the timer and progress state

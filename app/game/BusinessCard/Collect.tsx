@@ -29,6 +29,7 @@ interface CollectProps {
 const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity, managerOwned, index, userId, id, cost, multiplier, coins }) => {
 
     const [
+        userCoins,
         addCoins,
         bizQuantities,
         addBizQuantities,
@@ -38,6 +39,7 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
         bizRevenue,
         setBizRevenue,
     ] = useStore((state) => [
+        state.userCoins,
         state.addCoins,
         [
             state.biz1Quantity,
@@ -172,7 +174,7 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
                 if (data.coins) {
                     // success!
                     addCoins(finalRevenue)
-                    toast.success(`Collected ${finalRevenue.toLocaleString("en", { style: "currency", currency: "USD", maximumFractionDigits: 0 })} from ${name}! New balance is ${(data.coins).toLocaleString("en-US", { style: "currency", currency: "USD" })}.`)
+                    toast.success(`Collected ${finalRevenue.toLocaleString("en", { style: "currency", currency: "USD", maximumFractionDigits: 0 })} from ${name}!`)
                 } else {
                     toast.error(data.error)
                 }
