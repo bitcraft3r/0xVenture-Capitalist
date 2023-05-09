@@ -6,14 +6,15 @@ import { toast } from 'react-hot-toast';
 import { useStore } from "@/app/store/GameStore"
 import { useState } from 'react';
 
-const UpgradesModal = ({ children, playerUpgrades, userCoins, currentUser }: { children: React.ReactNode, playerUpgrades: any[], userCoins: number, currentUser: any }) => {
+const UpgradesModal = ({ children, playerUpgrades, currentUser }: { children: React.ReactNode, playerUpgrades: any[], currentUser: any }) => {
 
     const router = useRouter();
 
     const [isLoading, setIsLoading] = useState(false)
 
-    const [addCoins] = useStore(
+    const [userCoins, addCoins] = useStore(
         (state) => [
+            state.userCoins,
             state.addCoins,
         ]
     )
