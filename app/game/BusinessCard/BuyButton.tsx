@@ -111,6 +111,7 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
     const [currentPrice, setCurrentPrice] = useState(0);
     const [currentPriceFormatted, setCurrentPriceFormatted] = useState("");
     const [currentQuantity, setCurrentQuantity] = useState(0)
+    const [isLoading, setIsLoading] = useState(false)
 
 
     useEffect(() => {
@@ -139,6 +140,7 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
 
 
     const purchaseHandler = async () => {
+        setIsLoading(true)
 
         // console.log(`userCoins`, "userCoins")
         // console.log(`currentPrice`, currentPrice)
@@ -240,6 +242,8 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
 
         } catch (error) {
 
+        } finally {
+            setIsLoading(false)
         }
 
 
@@ -248,14 +252,19 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
 
     return (
         <div
-            onClick={() => purchaseHandler()}
+            onClick={isLoading ? undefined : () => purchaseHandler()}
             className={`
                 border-4 border-slate-700 rounded-md flex justify-between p-[0.5rem] h-[60px]
-                ${userCoins >= currentPrice ? (
+                ${isLoading
+                    ? ('disabled hover:cursor-not-allowed bg-gray-400 hover:bg-gray-600')
+                    : ('')
+                }
+                ${userCoins >= currentPrice && !isLoading ? (
                     'bg-orange-400 hover:cursor-pointer hover:bg-orange-500 hover:border-slate-600 hover:shadow-xl'
                 ) : (
                     'bg-[#857d75] hover:cursor-not-allowed hover:bg-gray-600'
                 )}
+                
             `}
         >
             <div>Buy x{buyQuantity}</div>
