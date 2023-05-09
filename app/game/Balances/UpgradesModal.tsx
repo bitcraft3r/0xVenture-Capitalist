@@ -73,6 +73,7 @@ const UpgradesModal = ({ children, playerUpgrades, userCoins, currentUser }: { c
                             </div>
                             <button
                                 onClick={() => upgradeHandler(upgrade.id, upgrade.price, userCoins, upgrade.purchased, upgrade.business, upgrade.description)}
+                                disabled={isLoading}
                                 className={`
                                     py-2 px-5 border rounded-xl text-xl
                                     ${upgrade.purchased

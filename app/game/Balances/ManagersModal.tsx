@@ -4,10 +4,13 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 
 import { useStore } from "@/app/store/GameStore"
+import { useState } from 'react';
 
 const ManagersModal = ({ children, playerBusinesses, userCoins, currentUser }: { children: React.ReactNode, playerBusinesses: any[], userCoins: number, currentUser: any }) => {
 
     const router = useRouter();
+
+    const [isLoading, setIsLoading] = useState(false)
 
     const [addCoins] = useStore(
         (state) => [
@@ -18,8 +21,10 @@ const ManagersModal = ({ children, playerBusinesses, userCoins, currentUser }: {
     const purchaseHandler = async (businessId: string, managerCost: number, userCoins: number, managerOwned: boolean, businessQuantity: number) => {
         // console.log(`purchaseHandler`)
 
+        setIsLoading(true)
+
         try {
-            fetch(`/api/player/business/manager/${currentUser.id}?businessId=${businessId}&managerCost=${managerCost}&userCoins=${userCoins}&managerOwned=${managerOwned}&businessQuantity=${businessQuantity}`, { method: 'GET' })
+            fetch(`/api/player/business/manager/${currentUser.id}?businessId=${businessId}&managerCost=${managerCost}&userCoins=${userCoins}&businessQuantity=${businessQuantity}`, { method: 'GET' })
                 .then((response) => response.json())
                 .then((data) => {
                     // console.log(data);
@@ -33,6 +38,7 @@ const ManagersModal = ({ children, playerBusinesses, userCoins, currentUser }: {
         } catch (error) {
             console.log(error)
         } finally {
+            setIsLoading(false)
             router.refresh();
         }
     }
@@ -68,6 +74,7 @@ const ManagersModal = ({ children, playerBusinesses, userCoins, currentUser }: {
                             </div>
                             <button
                                 onClick={() => purchaseHandler(business.id, business.managerCost, userCoins, business.managerOwned, business.quantity)}
+                                disabled={isLoading}
                                 className={`
                                     py-2 px-5 border rounded-xl text-xl
                                     ${business.managerOwned
@@ -76,6 +83,10 @@ const ManagersModal = ({ children, playerBusinesses, userCoins, currentUser }: {
                                             ? 'disabled hover:cursor-not-allowed bg-gray-300 hover:bg-gray-400'
                                             : 'bg-sky-200 hover:bg-sky-400'
 
+                                    }
+                                    ${isLoading
+                                        ? 'disabled hover:cursor-not-allowed'
+                                        : ''
                                     }
                                 `}
                             >
