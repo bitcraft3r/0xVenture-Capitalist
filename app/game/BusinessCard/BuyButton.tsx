@@ -1,9 +1,10 @@
 'use client'
 
+import { useEffect, useState } from "react"
 import { toast } from "react-hot-toast"
 
 import { useStore } from "@/app/store/GameStore"
-import { useEffect, useState } from "react"
+import FormatNumber from "@/app/components/FormatNumber"
 
 interface BuyButtonProps {
     id: string,
@@ -122,21 +123,21 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
         setCurrentPrice(Number(currentPrice.toFixed(2)))
 
         let priceAsNumber = Number(currentPrice)
-        let formattedNumber = formatNumber(priceAsNumber)
+        let formattedNumber = FormatNumber(priceAsNumber, false)
         setCurrentPriceFormatted(formattedNumber)
 
 
     }, [userCoins, quantity, bizQuantities[index], buyQuantity])
 
-    const formatNumber = (number: number) => {
-        const suffixes = ["", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion", "octillion", "nonillion", "decillion"];
-        let suffixIndex = 0;
-        while (number >= 1000 && suffixIndex < suffixes.length - 1) {
-            number /= 1000;
-            suffixIndex++;
-        }
-        return `${number.toFixed(3)} ${suffixes[suffixIndex]}`;
-    }
+    // const formatNumber = (number: number) => {
+    //     const suffixes = ["", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion", "octillion", "nonillion", "decillion"];
+    //     let suffixIndex = 0;
+    //     while (number >= 1000 && suffixIndex < suffixes.length - 1) {
+    //         number /= 1000;
+    //         suffixIndex++;
+    //     }
+    //     return `${number.toFixed(3)} ${suffixes[suffixIndex]}`;
+    // }
 
 
     const purchaseHandler = async () => {
@@ -269,13 +270,7 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
         >
             <div>Buy x{buyQuantity}</div>
             <div className="text-lg">
-                {currentPrice < 1_000_000 ? (
-                    `$${currentPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}`
-                ) : (
-                    // show 1.123 Billions or Trillions
-                    `$${currentPriceFormatted}`
-                    // `Billions!`
-                )}
+                ${currentPriceFormatted}
             </div>
         </div>
     )

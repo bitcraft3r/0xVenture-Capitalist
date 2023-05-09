@@ -1,12 +1,14 @@
 'use client'
 
-import { useStore } from "@/app/store/GameStore"
+import { useEffect, useState } from "react"
 import Image from "next/image"
-import { useEffect } from "react"
+
+import { useStore } from "@/app/store/GameStore"
 import ManagersModal from "./Balances/ManagersModal"
 import UpgradesModal from "./Balances/UpgradesModal"
 import UnlocksModal from "./Balances/UnlocksModal"
 import BuyQuantity from "./BuyQuantity"
+import FormatNumber from "@/app/components/FormatNumber"
 
 interface BalancesProps {
     coins: number,
@@ -24,9 +26,15 @@ const Balances: React.FC<BalancesProps> = ({ coins, playerBusinesses, currentUse
         ]
     )
 
+    const [formattedNumber, setFormattedNumber] = useState("")
+
     useEffect(() => {
         setCoins(coins)
     }, [])
+
+    useEffect(() => {
+        setFormattedNumber(FormatNumber(userCoins, true))
+    }, [userCoins])
 
     return (
         <div className="mb-[2rem] bg-[#555046] p-5 rounded-xl shadow-lg">
@@ -46,7 +54,7 @@ const Balances: React.FC<BalancesProps> = ({ coins, playerBusinesses, currentUse
                         </UnlocksModal>
                     </div>
                 </div>
-                <div className="text-3xl font-bold">${userCoins?.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
+                <div className="text-4xl font-bold">${formattedNumber}</div>
                 <div>
                     <BuyQuantity />
                 </div>
