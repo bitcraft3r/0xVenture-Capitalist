@@ -19,7 +19,23 @@ const UpgradesModal = ({ children, playerUpgrades, currentUser }: { children: Re
         ]
     )
 
+
+    // !! want to prevent user from purchasing multiple upgrades
+
+
+
+    // ? want to `throttle` function to prevent multiple clicks
+
+    // (A) async static ? to prevent multiple clicks
     const upgradeHandler = async (upgradeId: string, price: number, businessName: string, upgradeDescription: string) => {
+
+        // (B) add a 30ms (or longer) delay before execute
+
+
+        // (C) or create a "closure" function
+        // https://stackoverflow.com/questions/750486/javascript-closure-inside-loops-simple-practical-example
+
+
         // console.log(`upgradeHandler`)
         setIsLoading(true)
 

@@ -17,6 +17,12 @@ export async function GET(request: Params, { params }: { params: { userId: strin
 
     // console.log(userId, upgradeId, price, userCoins, businessName)
 
+
+
+    // RESEARCH: rate limiter
+
+
+    
     // get `purchased` from Upgrade db instead of from searchParams to make check more secure
     const upgrade = await prisma.upgrade.findUnique({
         where: {
