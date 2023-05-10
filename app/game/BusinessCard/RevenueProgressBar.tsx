@@ -1,6 +1,9 @@
 'use client'
 
+import { useEffect, useState } from "react"
+
 import { useStore } from "@/app/store/GameStore"
+import FormatNumber from "@/app/components/FormatNumber"
 
 interface RevenueProgressBarProps {
     revenue: number,
@@ -29,13 +32,20 @@ const RevenueProgressBar: React.FC<RevenueProgressBarProps> = ({ revenue, time, 
         ]
     )
 
+    const [formattedNumber, setFormattedNumber] = useState("")
+
+    useEffect(() => {
+        setFormattedNumber(FormatNumber(revenue * bizQuantity[index], false))
+    }, [revenue, bizQuantity[index]])
+
+
     return (
         <div>
             {quantity === 0
                 ? (
                     <>-</>
                 ) : (
-                    <>{(revenue * bizQuantity[index]).toLocaleString()}</>
+                    <>{formattedNumber}</>
                 )
             }
         </div>
