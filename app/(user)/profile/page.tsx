@@ -1,5 +1,5 @@
-import getCurrentUser from "../actions/getCurrentUser";
-import Welcome from "../components/home/Welcome";
+import getCurrentUser from "../../actions/getCurrentUser";
+import Welcome from "../../components/home/Welcome";
 
 const Profile = async () => {
     const currentUser = await getCurrentUser();

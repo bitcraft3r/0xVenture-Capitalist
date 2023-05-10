@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react"
 import { useRouter } from 'next/navigation';
-import RegisterModal from "../components/navbar/RegisterModal"
+import RegisterModal from "../../components/navbar/RegisterModal"
 
 interface StartButtonProps {
     userId: string
