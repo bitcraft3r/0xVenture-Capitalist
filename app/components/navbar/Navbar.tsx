@@ -7,7 +7,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
     const buttonClass = "rounded-md py-2 px-4 hover:cursor-pointer hover:shadow-md hover:bg-neutral-700"
     const navItems = [
         { heading: "Game", slug: "/game" },
-        { heading: "About", slug: "/about" },
+        { heading: "Leaderboard", slug: "/leaderboard" },
     ]
 
     return (

@@ -7,6 +7,7 @@ const Profile = async () => {
     return (
         <div>
             <Welcome currentUser={currentUser} />
+            {/* currentUser.admin === true && <div>Show Admin Button</div> */}
         </div>
     )
 }
