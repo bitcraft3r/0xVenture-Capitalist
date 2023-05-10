@@ -26,8 +26,8 @@ const CTA: React.FC<CTAProps> = ({ currentUser }) => {
         <>
             {user ? (
                 <Link href="/game">
-                    <button className="bg-green4 text-green11 shadow-blackA7 hover:bg-green5 focus:shadow-green7 inline-flex h-[35px] items-center justify-center rounded-[4px] px-[15px] font-bold leading-none shadow-[0_2px_10px] text-lg">
-                        Let's play!
+                    <button className="bg-green-500 text-white shadow-blackA7 hover:bg-green-600 focus:shadow-green7 inline-flex h-[35px] items-center justify-center rounded-[4px] px-[15px] font-bold leading-none shadow-[0_2px_10px] text-lg">
+                        Play Now!
                     </button>
                 </Link>
             ) : (
