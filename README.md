@@ -1,14 +1,20 @@
 # 0xVenture Capitalist
 
+0xVenture Capitalist is a browser game inspired by AdVenture Capitalist, where players invest in businesses to generate revenue and strive for financial success.
+
+It is an idle/clicker/incremental game that educates players investing, blockchain and cryptocurrencies.
+
 ![0xVenture Capitalist Homepage](https://github.com/sov3333/0xVenture-Capitalist/assets/8282076/38768bd7-6b09-4ea5-9a7e-aeee6170b78d)
 
-An idle/clicker/incremental browser game inspired by AdVenture Capitalist.
-
-Invest in different businesses and gain revenue, starting out with a single lemonade stand. Hire managers to earn while you're away, and make as much money as possible!
+> _Invest in different blockchain businesses and gain revenue, starting out with a single lemonade stand. Hire managers to earn while you're away, and make as much money as possible._
+>
+> _Become a blockchain business tycoon, and **MAKE YOUR FORTUNE**!_
 
 ## Technologies Used
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+The game is built using [Next.js](https://nextjs.org/), bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+To provide an engaging and visually appealing user interface, with smooth gameplay mechanics and sound effects, the following libraries are used:
 
 - Languages: [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript), [TypeScript](https://www.typescriptlang.org/)
 - Framework: [React](https://react.dev/)
@@ -16,7 +22,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - State Management: [Zustand](https://docs.pmnd.rs/zustand/getting-started/introduction)
 - Database & ORM: [MongoDB](https://www.mongodb.com/), [Prisma](https://www.prisma.io/mongodb)
 - Authentication: [Auth.js](https://authjs.dev/)
-- Design:
+- UI/UX:
 
   - [Tailwind CSS](https://tailwindcss.com/docs/guides/nextjs)
   - [Radix UI](https://www.radix-ui.com/)
@@ -24,6 +30,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
   - [React Icons](https://react-icons.github.io/react-icons/)
   - [React Hot Toast](https://react-hot-toast.com/)
   - [Framer Motion](https://www.framer.com/motion/)
+  - [Use Sound](https://github.com/joshwcomeau/use-sound)
 
 ## Installation and Setup
 
@@ -81,6 +88,19 @@ npm run dev
 
 ![0xVenture Capitalist Game Page](https://github.com/sov3333/0xVenture-Capitalist/assets/8282076/3550d8f8-9846-4fa2-b786-1ebb9d01c305)
 
+| CRUD | Method | Endpoint                              | Description                                                                                                                                 |
+| ---- | ------ | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| C    | POST   | /api/auth/[...nextauth]               | Create new user                                                                                                                             |
+| R    | GET    | /api/player/[email]                   | Get a `User` by `user.email`                                                                                                                |
+| R    | GET    | /api/player/business/[userId]         | Get all `Business` with `userId`                                                                                                            |
+| U    | PUT    | /api/player/business/buy/[userId]     | Buy a `Business` for `userId`, update `user.coins`, `business.quantity`, and `business.time` or `business.revenue` from unlock bonus if any |
+| U    | PUT    | /api/player/business/collect/[userId] | Collect profits for `userId`, update `user.coins`                                                                                           |
+| U    | PUT    | /api/player/business/manager/[userId] | Purchase a manager for `Business` for `userId`, update `user.coins` and `business.managerOwned`                                             |
+| C    | POST   | /api/player/business/seed/[id]        | Create all `Business` and `Upgrade` for `userId`                                                                                            |
+| R    | GET    | /api/upgrade/[userId]                 | Get all `Upgrade` with `userId`                                                                                                             |
+| U    | POST   | /api/upgrade/buy/[userId]             | Purchase an `Upgrade` for `userId`, update `user.coins`, `upgrade.purchased`, and `business.revenue`                                        |
+| D    | DELETE | /api/admin/reset/[userId]             | Delete all `Business` and `Upgrade` with `userId`, reset `user.coins` to 0, and increment `user.resets` by 1.                               |
+
 ## Approach
 
 Using an iterative approach, first focusing on building the core functionality and gradually adding features to enhance the gameplay experience.
@@ -105,15 +125,111 @@ Throughout the development process, followed best practices such as limiting the
 
 During the development process, encountered some challenges and had a few unsolved problems. These include:
 
-1. **Optimization**: As the game progresses and the player accumulates more businesses and managers, the performance of the application may be impacted. Actively working on optimizing the code and implementing strategies such as data pagination and caching to improve the overall performance.
+1. **Performance & Optimization - Laggy UX**:
 
-2. **Balance and Gameplay**: Balancing the game mechanics and ensuring an engaging gameplay experience is an ongoing challenge. Continuously refining the revenue generation, upgrade costs, and progression system to strike the right balance between challenge and reward.
+It takes ~1-2 seconds for an action to get response on the live server, especially if the action involves calling the backend API to Prisma to MongoDB and needs to wait for a response.
 
-3. **Security**: While authentication has been implemented using Auth.js, ensuring the security of user data and preventing unauthorized access is crucial. Taken measures to secure the application, but ongoing monitoring and updates are necessary to address any potential security vulnerabilities.
+As the game progresses and the player accumulates more businesses and managers, the performance of the application may be impacted.
 
-4. **User Feedback and Iteration**: Gathering user feedback and incorporating it into the application is an ongoing process. Encourage users to provide feedback and suggestions, which will help identify areas for improvement and enhance the overall user experience.
+Solution is to actively work on optimizing the code and implementing strategies to improve overall performance, such as:
 
-Despite these challenges, we are committed to addressing them and continuously improving the application to provide an enjoyable and seamless gaming experience.
+- server-side rendering
+- code splitting
+- caching
+- lazy loading / data pagination
+- etc.
+
+2. **Performance & Optimization - MongoDB**:
+
+MongoDB Altas free tier limitation:
+
+- 500 connections and a max of 500 collections (100 databases) in total
+- _100 crud requests per second_ at max
+
+Ideally, at capcaity, we have 100 players making 1 CRUD request per second.
+
+Hence, to reduce the number of API calls to MongoDB, the auto-generated revenue (which can be making 10s of API calls per second) is first saved to Zustand store, and then pushed to MongoDB every 30 seconds.
+
+However, this results in Problem #3 described below.
+
+3. **Syncing Database vs Store/State**:
+
+There are several cases where a discrepancy occurs between the database and the store/state, where one is updated but not the other. This mostly involves the 30 second window when the auto-generated revenue is saved to the store but not yet pushed to the database. Examples include:
+
+- the player refreshes the page, resulting in the store/state being reset to the database values.
+- the player purchases an upgrade or investment, resulting in database value becoming negative while the store/state value is still positive.
+- the profits earned when a player is actively playing vs when offline are calculated differently (offline profits pays pro-rated revenue vs if actively playing you would earn 0 if timer is not yet reached), resulting in offline profits being higher/faster.
+
+Problem #2 and #3 are related to the fact that there are 2 states to manage (store vs db) and they are not always in sync.
+
+4. **Gameplay Bugs, Loopholes and Exploits**:
+
+A major bug is that the player is able to purchase an upgrade multiple times, even though there are basic checks in place to try prevent multiple buys.
+
+When purchasing the upgrade, the following checks are made on the backend API route:
+
+- if the player has enough money to purchase the upgrade
+- if the player has already purchased the upgrade
+
+On the frontend, the purchase upgrade button is also disabled once the player clicks on it, until the function to purchase the upgrade is completed.
+
+One possible reason for this bug is that almost-simultaneous calls manage to pass the check of `upgrade.purchased = false` and `coins > upgradeCost`.
+
+Possible solutions:
+
+- implement a more robust check on the backend API route
+- disable the button on the frontend for a longer period of time
+- implement a queue system to handle multiple requests
+- implement a random delay (0-1s) before the purchase upgrade function is executed
+- etc.
+
+5. **Security**:
+
+Ensuring the security of user data and preventing unauthorized access is crucial.
+
+Measures taken to secure the application include:
+
+- using HTTPS
+- using Auth.js for authentication
+- using `next-auth` to create API routes
+- using `next-auth` to create protected pages
+
+Other security measures to consider:
+
+- using `next-rate-limit` to limit the number of requests
+- using `next-secure-headers` to set security-related HTTP headers
+- using `next-csp` to set Content Security Policy headers
+
+6. **User Feedback, Testing and Iteration**:
+
+While the application has been thoroughly tested, there may be some bugs or issues that have not been identified.
+
+If you encounter any problems while playing the game, please report them [by creating an issue](https://github.com/sov3333/0xVenture-Capitalist/issues/new) so that they can be addressed.
+
+Gathering user feedback and incorporating it into the application is an ongoing process. Encourage users to provide feedback and suggestions, which will help identify areas for improvement and enhance the overall user experience.
+
+## Future Development
+
+1. **Mobile-friendly UI**: The game is currently optimized for desktop and tablet screens, but not yet for mobile. This is a future development that will be implemented in the next version of the game.
+
+2. **Cloning All Features**: Due to time constraints, not all features of AdVenture Capitalist were cloned. Some of the features that were not implemented include:
+
+- angel investors (reset game)
+- moon/mars expansion
+- unlocks for 5,000+ quantity of businesses
+- achievements (milestones)
+- events
+- advertisements
+- etc.
+
+3. **New Features**: Some new features that could be implemented in the future include:
+
+- Leaderboard
+- Web3 integration
+- NFTs for players/characters, skins, etc.
+- Weekly/monthly rewards
+- Multiplayer
+- etc.
 
 ## Acknowledgments
 
@@ -145,7 +261,9 @@ I would like to acknowledge the following resources that inspired and supported 
 
 0xVenture Capitalist is a captivating idle/clicker/incremental browser game that allows players to invest in businesses, generate revenue, and strive for financial success. With its intuitive user interface, engaging gameplay mechanics, and seamless integration of backend and frontend technologies, the game offers an immersive experience for players.
 
-Hope you enjoy playing 0xVenture Capitalist as much as I enjoyed creating it. Feel free to provide feedback, report any issues, or contribute to the project's ongoing development. Thank you!
+Hope you enjoy playing 0xVenture Capitalist as much as I enjoyed creating it. Feel free to provide feedback, report any issues, or contribute to the project's ongoing development.
+
+Thank you!
 
 ## License
 
