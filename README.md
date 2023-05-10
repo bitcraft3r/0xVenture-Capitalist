@@ -89,17 +89,17 @@ Here are the major steps taken during the development process:
 
 1. **Project Setup**: Set up the development environment, including installing the necessary dependencies and configuring the project structure.
 
-2. **Backend Development**: Build the backend using Node.js, Express, and MongoDB. Designed the database schema and implemented the API endpoints for creating, reading, updating, and deleting data.
+2. **Backend Development**: Build the backend using the Next.js app router, and MongoDB with Prisma for database. Designed the database schema and implemented the API endpoints for creating, reading, updating, and deleting data.
 
-3. **Frontend Development**: Implemented the frontend using React and Next.js. Designed the user interface, including the game mechanics, investment options, and revenue tracking. Used Tailwind CSS for styling and Framer Motion for animations.
+3. **Frontend Development**: Implemented the frontend using React, TypeScript and Next.js. Used Zustand for state management. Designed the user interface, including the game mechanics, investment options, and revenue tracking. Used Tailwind CSS for styling, Radix UI for pre-made components, and Framer Motion for animations.
 
 4. **Integration**: Integrated the frontend with the backend, enabling seamless communication between the client and server. Implemented authentication using Auth.js to support user and admin logins with different access levels.
 
 5. **Testing and Refinement**: Thoroughly tested the application to identify and fix any bugs or issues. Gathered feedback from users and made improvements based on their suggestions.
 
-6. **Deployment**: Deployed the application to a hosting platform, making it accessible to users through a live URL.
+6. **Deployment**: Deployed the application to Vercel, making it accessible to users through a live URL.
 
-Throughout the development process, followed best practices such as **\*\***\*\***\*\***\_\_**\*\***\*\***\*\***, writing clean and maintainable code, and using version control with Git.
+Throughout the development process, followed best practices such as limiting the use of `client components` to where user interaction is required, writing clean and maintainable code, and using version control with Git.
 
 ## Unsolved Problems and Challenges
 
@@ -124,6 +124,22 @@ I would like to acknowledge the following resources that inspired and supported 
 2. [The Math of Idle Games part 1](https://blog.kongregate.com/the-math-of-idle-games-part-i/)
 
 ![formula](https://user-images.githubusercontent.com/8282076/235336622-6ce21750-a825-48fe-b390-a821c7c03bfc.png)
+
+3. AdVenture Capitalist clones in JavaScript by [@Rukmoni](https://github.com/Rukmoni/captialist--game), [@matart15](https://github.com/matart15/adventure-capitalist-clone) and [@Satttoshi](https://github.com/Satttoshi/idle-boss).
+
+4. YouTube tutorials:
+
+- [Next.js 13 - The Basics](https://youtu.be/__mSgDEOyv8)
+- [Securely Fetching Data in NextJS 13 Server and Client Components!](https://youtu.be/RK3xRielPl4)
+- [The Ultimate NEXT.JS 13 Tutorial (Complete Walkthrough w/ Examples)](https://youtu.be/6aP9nyTcd44)
+- [NextJS 13 Introduction - Building a fullstack app using Prisma & Mongodb](https://youtu.be/L5JU1oR29TM)
+- [Set up a (Next.js + Zustand + Typescript) app | Part 1](https://youtu.be/J0IQ8Oe0AJE)
+- [Authentication with Next Auth and Next.js 13](https://youtu.be/cDWytA0V2kI)
+- [Full Stack Airbnb Clone with Next.js 13 App Router: React, Tailwind, Prisma, MongoDB, NextAuth 2023](https://youtu.be/c_-b_isI4vg)
+
+5. Icons on Flaticon.com created by [designbydai](https://www.flaticon.com/authors/designbydai), [Taufik Ramadhan](https://www.flaticon.com/authors/taufik-ramadhan), [Freepik](https://www.flaticon.com/authors/freepik), [justicon](https://www.flaticon.com/authors/justicon), [itim2101](https://www.flaticon.com/authors/itim2101), [Flowicon](https://www.flaticon.com/authors/flowicon), [Konkapp](https://www.flaticon.com/authors/konkapp), and [iconjam](https://www.flaticon.com/authors/iconjam).
+
+6. [Next.js templates](https://vercel.com/templates/next.js)
 
 ## Conclusion
 
