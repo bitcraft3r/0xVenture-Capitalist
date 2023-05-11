@@ -228,6 +228,7 @@ Measures taken to secure the application include:
 
 Other security measures to consider:
 
+- protect API routes such that they can't be called directly with bogus data and/or by user without authorization
 - using `next-rate-limit` to limit the number of requests
 - using `next-secure-headers` to set security-related HTTP headers
 - using `next-csp` to set Content Security Policy headers
@@ -263,6 +264,34 @@ Gathering user feedback and incorporating it into the application is an ongoing 
 - Weekly/monthly rewards
 - Multiplayer
 - etc.
+
+3. **Explore Alternative Technologies**: Some other technologies that could be explored in the future include:
+
+- JS frameworks: [Deno](https://deno.com/)+[Fresh](https://fresh.deno.dev/), [Svelte](https://svelte.dev/), [Astro](https://astro.build/), [Qwik](https://qwik.builder.io/), [Solid](https://www.solidjs.com/), [Bun](https://bun.sh/), [Vue](https://vuejs.org/)
+- TypeScript libraries: [Zod](https://github.com/colinhacks/zod), [tRPC](https://trpc.io/)
+- State management: [Jotai](https://jotai.org/), [Redux Toolkit](https://redux-toolkit.js.org/)
+- Database: [Firebase](https://firebase.google.com/), [Supabase](https://supabase.com/), [Planetscale](https://planetscale.com/), [Cassandra](https://cassandra.apache.org/), [FaunaDB](https://fauna.com/), [PocketBase](https://pocketbase.io/), [CockroachDB](https://www.cockroachlabs.com/)
+- Caching: [Tanstack Query](https://tanstack.com/query/latest) (also for state), [Redis](https://redis.io/) (also for db)
+- Object Relational Mapper: [Drizzle](https://www.npmjs.com/package/drizzle-orm)
+- Authentication: [Clerk](https://clerk.com/)
+- Web3: [Thirdweb](https://thirdweb.com/), [Wagmi](https://wagmi.sh/), [Ethers](https://docs.ethers.org/v6/)
+- Testing: [Playwright](https://playwright.dev/), [Cypress](https://www.cypress.io/), [Jest](https://jestjs.io/)
+- API: [GraphQL](https://graphql.org/)
+- Containerization: [Docker](https://www.docker.com/)
+- Mobile frameworks: [React Native](https://reactnative.dev/), [Flutter](https://flutter.dev/)
+- Game frameworks: [Unity](https://unity.com/), [Phaser](https://phaser.io/)
+- Headless? Serverless? Edge? ["Edge is slower if data-fetching is involved but not optimized"](https://www.youtube.com/watch?v=yOP5-3_WFus)
+
+References:
+
+- [How to OVER Engineer a Website // What is a Tech Stack?](https://youtu.be/Sxxw3qtb3_g)
+- [Web Development In 2023 - A Practical Guide](https://youtu.be/u72H_zZzkcw)
+- [2023 JavaScript Predictions: What to Expect](https://youtu.be/8SgwWpm8M4Y)
+- [2023 Frontend Dev and more](https://youtu.be/1v_TEnpqHXE?t=268)
+- [7 better ways to create a React app](https://youtu.be/2OTq15A5s0Y)
+- [I built the same app 10 times // Which JS Framework is best?](https://www.youtube.com/watch?v=cuHDQhDhvPE)
+- [My Bleeding Edge Tech Stack for 2025](https://youtu.be/rFP7rUYtOOg)
+- [5 dev trends to follow in 2023](https://youtu.be/J6lrVTrVHK4)
 
 ## Acknowledgments
 
