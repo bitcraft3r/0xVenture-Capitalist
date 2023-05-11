@@ -22,6 +22,7 @@ model User {
   image         String?
   coins         Float     @default(0)
   admin         Boolean?  @default(false)
+  resets        Int?      @default(0)
 
   accounts   Account[]
   businesses Business[]
