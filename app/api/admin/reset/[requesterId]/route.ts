@@ -7,6 +7,9 @@ interface Params extends Request {
 }
 
 export async function GET(request: Params, { params }: { params: { requesterId: string }}) {
+
+    console.log(`Hello from /api/admin/reset/[requesterId]/route.ts !`)
+
     // get the userId sent via params
     const requesterId = params.requesterId
     

@@ -1,4 +1,4 @@
-
+'use client'
 
 const AdminDashboard = () => {
 
@@ -8,8 +8,17 @@ const AdminDashboard = () => {
         // userId is the id of the player who is being reset
 
         try {
-            fetch(`/api/admin/reset/${requesterId}?userId=${userId}`, { method: "" })
-            // ...
+            fetch(`/api/admin/reset/${requesterId}?userId=${userId}`, { method: "GET" })
+                .then((response) => {
+                    if (response.ok) {
+                        console.log(`response`, response)
+                    } else {
+                        console.log(`response`, response)
+                    }
+                })
+                .catch((error) => {
+                    console.log(`error`, error)
+                })
         } catch (error) {
 
         }
@@ -25,8 +34,8 @@ const AdminDashboard = () => {
             AdminDashboard
             <div>
                 <button
-                    onClick={() => { }}
-                // onClick={() => handleResetPlayer("requesterId", "userId")}
+                    onClick={() => handleResetPlayer("requesterId", "userId")}
+                    className="border rounded-xl px-4 py-2"
                 >
                     Reset Player
                 </button>
