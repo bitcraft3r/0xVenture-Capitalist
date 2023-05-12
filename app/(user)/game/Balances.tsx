@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import useSound from 'use-sound'
+import { motion } from "framer-motion";
 
 import { useStore } from "@/app/store/GameStore"
 import ManagersModal from "./Balances/ManagersModal"
@@ -32,6 +33,7 @@ const Balances: React.FC<BalancesProps> = ({ coins, playerBusinesses, currentUse
     )
 
     const [formattedNumber, setFormattedNumber] = useState("")
+    const [isNoob, setIsNoob] = useState(false)
 
     useEffect(() => {
         setCoins(coins)
@@ -39,6 +41,11 @@ const Balances: React.FC<BalancesProps> = ({ coins, playerBusinesses, currentUse
 
     useEffect(() => {
         setFormattedNumber(FormatNumber(userCoins, true))
+
+        if (playerBusinesses[0].managerOwned) return
+        else if (userCoins >= 1000) {
+            setIsNoob(true)
+        }
     }, [userCoins])
 
     return (
@@ -50,14 +57,20 @@ const Balances: React.FC<BalancesProps> = ({ coins, playerBusinesses, currentUse
                     <div className="flex flex-col ml-[1rem] justify-around">
                         <ManagersModal playerBusinesses={playerBusinesses} userCoins={userCoins} currentUser={currentUser}>
                             {/* TODO: if (user.coins >= 1000 && business(lemon).managerOwned === false) i.e. player hasn't hired manager; then animate the Managers button */}
-                            <button
-                                onClick={() => successSound()}
+                            <motion.button
+                                onClick={() => {
+                                    successSound()
+                                    setIsNoob(false)
+                                }}
                                 onMouseEnter={() => popSound()}
                                 onMouseLeave={() => stopPopSound()}
                                 className={`${buttonClass}`}
+                                initial={!!isNoob ? { scale: 1 } : {}} // Initial scale when component mounts
+                                animate={!!isNoob ? { scale: [1, 1.2, 1] } : {}} // Animate between scales of 1, 1.2, and 1
+                                transition={!!isNoob ? { duration: 1.5, repeat: Infinity } : {}} // Animation duration and repeat indefinitely
                             >
                                 Managers
-                            </button>
+                            </motion.button>
                         </ManagersModal>
                         <UpgradesModal playerUpgrades={playerUpgrades} currentUser={currentUser}>
                             <button

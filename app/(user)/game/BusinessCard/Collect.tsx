@@ -3,7 +3,7 @@
 import Image from "next/image"
 import { toast } from "react-hot-toast";
 import useSound from 'use-sound'
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 import { useStore } from "@/app/store/GameStore"
 import { useEffect, useState, MouseEventHandler } from "react";
@@ -140,6 +140,7 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
     const [buttonClicked, setButtonClicked] = useState(false)
     const [hasManager, setHasManager] = useState(false)
     const [isNoob, setIsNoob] = useState(false)
+    const [isNewBuyer, setIsNewBuyer] = useState(false)
 
     useEffect(() => {
         setBizQuantities[index](quantity);
@@ -148,13 +149,18 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
         setBizRevenue[index](revenue);
 
         // check if player first time playing
-        if (coins === 0 && index === 0 && quantity === 1) {
-            setIsNoob(true)
-        } else {
-            return;
-        }
-
+        if (index !== 0) return
+        if (quantity !== 1) return
+        if (coins === 0) setIsNoob(true)
+        if (coins >= 4) setIsNewBuyer(true)
     }, [])
+
+    useEffect(() => {
+        // // check if player has not bought any businesses yet
+        if (index !== 0) return
+        if (quantity !== 1) return
+        if (userCoins >= 4) setIsNewBuyer(true)
+    }, [userCoins])
 
     useEffect(() => {
         setThisQuantity(bizQuantities[index]);
@@ -209,7 +215,7 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
     return (
         <div className="flex">
             {/* COLLECT BUTTON */}
-            {/* TODO: if (!!isNoob) then motion div with perpetual animation */}
+            {/* If (!!isNoob) then motion div with perpetual animation */}
             <motion.div
                 onClick={!disabled ? collectHandler : undefined}
                 onMouseEnter={() => popSound()}
@@ -244,8 +250,14 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
             </motion.div>
             <div className="flex flex-col w-4/5 items-center">
                 {/* BUY BUTTON */}
-                {/* TODO: if (user.coins >= 4 && business(lemon).quantity === 1) i.e. player still hasn't bought 2nd lemon stand; then animate the buy button */}
-                <div className="w-[100%] px-2 mb-2">
+                {/* If (!!isNewBuyer) then animate the buy button */}
+                <motion.div
+                    initial={!!isNewBuyer ? { scale: 1 } : {}} // Initial scale when component mounts
+                    animate={!!isNewBuyer ? { scale: [1, 1.1, 1] } : {}} // Animate between scales of 1, 1.2, and 1
+                    transition={!!isNewBuyer ? { duration: 1.5, repeat: Infinity } : {}} // Animation duration and repeat indefinitely
+                    className="w-[100%] px-2 mb-2"
+                    onClick={() => setIsNewBuyer(false)}
+                >
                     <BuyButton
                         id={id}
                         name={name}
@@ -256,7 +268,7 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
                         userId={userId}
                         coins={coins}
                     />
-                </div>
+                </motion.div>
                 {/* PROGRESS BARS */}
                 <div className="w-[100%] flex items-center flex-col">
                     {bizQuantities[index] > 0 ?
