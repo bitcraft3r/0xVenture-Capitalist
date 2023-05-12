@@ -13,32 +13,33 @@ const Music = () => {
 
 
     const handleMusic = () => {
-        stopMusic1(); stopMusic2(); stopMusic3(); stopMusic4(); stopMusic5(); // stop all music
-
         switch (currentMusic) {
             case 1:
                 playMusic1();
                 setCurrentMusic(2);
                 break;
             case 2:
+                stopMusic1();
                 playMusic2();
                 setCurrentMusic(3);
                 break;
             case 3:
+                stopMusic2();
                 playMusic3();
                 setCurrentMusic(4);
                 break;
             case 4:
+                stopMusic3();
                 playMusic4();
                 setCurrentMusic(5);
                 break;
             case 5:
+                stopMusic4();
                 playMusic5();
-                setCurrentMusic(6); // Loop back to playMusic1()
+                setCurrentMusic(6);
                 break;
             case 6:
-            case 6:
-                stopMusic1(); stopMusic2(); stopMusic3(); stopMusic4(); stopMusic5(); // stop all music
+                stopMusic5();
                 setCurrentMusic(1); // Loop back to playMusic1()
                 break;
             default:
