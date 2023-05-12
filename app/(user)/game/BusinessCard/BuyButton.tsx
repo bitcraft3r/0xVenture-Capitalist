@@ -262,7 +262,8 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
             onMouseEnter={() => popSound()}
             onMouseLeave={() => stopPopSound()}
             className={`
-                border-4 border-slate-700 rounded-md flex justify-between p-[0.5rem] h-[60px]
+                overflow-hidden
+                border-[3px] border-slate-700 rounded-xl flex justify-between md:p-[0.5rem] sm:p-[4px] p-[5px] md:h-[45px] sm:h-[55px] h-[50px]
                 ${isLoading
                     ? ('disabled hover:cursor-not-allowed bg-gray-400 hover:bg-gray-600')
                     : ('')
@@ -275,8 +276,8 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
                 
             `}
         >
-            <div>Buy x{buyQuantity}</div>
-            <div className="text-lg">
+            <div className="pr-[2px] sm:text-[12px] text-[10px]">Buy x{buyQuantity}</div>
+            <div className="lg:text-[18px] md:text-[16px] sm:text-[14px] text-[12px]">
                 ${currentPriceFormatted}
             </div>
         </div>

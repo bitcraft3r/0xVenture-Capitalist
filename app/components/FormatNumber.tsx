@@ -5,7 +5,7 @@ const FormatNumber = (number: number, caps: boolean) => {
     let suffixIndex = 0;
 
 
-    if (number < 1000000000) {
+    if (number < 1000000) {
         return `${number.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
     }
 

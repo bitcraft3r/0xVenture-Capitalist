@@ -213,7 +213,7 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
     }
 
     return (
-        <div className="flex">
+        <div className="flex flex-row">
             {/* COLLECT BUTTON */}
             {/* If (!!isNoob) then motion div with perpetual animation */}
             <motion.div
@@ -221,7 +221,7 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
                 onMouseEnter={() => popSound()}
                 onMouseLeave={() => stopPopSound()}
                 className={`
-                    flex flex-col justify-center items-center h-[120px]
+                    flex flex-col justify-center items-center h-[100px]
                 `}
                 initial={!!isNoob ? { scale: 1 } : {}} // Initial scale when component mounts
                 animate={!!isNoob ? { scale: [1, 1.2, 1] } : {}} // Animate between scales of 1, 1.2, and 1
@@ -255,7 +255,7 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
                     initial={!!isNewBuyer ? { scale: 1 } : {}} // Initial scale when component mounts
                     animate={!!isNewBuyer ? { scale: [1, 1.1, 1] } : {}} // Animate between scales of 1, 1.2, and 1
                     transition={!!isNewBuyer ? { duration: 1.5, repeat: Infinity } : {}} // Animation duration and repeat indefinitely
-                    className="w-[100%] px-2 mb-2"
+                    className="w-[100%] px-[1px] mb-1"
                     onClick={() => setIsNewBuyer(false)}
                 >
                     <BuyButton
@@ -288,7 +288,7 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
                                 </div>
                             </>
                         ) : (
-                            <div className="font-bold text-slate-900">
+                            <div className="font-bold text-neutral-400">
                                 {name}
                             </div>
                         )

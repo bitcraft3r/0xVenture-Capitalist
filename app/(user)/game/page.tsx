@@ -58,7 +58,7 @@ const Game = async () => {
                     <Balances coins={currentUser.coins} playerBusinesses={playerBusinesses} currentUser={currentUser} playerUpgrades={playerUpgrades} />
 
                     {/* show all businesses, split into two columns */}
-                    <div className="flex justify-around">
+                    <div className="flex mt-[2rem] justify-around md:text-[14px] sm:text-[12px] text-[10px]">
                         <div>
                             {playerBusinesses.map((business: any) => (
                                 business.index < 5 ? (

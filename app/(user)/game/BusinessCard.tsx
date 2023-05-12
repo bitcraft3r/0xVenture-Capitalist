@@ -41,31 +41,24 @@ const BusinessCard: React.FC<BusinessCardProps> = ({
 
 
     return (
-        <>
-            {/* <div>{name}</div> */}
-            <div className="flex m-[1rem] p-[0.5rem] w-[40vw]">
-
-                <div className="w-[100%]">
-                    <Collect
-                        name={name}
-                        image={image}
-                        revenue={revenue}
-                        time={time}
-                        quantity={quantity}
-                        index={index}
-                        userId={userId}
-                        managerOwned={managerOwned}
-
-                        id={id}
-                        cost={cost}
-                        multiplier={multiplier}
-                        coins={currentUser.coins}
-                    />
-
-                </div>
-
+        <div className="flex w-[40vw] py-1">
+            <div className="w-[100%]">
+                <Collect
+                    name={name}
+                    image={image}
+                    revenue={revenue}
+                    time={time}
+                    quantity={quantity}
+                    index={index}
+                    userId={userId}
+                    managerOwned={managerOwned}
+                    id={id}
+                    cost={cost}
+                    multiplier={multiplier}
+                    coins={currentUser.coins}
+                />
             </div>
-        </>
+        </div>
     )
 }
 
