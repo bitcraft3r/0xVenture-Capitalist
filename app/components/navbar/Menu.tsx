@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { toast } from "react-hot-toast";
+import useSound from 'use-sound'
 
 import Dropdown from "./Dropdown"
 import RegisterModal from "./RegisterModal";
@@ -9,6 +10,9 @@ import RegisterModal from "./RegisterModal";
 interface MenuProps { currentUser?: any }
 
 const Menu: React.FC<MenuProps> = ({ currentUser }) => {
+    const [popSound, { stop: stopPopSound }] = useSound('/audio/pop.mp3')
+    const [successSound] = useSound('/audio/success.mp3')
+
     const buttonClass = "rounded-md py-1 px-2 hover:cursor-pointer hover:shadow-md hover:bg-gray-300 text-sm"
     const [user, setUser] = useState(null)
 
@@ -37,7 +41,12 @@ const Menu: React.FC<MenuProps> = ({ currentUser }) => {
                         focus:shadow-amber-300
 
 
-                        shadow-blackA7 hover:bg-mauve3 inline-flex h-[35px] items-center justify-center rounded-[4px] bg-white px-[15px] font-medium leading-none shadow-[0_2px_10px] text-sm">
+                        shadow-blackA7 hover:bg-mauve3 inline-flex h-[35px] items-center justify-center rounded-[4px] bg-white px-[15px] font-medium leading-none shadow-[0_2px_10px] text-sm"
+                        // @ts-ignore
+                        onClick={successSound}
+                        onMouseEnter={() => popSound()}
+                        onMouseLeave={() => stopPopSound()}
+                    >
                         Sign In
                     </button>
                 </RegisterModal>

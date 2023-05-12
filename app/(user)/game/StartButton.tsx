@@ -2,6 +2,8 @@
 
 import { useState, useTransition } from "react"
 import { useRouter } from 'next/navigation';
+import useSound from 'use-sound'
+
 import RegisterModal from "../../components/navbar/RegisterModal"
 
 interface StartButtonProps {
@@ -11,6 +13,9 @@ interface StartButtonProps {
 const buttonStyle = ""
 
 const StartButton: React.FC<StartButtonProps> = ({ userId }) => {
+    const [popSound, { stop: stopPopSound }] = useSound('/audio/pop.mp3')
+    const [successSound] = useSound('/audio/success.mp3')
+    const [welcomeSound] = useSound('/audio/welcome.mp3')
     const router = useRouter();
 
     const [isPending, startTransition] = useTransition();
@@ -28,6 +33,7 @@ const StartButton: React.FC<StartButtonProps> = ({ userId }) => {
             // console.log(`data rcvd in StartButton comp: ${data}`)
 
             setIsFetching(false);
+            welcomeSound()
 
             startTransition(() => {
                 // refresh current route
@@ -54,6 +60,9 @@ const StartButton: React.FC<StartButtonProps> = ({ userId }) => {
                         focus:shadow-green7 
                     `}
                     disabled={isMutating}
+                    // @ts-ignore
+                    onMouseEnter={() => popSound()}
+                    onMouseLeave={() => stopPopSound()}
                 >
                     Start
                 </button>
@@ -69,7 +78,11 @@ const StartButton: React.FC<StartButtonProps> = ({ userId }) => {
                         hover:text-white hover:border-amber-100
                         hover:shadow-amber-500 hover:shadow-[0_0_20px]
                         focus:shadow-amber-300 
-                    `}
+                        `}
+                        // @ts-ignore
+                        onClick={successSound}
+                        onMouseEnter={() => popSound()}
+                        onMouseLeave={() => stopPopSound()}
                     >
                         Sign In To Play
                     </button>

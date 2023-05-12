@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import useSound from 'use-sound'
 
 import RegisterModal from "../navbar/RegisterModal"
 
@@ -16,6 +17,9 @@ interface CTAProps {
 const commonButtonClass = "shadow-blackA8 shadow-[0_0_10px] inline-flex my-[0.5rem] items-center justify-center rounded-full px-6 py-4 font-bold leading-none text-lg text-neutral-100 border-4"
 
 const CTA: React.FC<CTAProps> = ({ currentUser }) => {
+    const [popSound, { stop: stopPopSound }] = useSound('/audio/pop.mp3')
+    const [successSound] = useSound('/audio/success.mp3')
+
     const [user, setUser] = useState<User | null>(currentUser || null)
 
     useEffect(() => {
@@ -35,7 +39,12 @@ const CTA: React.FC<CTAProps> = ({ currentUser }) => {
                         hover:text-white hover:border-teal-100
                         hover:shadow-green10 hover:shadow-[0_0_20px]
                         focus:shadow-green7 
-                    `}>
+                        `}
+                        // @ts-ignore
+                        onClick={successSound}
+                        onMouseEnter={() => popSound()}
+                        onMouseLeave={() => stopPopSound()}
+                    >
                         Play Now!
                     </button>
                 </Link>
@@ -48,8 +57,13 @@ const CTA: React.FC<CTAProps> = ({ currentUser }) => {
                         hover:text-white hover:border-amber-100
                         hover:shadow-amber-500 hover:shadow-[0_0_20px]
                         focus:shadow-amber-300 
-                        
-                    `}>
+                        `}
+                        // @ts-ignore
+                        onClick={successSound}
+                        onMouseEnter={() => popSound()}
+                        onMouseLeave={() => stopPopSound()}
+
+                    >
                         Ready to play?
                     </button>
                 </RegisterModal>
