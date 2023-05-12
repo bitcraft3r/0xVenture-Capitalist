@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { toast } from "react-hot-toast";
 import useSound from 'use-sound'
+import { motion, AnimatePresence } from "framer-motion";
 
 import { useStore } from "@/app/store/GameStore"
 import { useEffect, useState, MouseEventHandler } from "react";
@@ -138,12 +139,21 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
     const [disabled, setDisabled] = useState(false)
     const [buttonClicked, setButtonClicked] = useState(false)
     const [hasManager, setHasManager] = useState(false)
+    const [isNoob, setIsNoob] = useState(false)
 
     useEffect(() => {
         setBizQuantities[index](quantity);
         setHasManager(managerOwned)
         setBizTime[index](time);
         setBizRevenue[index](revenue);
+
+        // check if player first time playing
+        if (coins === 0 && index === 0 && quantity === 1) {
+            setIsNoob(true)
+        } else {
+            return;
+        }
+
     }, [])
 
     useEffect(() => {
@@ -183,6 +193,7 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
                     addCoins(finalRevenue)
                     toast.success(`Collected ${finalRevenue.toLocaleString("en", { style: "currency", currency: "USD", maximumFractionDigits: 0 })} from ${name}!`)
                     coinSound()
+                    setIsNoob(false)
                 } else {
                     toast.error(data.error)
                 }
@@ -198,14 +209,17 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
     return (
         <div className="flex">
             {/* COLLECT BUTTON */}
-            {/* TODO: if (user.coins === 0 && business(lemon).quantity === 1) i.e. player has not played the game; then animate the collect button/icon */}
-            <div
+            {/* TODO: if (!!isNoob) then motion div with perpetual animation */}
+            <motion.div
                 onClick={!disabled ? collectHandler : undefined}
                 onMouseEnter={() => popSound()}
                 onMouseLeave={() => stopPopSound()}
                 className={`
                     flex flex-col justify-center items-center h-[120px]
                 `}
+                initial={!!isNoob ? { scale: 1 } : {}} // Initial scale when component mounts
+                animate={!!isNoob ? { scale: [1, 1.2, 1] } : {}} // Animate between scales of 1, 1.2, and 1
+                transition={!!isNoob ? { duration: 1.5, repeat: Infinity } : {}} // Animation duration and repeat indefinitely
             >
                 <Image
                     src={image} alt={name} width={75} height={75}
@@ -227,7 +241,7 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
                 <div className="w-[100%] text-white -mt-6 font-bold z-10">
                     {bizQuantities[index]}
                 </div>
-            </div>
+            </motion.div>
             <div className="flex flex-col w-4/5 items-center">
                 {/* BUY BUTTON */}
                 {/* TODO: if (user.coins >= 4 && business(lemon).quantity === 1) i.e. player still hasn't bought 2nd lemon stand; then animate the buy button */}
