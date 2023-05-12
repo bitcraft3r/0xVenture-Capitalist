@@ -22,7 +22,7 @@ const About: React.FC<AboutProps> = ({ userId }) => {
             <div className="mt-[1rem]">
                 <div className="text-2xl font-bold text-neutral-200 mb-1">How To Play</div>
                 <div className="text-neutral-300">
-                    <div>You start with a single lemonade stand, and expand your business empire by purchasing more businesses, hiring managers, and upgrading your businesses.</div>
+                    <div>You start with a single lemonade stand, and expand your business empire by purchasing more businesses, upgrading them, and hiring managers to run them for you.</div>
                 </div>
             </div>
             {/* LAST SECTION */}
@@ -31,7 +31,7 @@ const About: React.FC<AboutProps> = ({ userId }) => {
                 <div className="text-neutral-300">0xVC is an idle clicker game where players learn about investing in cryptocurrencies, DeFi, and NFTs, while playing a fun game. Earn virtual currency, unlock valuable assets, and become a real blockchain tycoon!</div>
             </div>
             {/* LAST SECTION */}
-            <div className="my-[1rem]">
+            <div className="mt-[1rem]">
                 <MadeByButton />
             </div>
         </div>

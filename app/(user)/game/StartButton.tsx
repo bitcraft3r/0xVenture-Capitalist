@@ -8,7 +8,7 @@ interface StartButtonProps {
     userId: string
 }
 
-const buttonStyle = "border-4 border-neutral-500 px-8 py-3 rounded-full font-semibold bg-gradient-to-br from-green-400 to-blue-500 hover:bg-gradient-to-br hover:from-emerald-300 hover:to-blue-400 hover:text-white hover:shadow-sky-400 hover:shadow-[0_0_15px] focus:shadow-blue-300 focus:border-neutral-600"
+const buttonStyle = ""
 
 const StartButton: React.FC<StartButtonProps> = ({ userId }) => {
     const router = useRouter();
@@ -44,7 +44,15 @@ const StartButton: React.FC<StartButtonProps> = ({ userId }) => {
             {userId ? (
                 <button
                     onClick={() => handleStart()}
-                    className={`${buttonStyle}`}
+                    className={`
+                        ${buttonStyle}
+                        border-4 px-8 py-3 rounded-full font-semibold 
+                        bg-gradient-to-br from-green-400 to-blue-500 border-teal-400
+                        hover:bg-gradient-to-br hover:from-emerald-300 hover:to-blue-400
+                        hover:text-white hover:border-teal-100
+                        hover:shadow-green10 hover:shadow-[0_0_20px]
+                        focus:shadow-green7 
+                    `}
                     disabled={isMutating}
                 >
                     Start
@@ -53,7 +61,15 @@ const StartButton: React.FC<StartButtonProps> = ({ userId }) => {
             ) : (
                 <RegisterModal>
                     <button
-                        className={`${buttonStyle}`}
+                        className={`
+                        ${buttonStyle}
+                        border-4 px-8 py-3 rounded-full font-semibold 
+                        bg-gradient-to-br from-amber-400 to-pink-500 border-amber-400
+                        hover:bg-gradient-to-br hover:from-amber-300 hover:to-pink-400
+                        hover:text-white hover:border-amber-100
+                        hover:shadow-amber-500 hover:shadow-[0_0_20px]
+                        focus:shadow-amber-300 
+                    `}
                     >
                         Sign In To Play
                     </button>

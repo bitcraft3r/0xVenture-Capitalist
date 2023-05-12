@@ -20,7 +20,7 @@ export default async function Home() {
         alt="Hero image"
         width={150}
         height={150}
-        className="border-8 border-orange-400 shadow-xl rounded-xl my-[1rem]"
+        className="border-8 border-amber-400 rounded-xl my-[2rem] shadow-amber-500 shadow-[0_0_32px]"
       />
 
       {/* PLAY BUTTON */}
