@@ -19,7 +19,7 @@ interface BalancesProps {
     playerUpgrades: any[],
 }
 
-const buttonClass = "border-4 border-neutral-700 shadow-md rounded-lg px-4 py-1 my-1 bg-[#857d75] text-neutral-100 text-sm font-semibold hover:text-neutral-600 hover:bg-neutral-300 hover:border-neutral-600 hover:shadow-xl focus:bg-neutral-400 focus:border-neutral-800"
+const buttonClass = "border-4 border-neutral-700 shadow-md rounded-lg px-4 md:py-1 py-[1px] md:my-1 sm:my-[1px] my-[2px] bg-[#857d75] text-neutral-100 md:text-sm sm:text-[12px] text-[10px] font-semibold hover:text-neutral-600 hover:bg-neutral-300 hover:border-neutral-600 hover:shadow-xl focus:bg-neutral-400 focus:border-neutral-800"
 
 const Balances: React.FC<BalancesProps> = ({ coins, playerBusinesses, currentUser, playerUpgrades }) => {
     const [popSound, { stop: stopPopSound }] = useSound('/audio/pop.mp3', { volume: 0.75 })
@@ -49,10 +49,12 @@ const Balances: React.FC<BalancesProps> = ({ coins, playerBusinesses, currentUse
     }, [userCoins])
 
     return (
-        <div className="mb-[2rem] bg-[#555046] p-5 rounded-xl shadow-lg">
-            <div className="flex justify-between items-center">
+        <div className="mb-[1rem] bg-[#555046] p-[1rem] rounded-xl shadow-lg">
+            <div className="flex sm:flex-row flex-col justify-between items-center">
+
+                {/* IMG + MODAL BUTTONS */}
                 <div className="flex">
-                    <Image src="/images/mascot-256px.jpeg" alt="mascot" height="128" width="128" className="rounded-lg border-4 border-neutral-700 shadow-xl" />
+                    <Image src="/images/mascot-256px.jpeg" alt="mascot" height="128" width="128" className="rounded-lg border-4 border-neutral-700 shadow-xl md:w-[128px] md:h-[128px] w-[100px] h-[100px]" />
 
                     <div className="flex flex-col ml-[1rem] justify-around">
                         <ManagersModal playerBusinesses={playerBusinesses} userCoins={userCoins} currentUser={currentUser}>
@@ -93,10 +95,19 @@ const Balances: React.FC<BalancesProps> = ({ coins, playerBusinesses, currentUse
                         </UnlocksModal>
                     </div>
                 </div>
-                <div className="xl:text-4xl lg:text-3xl md:text-2xl sm:text-xl text-lg font-bold">${formattedNumber}</div>
-                <div>
-                    <BuyQuantity />
+
+                <div className="flex w-full sm:justify-between justify-around items-center">
+                    {/* <div className="flex md:w-[55%] sm:w-[55%] w-[80%] sm:justify-between justify-around items-center"> */}
+                    {/* BALANCE */}
+                    <div className="sm:ml-[8rem] ml-0 xl:text-4xl lg:text-3xl md:text-2xl sm:text-xl text-lg font-bold md:my-0 my-[1rem]">${formattedNumber}</div>
+
+                    {/* TOGGLE QTY BUTTON */}
+                    <div className="lg:text-lg md:text-md sm:text-[14px] text-[10px]">
+                        <BuyQuantity />
+                    </div>
                 </div>
+
+
             </div>
         </div>
     )

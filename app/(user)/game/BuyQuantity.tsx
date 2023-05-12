@@ -27,7 +27,7 @@ const BuyQuantity = () => {
             onClick={() => handleBuyQuantity()}
             onMouseEnter={() => popSound()}
             onMouseLeave={() => stopPopSound()}
-            className="px-4 py-2 border-slate-700 border-4 rounded-xl bg-orange-400 hover:bg-orange-500 hover:border-slate-600 hover:shadow-xl"
+            className="px-4 md:py-2 py-1 border-slate-700 border-4 rounded-xl bg-orange-400 hover:bg-orange-500 hover:border-slate-600 hover:shadow-xl"
         >
             Buy x{buyQuantity}
         </button>
