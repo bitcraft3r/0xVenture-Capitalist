@@ -19,7 +19,7 @@ export default async function Home() {
       </h2>
       {/* IMAGE */}
       <Image
-        src="/images/mascot.jpeg"
+        src="/images/mascot-256px.jpeg"
         alt="Hero image"
         width={150}
         height={150}

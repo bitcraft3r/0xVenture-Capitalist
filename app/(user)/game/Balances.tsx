@@ -17,6 +17,8 @@ interface BalancesProps {
     playerUpgrades: any[],
 }
 
+const buttonClass = "border-4 border-neutral-700 shadow-md rounded-lg px-4 py-1 my-1 bg-[#857d75] text-neutral-100 text-sm font-semibold hover:text-neutral-600 hover:bg-neutral-300 hover:border-neutral-600 hover:shadow-xl focus:bg-neutral-400 focus:border-neutral-800"
+
 const Balances: React.FC<BalancesProps> = ({ coins, playerBusinesses, currentUser, playerUpgrades }) => {
 
     const [userCoins, setCoins] = useStore(
@@ -40,21 +42,21 @@ const Balances: React.FC<BalancesProps> = ({ coins, playerBusinesses, currentUse
         <div className="mb-[2rem] bg-[#555046] p-5 rounded-xl shadow-lg">
             <div className="flex justify-between items-center">
                 <div className="flex">
-                    <Image src="/images/mascot.jpeg" alt="mascot" height="135" width="135" className="rounded-lg border-4 border-orange-950 shadow-xl" />
+                    <Image src="/images/mascot-256px.jpeg" alt="mascot" height="128" width="128" className="rounded-lg border-4 border-neutral-700 shadow-xl" />
 
                     <div className="flex flex-col ml-[1rem] justify-around">
                         <ManagersModal playerBusinesses={playerBusinesses} userCoins={userCoins} currentUser={currentUser}>
-                            <button className="border-4 border-slate-700 rounded-lg px-4 py-1 my-1 bg-neutral-200 text-yellow-950 text-sm font-semibold hover:bg-neutral-300 hover:border-slate-600 hover:shadow-xl">Managers</button>
+                            <button className={`${buttonClass}`}>Managers</button>
                         </ManagersModal>
                         <UpgradesModal playerUpgrades={playerUpgrades} currentUser={currentUser}>
-                            <button className="border-4 border-slate-700 rounded-lg px-4 py-1 my-1 bg-neutral-200 text-yellow-950 text-sm font-semibold hover:bg-neutral-300 hover:border-slate-600 hover:shadow-xl">Upgrades</button>
+                            <button className={`${buttonClass}`}>Upgrades</button>
                         </UpgradesModal>
                         <UnlocksModal playerBusinesses={playerBusinesses} >
-                            <button className="border-4 border-slate-700 rounded-lg px-4 py-1 my-1 bg-neutral-200 text-yellow-950 text-sm font-semibold hover:bg-neutral-300 hover:border-slate-600 hover:shadow-xl">Unlocks</button>
+                            <button className={`${buttonClass}`}>Unlocks</button>
                         </UnlocksModal>
                     </div>
                 </div>
-                <div className="text-4xl font-bold">${formattedNumber}</div>
+                <div className="xl:text-4xl lg:text-3xl md:text-2xl sm:text-xl text-lg font-bold">${formattedNumber}</div>
                 <div>
                     <BuyQuantity />
                 </div>
