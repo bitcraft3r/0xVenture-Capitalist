@@ -2,11 +2,15 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
+import useSound from 'use-sound'
 
 import { useStore } from "@/app/store/GameStore"
 import { useState } from 'react';
 
 const ManagersModal = ({ children, playerBusinesses, userCoins, currentUser }: { children: React.ReactNode, playerBusinesses: any[], userCoins: number, currentUser: any }) => {
+    const [popSound, { stop: stopPopSound }] = useSound('/audio/pop.mp3', { volume: 0.75 })
+    const [deniedSound] = useSound('/audio/denied.mp3', { volume: 0.4 })
+    const [tadaMidSound] = useSound('/audio/tada-mid.mp3')
 
     const router = useRouter();
 
@@ -19,24 +23,26 @@ const ManagersModal = ({ children, playerBusinesses, userCoins, currentUser }: {
     )
 
     const purchaseHandler = async (businessId: string, managerCost: number, userCoins: number, managerOwned: boolean, businessQuantity: number) => {
-        // console.log(`purchaseHandler`)
-
         setIsLoading(true)
 
         try {
             fetch(`/api/player/business/manager/${currentUser.id}?businessId=${businessId}&managerCost=${managerCost}&userCoins=${userCoins}&businessQuantity=${businessQuantity}`, { method: 'GET' })
                 .then((response) => response.json())
                 .then((data) => {
-                    // console.log(data);
                     if (data.success) {
                         addCoins(-managerCost);
                         toast.success(data.success);
+                        tadaMidSound()
                         router.refresh();
                     }
-                    else if (data.error) { toast.error(data.error) }
+                    else if (data.error) {
+                        toast.error(data.error)
+                        deniedSound()
+                    }
                 })
         } catch (error) {
             console.log(error)
+            deniedSound()
         } finally {
             setIsLoading(false)
             router.refresh();
@@ -74,12 +80,15 @@ const ManagersModal = ({ children, playerBusinesses, userCoins, currentUser }: {
                             </div>
                             <button
                                 onClick={() => purchaseHandler(business.id, business.managerCost, userCoins, business.managerOwned, business.quantity)}
+                                onMouseEnter={() => popSound()}
+                                onMouseLeave={() => stopPopSound()}
                                 disabled={isLoading}
                                 className={`
                                     py-2 px-5 border rounded-xl text-xl
                                     ${business.managerOwned
                                         ? 'disabled bg-emerald-200 hover:cursor-not-allowed'
                                         : userCoins < business.managerCost || business.quantity === 0
+                                            // TODO / BUG: This check is failing to detect if `business.quantity` has increased after the page loaded, since `business.quantity` is loaded at the beginning only once, and is not updated when the `business.quantity` is updated in the database. i.e. If player doesn't own a business, then buys 1 business, the hire button still remains disabled until the page is refreshed.
                                             ? 'disabled hover:cursor-not-allowed bg-gray-300 hover:bg-gray-400'
                                             : 'bg-sky-200 hover:bg-sky-400'
 

@@ -2,11 +2,15 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
+import useSound from 'use-sound'
 
 import { useStore } from "@/app/store/GameStore"
 import { useState } from 'react';
 
 const UpgradesModal = ({ children, playerUpgrades, currentUser }: { children: React.ReactNode, playerUpgrades: any[], currentUser: any }) => {
+    const [popSound, { stop: stopPopSound }] = useSound('/audio/pop.mp3', { volume: 0.75 })
+    const [deniedSound] = useSound('/audio/denied.mp3', { volume: 0.4 })
+    const [tadaHighSound] = useSound('/audio/tada-high.mp3')
 
     const router = useRouter();
 
@@ -19,40 +23,27 @@ const UpgradesModal = ({ children, playerUpgrades, currentUser }: { children: Re
         ]
     )
 
-
-    // !! want to prevent user from purchasing multiple upgrades
-
-
-
-    // ? want to `throttle` function to prevent multiple clicks
-
-    // (A) async static ? to prevent multiple clicks
     const upgradeHandler = async (upgradeId: string, price: number, businessName: string, upgradeDescription: string) => {
-
-        // (B) add a 30ms (or longer) delay before execute
-
-
-        // (C) or create a "closure" function
-        // https://stackoverflow.com/questions/750486/javascript-closure-inside-loops-simple-practical-example
-
-
-        // console.log(`upgradeHandler`)
         setIsLoading(true)
 
         try {
             fetch(`/api/player/upgrade/buy/${currentUser.id}?upgradeId=${upgradeId}&price=${price}&businessName=${businessName}&upgradeDescription=${upgradeDescription}`, { method: 'GET' })
                 .then((response) => response.json())
                 .then((data) => {
-                    // console.log(data);
                     if (data.success) {
                         addCoins(-price);
                         toast.success(data.success);
+                        tadaHighSound()
                         router.refresh();
                     }
-                    else if (data.error) { toast.error(data.error) }
+                    else if (data.error) {
+                        toast.error(data.error)
+                        deniedSound()
+                    }
                 })
         } catch (error) {
             console.log(error)
+            deniedSound()
         } finally {
             router.refresh();
             setIsLoading(false)
@@ -90,6 +81,8 @@ const UpgradesModal = ({ children, playerUpgrades, currentUser }: { children: Re
                             </div>
                             <button
                                 onClick={() => upgradeHandler(upgrade.id, upgrade.price, upgrade.business, upgrade.description)}
+                                onMouseEnter={() => popSound()}
+                                onMouseLeave={() => stopPopSound()}
                                 disabled={isLoading}
                                 className={`
                                     py-2 px-5 border rounded-xl text-xl

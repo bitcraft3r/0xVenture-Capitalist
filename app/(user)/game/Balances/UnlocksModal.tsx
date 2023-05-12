@@ -1,8 +1,12 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
+import useSound from 'use-sound'
+
 import UnlocksGalleryModal from './UnlocksGalleryModal';
 
 const UnlocksModal = ({ children, playerBusinesses }: { children: React.ReactNode, playerBusinesses: any[] }) => {
+    const [popSound, { stop: stopPopSound }] = useSound('/audio/pop.mp3', { volume: 0.75 })
+    const [welcomeSound] = useSound('/audio/welcome.mp3', { volume: 0.6 })
 
     // map playerBusinesses, if business quantity is less than the tier, show the name of business + next tier's unlock message e.g. "Lemonade Stand \n 2x Speed". also show the next tier's quantity.
 
@@ -82,6 +86,10 @@ const UnlocksModal = ({ children, playerBusinesses }: { children: React.ReactNod
 
                             <UnlocksGalleryModal name={business.name} quantity={business.quantity}>
                                 <button
+                                    // @ts-ignore
+                                    onClick={welcomeSound}
+                                    onMouseEnter={() => popSound()}
+                                    onMouseLeave={() => stopPopSound()}
                                     className={`
                                     py-2 px-5 border rounded-xl text-xl hover:bg-emerald-200
                           

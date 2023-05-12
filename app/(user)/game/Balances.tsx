@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Image from "next/image"
+import useSound from 'use-sound'
 
 import { useStore } from "@/app/store/GameStore"
 import ManagersModal from "./Balances/ManagersModal"
@@ -20,6 +21,8 @@ interface BalancesProps {
 const buttonClass = "border-4 border-neutral-700 shadow-md rounded-lg px-4 py-1 my-1 bg-[#857d75] text-neutral-100 text-sm font-semibold hover:text-neutral-600 hover:bg-neutral-300 hover:border-neutral-600 hover:shadow-xl focus:bg-neutral-400 focus:border-neutral-800"
 
 const Balances: React.FC<BalancesProps> = ({ coins, playerBusinesses, currentUser, playerUpgrades }) => {
+    const [popSound, { stop: stopPopSound }] = useSound('/audio/pop.mp3', { volume: 0.75 })
+    const [successSound] = useSound('/audio/success.mp3')
 
     const [userCoins, setCoins] = useStore(
         (state) => [
@@ -46,13 +49,33 @@ const Balances: React.FC<BalancesProps> = ({ coins, playerBusinesses, currentUse
 
                     <div className="flex flex-col ml-[1rem] justify-around">
                         <ManagersModal playerBusinesses={playerBusinesses} userCoins={userCoins} currentUser={currentUser}>
-                            <button className={`${buttonClass}`}>Managers</button>
+                            <button
+                                onClick={() => successSound()}
+                                onMouseEnter={() => popSound()}
+                                onMouseLeave={() => stopPopSound()}
+                                className={`${buttonClass}`}
+                            >
+                                Managers
+                            </button>
                         </ManagersModal>
                         <UpgradesModal playerUpgrades={playerUpgrades} currentUser={currentUser}>
-                            <button className={`${buttonClass}`}>Upgrades</button>
+                            <button
+                                onClick={() => successSound()}
+                                onMouseEnter={() => popSound()}
+                                onMouseLeave={() => stopPopSound()}
+                                className={`${buttonClass}`}>
+                                Upgrades
+                            </button>
                         </UpgradesModal>
                         <UnlocksModal playerBusinesses={playerBusinesses} >
-                            <button className={`${buttonClass}`}>Unlocks</button>
+                            <button
+                                onClick={() => successSound()}
+                                onMouseEnter={() => popSound()}
+                                onMouseLeave={() => stopPopSound()}
+                                className={`${buttonClass}`}
+                            >
+                                Unlocks
+                            </button>
                         </UnlocksModal>
                     </div>
                 </div>
