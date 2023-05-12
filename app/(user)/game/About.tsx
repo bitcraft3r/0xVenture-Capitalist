@@ -12,7 +12,7 @@ const About: React.FC<AboutProps> = ({ userId }) => {
             <div>
                 <h1 className="text-3xl font-bold text-neutral-100 mb-1">0xVenture Capitalist</h1>
                 <h2 className="text-lg text-neutral-300">
-                    Accumulate wealth and become the world's wealthiest crypto tycoon!
+                    Accumulate wealth and become the world's richest crypto tycoon!
                 </h2>
                 <div className="mt-[1rem]">
                     <StartButton userId={userId} />
@@ -22,7 +22,7 @@ const About: React.FC<AboutProps> = ({ userId }) => {
             <div className="mt-[1rem]">
                 <div className="text-2xl font-bold text-neutral-200 mb-1">How To Play</div>
                 <div className="text-neutral-300">
-                    <div>You start with a single lemonade stand, and expand your business empire by purchasing more businesses, upgrading them, and hiring managers to run them for you.</div>
+                    <div>Start with a single lemonade stand, and expand your business empire by purchasing more businesses, upgrading them, and hiring managers to run them for you.</div>
                 </div>
             </div>
             {/* LAST SECTION */}

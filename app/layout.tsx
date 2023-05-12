@@ -1,4 +1,4 @@
-import { Inter } from 'next/font/google'
+import { Signika } from 'next/font/google'
 
 import './globals.css'
 import Navbar from './components/navbar/Navbar'
@@ -10,7 +10,7 @@ export const metadata = {
   description: `0xVC is an idle clicker game, where players aim to become the wealthiest crypto tycoon in the world. Learn about investing in crypto, DeFi, and NFTs, while playing a fun game!`,
 }
 
-const font = Inter({ subsets: ['latin'] })
+const font = Signika({ subsets: ['latin'] })
 
 export default async function RootLayout({
   children,
