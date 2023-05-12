@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import useSound from 'use-sound'
 
 const Music = () => {
@@ -11,41 +11,46 @@ const Music = () => {
     const [playMusic5, { stop: stopMusic5 }] = useSound('/audio/beach-vibes.mp3')
     const [currentMusic, setCurrentMusic] = useState(1);
 
+    const stopFunctions = [stopMusic1, stopMusic2, stopMusic3, stopMusic4, stopMusic5];
+
+    const stopAllMusic = () => {
+        stopFunctions.forEach(stopFunction => stopFunction());
+    };
 
     const handleMusic = () => {
+        setCurrentMusic(current => {
+            const nextMusic = current === 6 ? 1 : current + 1; // Loop back to playMusic1() when currentMusic is 6
+            return nextMusic;
+        });
+
         switch (currentMusic) {
             case 1:
+                stopAllMusic();
                 playMusic1();
-                setCurrentMusic(2);
                 break;
             case 2:
-                stopMusic1();
+                stopAllMusic();
                 playMusic2();
-                setCurrentMusic(3);
                 break;
             case 3:
-                stopMusic2();
+                stopAllMusic();
                 playMusic3();
-                setCurrentMusic(4);
                 break;
             case 4:
-                stopMusic3();
+                stopAllMusic();
                 playMusic4();
-                setCurrentMusic(5);
                 break;
             case 5:
-                stopMusic4();
+                stopAllMusic();
                 playMusic5();
-                setCurrentMusic(6);
                 break;
             case 6:
-                stopMusic5();
-                setCurrentMusic(1); // Loop back to playMusic1()
+                stopAllMusic();
                 break;
             default:
                 break;
         }
-    }
+    };
 
     return (
         <div
