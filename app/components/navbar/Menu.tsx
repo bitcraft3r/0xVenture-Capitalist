@@ -28,7 +28,16 @@ const Menu: React.FC<MenuProps> = ({ currentUser }) => {
             ) : (
 
                 <RegisterModal>
-                    <button className="text-black shadow-blackA7 hover:bg-mauve3 inline-flex h-[35px] items-center justify-center rounded-[4px] bg-white px-[15px] font-medium leading-none shadow-[0_2px_10px] text-sm">
+                    <button className="
+                        bg-gradient-to-br from-amber-500 to-pink-500
+                        text-neutral-100
+                        hover:bg-gradient-to-br hover:from-amber-400 hover:to-pink-400
+                        hover:text-white
+                        hover:shadow-amber-500 hover:shadow-[0_0_20px]
+                        focus:shadow-amber-300
+
+
+                        shadow-blackA7 hover:bg-mauve3 inline-flex h-[35px] items-center justify-center rounded-[4px] bg-white px-[15px] font-medium leading-none shadow-[0_2px_10px] text-sm">
                         Sign In
                     </button>
                 </RegisterModal>
