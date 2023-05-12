@@ -2,7 +2,7 @@
 const nextConfig = {
   experimental: {
     // appDir: true, // now stable in 13.4
-    serverActions: true,
+    // serverActions: true,
   },
   images: {
     remotePatterns: [
