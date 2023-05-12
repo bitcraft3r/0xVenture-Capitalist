@@ -49,6 +49,7 @@ const Balances: React.FC<BalancesProps> = ({ coins, playerBusinesses, currentUse
 
                     <div className="flex flex-col ml-[1rem] justify-around">
                         <ManagersModal playerBusinesses={playerBusinesses} userCoins={userCoins} currentUser={currentUser}>
+                            {/* TODO: if (user.coins >= 1000 && business(lemon).managerOwned === false) i.e. player hasn't hired manager; then animate the Managers button */}
                             <button
                                 onClick={() => successSound()}
                                 onMouseEnter={() => popSound()}

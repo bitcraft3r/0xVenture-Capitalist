@@ -167,7 +167,6 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
             return
         }
 
-        // TODO: Add a timer of `time` seconds before executing the collect function, and while the timer is running, disable the button
         setDisabled(true)
         setButtonClicked(true)
         welcomeSound()
@@ -199,6 +198,7 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
     return (
         <div className="flex">
             {/* COLLECT BUTTON */}
+            {/* TODO: if (user.coins === 0 && business(lemon).quantity === 1) i.e. player has not played the game; then animate the collect button/icon */}
             <div
                 onClick={!disabled ? collectHandler : undefined}
                 onMouseEnter={() => popSound()}
@@ -230,6 +230,7 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
             </div>
             <div className="flex flex-col w-4/5 items-center">
                 {/* BUY BUTTON */}
+                {/* TODO: if (user.coins >= 4 && business(lemon).quantity === 1) i.e. player still hasn't bought 2nd lemon stand; then animate the buy button */}
                 <div className="w-[100%] px-2 mb-2">
                     <BuyButton
                         id={id}
