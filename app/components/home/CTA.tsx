@@ -13,6 +13,8 @@ interface CTAProps {
     currentUser?: any
 }
 
+const commonButtonClass = "shadow-blackA8 shadow-[0_0_10px] inline-flex h-[35px] items-center justify-center rounded-[4px] px-[15px] font-bold leading-none text-lg text-neutral-100"
+
 const CTA: React.FC<CTAProps> = ({ currentUser }) => {
     const [user, setUser] = useState<User | null>(currentUser || null)
 
@@ -26,13 +28,28 @@ const CTA: React.FC<CTAProps> = ({ currentUser }) => {
         <>
             {user ? (
                 <Link href="/game">
-                    <button className="bg-green-500 text-white shadow-blackA7 hover:bg-green-600 focus:shadow-green7 inline-flex h-[35px] items-center justify-center rounded-[4px] px-[15px] font-bold leading-none shadow-[0_2px_10px] text-lg">
+                    <button className={`
+                        ${commonButtonClass}
+                        bg-gradient-to-br from-emerald-400 to-green-500 
+                        hover:bg-gradient-to-br hover:from-emerald-300 hover:to-green-400
+                        hover:text-white
+                        hover:shadow-green10 hover:shadow-[0_0_20px]
+                        focus:shadow-green7 
+                    `}>
                         Play Now!
                     </button>
                 </Link>
             ) : (
                 <RegisterModal>
-                    <button className="bg-rose-100 text-rose-500 shadow-blackA7 hover:bg-rose-200 focus:shadow-rose-200 inline-flex h-[35px] items-center justify-center rounded-[4px] px-[15px] font-bold leading-none shadow-[0_2px_10px] text-lg">
+                    <button className={`
+                        ${commonButtonClass}
+                        bg-gradient-to-br from-amber-400 to-pink-500 
+                        hover:bg-gradient-to-br hover:from-amber-300 hover:to-pink-400
+                        hover:text-white
+                        hover:shadow-amber-500 hover:shadow-[0_0_20px]
+                        focus:shadow-amber-300 
+                        
+                    `}>
                         Ready to play?
                     </button>
                 </RegisterModal>

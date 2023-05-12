@@ -24,7 +24,7 @@ export default async function RootLayout({
       <body className={font.className}>
         <ToasterProvider />
         <Navbar currentUser={currentUser} />
-        <main className="pt-[6rem] px-[1rem] bg-[#706960] text-neutral-100 h-[100vh]">
+        <main className="py-[6rem] px-[1rem] bg-[#706960] text-neutral-100 h-[100vh]">
           {children}
         </main>
       </body>

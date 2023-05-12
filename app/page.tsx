@@ -8,23 +8,36 @@ export default async function Home() {
   const currentUser = await getCurrentUser();
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen -mt-[10rem]">
+    <div className="flex flex-col justify-center items-center text-center">
+      <h1
+        className="text-3xl font-bold text-neutral-100 mb-1"
+      >
+        0xVenture Capitalist
+      </h1>
+      <h2 className="text-lg text-neutral-300">
+        The world's easiest game!
+      </h2>
       {/* IMAGE */}
       <Image
         src="/images/mascot.jpeg"
         alt="Hero image"
-        width={200}
-        height={200}
+        width={150}
+        height={150}
+        className="border-8 border-orange-400 shadow-xl rounded-xl my-[1rem]"
       />
-      {/* HERO SECTION */}
-      <div className="max-w-3xl text-center mt-[1rem]">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          Be the next blockchain billionaire!
-        </h1>
-        <p className="text-xl text-gray-700 mb-8">
-          Build your money EMPIRE and rise to the TOP!
-        </p>
+      {/* PLAY BUTTON */}
+      <div
+      >
         <CTA currentUser={currentUser} />
+      </div>
+      {/* HERO SECTION */}
+      <div className="max-w-3xl text-center">
+        {/* <p className="text-xl text-gray-700 mt-[5rem]">
+          Build your money EMPIRE!
+          Rise to the TOP!
+          Become a blockchain TYCOON!
+          Make your FORTUNE!
+        </p> */}
       </div>
     </div>
   )
