@@ -4,7 +4,7 @@
 
 It is an idle/clicker/incremental game that educates players about investing, blockchain and cryptocurrencies.
 
-![0xVenture Capitalist Homepage](https://github.com/sov3333/0xVenture-Capitalist/assets/8282076/38768bd7-6b09-4ea5-9a7e-aeee6170b78d)
+![0xVenture Capitalist Gameplay x1.5 speed](https://i.imgur.com/z75a3jD.gif)
 
 > _Invest in different blockchain businesses and gain revenue, starting out with a single lemonade stand. Hire managers to earn while you're away, and make as much money as possible._
 >
@@ -14,7 +14,7 @@ It is an idle/clicker/incremental game that educates players about investing, bl
 
 The game is built using [Next.js](https://nextjs.org/), bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-To provide an engaging and visually appealing user interface, with smooth gameplay mechanics and sound effects, the following libraries are used:
+To provide a visually appealing user interface, an interactive and engaging experience, and with smooth gameplay mechanics, the following libraries are used:
 
 - Languages: [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript), [TypeScript](https://www.typescriptlang.org/)
 - Framework: [React](https://react.dev/)
@@ -93,6 +93,8 @@ npm run dev
 
 ## Wireframes
 
+![0xVenture Capitalist Homepage](https://github.com/sov3333/0xVenture-Capitalist/assets/8282076/38768bd7-6b09-4ea5-9a7e-aeee6170b78d)
+
 ![0xVenture Capitalist Game Page](https://github.com/sov3333/0xVenture-Capitalist/assets/8282076/3550d8f8-9846-4fa2-b786-1ebb9d01c305)
 
 | CRUD | Method | Endpoint                              | Description                                                                                                                                         |
@@ -112,7 +114,7 @@ npm run dev
 
 I decided to use `Next.js`, `TypeScript`, `Auth.js`, `Prisma`, `TailwindCSS` and `Radix UI` from the start. The usual process is to decide on a stack after the project is scoped, but I wanted to challenge myself to learn new technologies and build a full-stack application with a modern tech stack.
 
-After the initial planning phase, I used an an iterative approach to develop the game, first focusing on building the core functionality and gradually adding features to enhance the gameplay experience, and quickly work towards a working prototype.
+After the initial planning phase, I used an iterative approach to develop the game, first focusing on building the core functionality and gradually adding features to enhance the gameplay experience, and quickly work towards a working prototype.
 
 This allowed me to launch the game publicly in 10 days, fix major bugs on launch day, and further iterate on it to improve the user experience.
 
@@ -274,7 +276,7 @@ Gathering user feedback and incorporating it into the application is an ongoing 
 - Caching: [Tanstack Query](https://tanstack.com/query/latest) (also for state), [Redis](https://redis.io/) (also for db)
 - Object Relational Mapper: [Drizzle](https://www.npmjs.com/package/drizzle-orm)
 - Authentication: [Clerk](https://clerk.com/)
-- Web3: [Thirdweb](https://thirdweb.com/), [Wagmi](https://wagmi.sh/), [Ethers](https://docs.ethers.org/v6/)
+- Web3: [Thirdweb](https://thirdweb.com/), [Wagmi](https://wagmi.sh/), [Ethers](https://docs.ethers.org/v6/), [Siwe](https://docs.login.xyz/general-information/siwe-overview)
 - Testing: [Playwright](https://playwright.dev/), [Cypress](https://www.cypress.io/), [Jest](https://jestjs.io/)
 - API: [GraphQL](https://graphql.org/)
 - Containerization: [Docker](https://www.docker.com/)
