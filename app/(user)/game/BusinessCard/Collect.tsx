@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import { toast } from "react-hot-toast";
+import useSound from 'use-sound'
 
 import { useStore } from "@/app/store/GameStore"
 import { useEffect, useState, MouseEventHandler } from "react";
@@ -27,6 +28,10 @@ interface CollectProps {
 }
 
 const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity, managerOwned, index, userId, id, cost, multiplier, coins }) => {
+    const [popSound, { stop: stopPopSound }] = useSound('/audio/pop.mp3', { volume: 0.75 })
+    const [welcomeSound] = useSound('/audio/welcome.mp3', { volume: 0.6 })
+    const [deniedSound] = useSound('/audio/denied.mp3', { volume: 0.4 })
+    const [coinSound] = useSound('/audio/coin.mp3')
 
     const [
         userCoins,
@@ -151,18 +156,21 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
         // if player doesn't own any of this business, return
         if (bizQuantities[index] < 1) {
             toast.error(`You must own at least one ${name}!`)
+            deniedSound()
             return
         }
 
         // if player owns a manager for this business, return
         if (managerOwned) {
             toast.error(`You already have a manager running ${name}!`)
+            deniedSound()
             return
         }
 
         // TODO: Add a timer of `time` seconds before executing the collect function, and while the timer is running, disable the button
         setDisabled(true)
         setButtonClicked(true)
+        welcomeSound()
 
         setTimeout(async () => {
             try {
@@ -175,6 +183,7 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
                     // success!
                     addCoins(finalRevenue)
                     toast.success(`Collected ${finalRevenue.toLocaleString("en", { style: "currency", currency: "USD", maximumFractionDigits: 0 })} from ${name}!`)
+                    coinSound()
                 } else {
                     toast.error(data.error)
                 }
@@ -192,6 +201,8 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
             {/* COLLECT BUTTON */}
             <div
                 onClick={!disabled ? collectHandler : undefined}
+                onMouseEnter={() => popSound()}
+                onMouseLeave={() => stopPopSound()}
                 className={`
                     flex flex-col justify-center items-center h-[120px]
                 `}

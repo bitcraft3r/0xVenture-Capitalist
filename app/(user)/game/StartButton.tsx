@@ -60,7 +60,6 @@ const StartButton: React.FC<StartButtonProps> = ({ userId }) => {
                         focus:shadow-green7 
                     `}
                     disabled={isMutating}
-                    // @ts-ignore
                     onMouseEnter={() => popSound()}
                     onMouseLeave={() => stopPopSound()}
                 >

@@ -1,5 +1,4 @@
 import Collect from './BusinessCard/Collect';
-import BuyButton from './BusinessCard/BuyButton';
 
 interface BusinessCardProps {
     id: string,

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { toast } from "react-hot-toast"
+import useSound from 'use-sound'
 
 import { useStore } from "@/app/store/GameStore"
 import FormatNumber from "@/app/components/FormatNumber"
@@ -18,6 +19,20 @@ interface BuyButtonProps {
 }
 
 const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quantity, index, userId, coins }) => {
+    const [popSound, { stop: stopPopSound }] = useSound('/audio/pop.mp3', { volume: 0.75 })
+    const [deniedSound] = useSound('/audio/denied.mp3', { volume: 0.4 })
+    const [tadaLowSound] = useSound('/audio/tada-low.mp3')
+    const [tadaMidSound] = useSound('/audio/tada-mid.mp3')
+    const [tadaHighSound] = useSound('/audio/tada-high.mp3')
+
+    // for increasing pitch on every click
+    const [playbackRate, setPlaybackRate] = useState(0.75);
+    const [coinSound] = useSound('/audio/coin.mp3', {
+        playbackRate,
+        // `interrupt` ensures that if the sound starts again before it's
+        // ended, it will truncate it. Otherwise, the sound can overlap.
+        interrupt: true,
+    })
 
     const [
         userCoins,
@@ -129,44 +144,29 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
 
     }, [userCoins, quantity, bizQuantities[index], buyQuantity])
 
-    // const formatNumber = (number: number) => {
-    //     const suffixes = ["", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion", "octillion", "nonillion", "decillion"];
-    //     let suffixIndex = 0;
-    //     while (number >= 1000 && suffixIndex < suffixes.length - 1) {
-    //         number /= 1000;
-    //         suffixIndex++;
-    //     }
-    //     return `${number.toFixed(3)} ${suffixes[suffixIndex]}`;
-    // }
-
-
     const purchaseHandler = async () => {
         setIsLoading(true)
-
-        // console.log(`userCoins`, "userCoins")
-        // console.log(`currentPrice`, currentPrice)
 
         // if player doesn't have enough coins, return
         if (userCoins < currentPrice) {
             toast.error(`You have not enough coins!`)
+            deniedSound()
+            setIsLoading(false)
             return
         }
 
         // if player has enough coins, then purchase
         try {
-
-
             const response = await fetch(`/api/player/business/buy/${userId}?quantity=${buyQuantity}&amount=${currentPrice}&businessId=${id}&quantityBefore=${bizQuantities[index]}`)
 
             let quantityBefore = bizQuantities[index]
             let quantityAfter = quantityBefore + buyQuantity
 
-            // console.log(quantityBefore, quantityAfter)
-
             if (
                 quantityBefore < 25 && quantityAfter >= 25
             ) {
                 toast.success(`2x speed on your ${name}!`)
+                tadaLowSound()
                 // set store's bizTime[index] to x0.5
                 setBizTime[index](bizTime[index] / 2)
             }
@@ -174,6 +174,7 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
                 quantityBefore < 50 && quantityAfter >= 50
             ) {
                 toast.success(`2x speed on your ${name}!`)
+                tadaLowSound()
                 // set store's bizTime[index] to x0.5
                 setBizTime[index](bizTime[index] / 2)
             }
@@ -184,6 +185,7 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
                 quantityBefore < 400 && quantityAfter >= 400
             ) {
                 toast.success(`2x speed on your ${name}!`)
+                tadaLowSound()
                 // set store's bizTime[index] to x0.5
                 setBizTime[index](bizTime[index] / 2)
             }
@@ -204,6 +206,7 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
                 quantityBefore < 1900 && quantityAfter >= 1900
             ) {
                 toast.success(`4x revenue on your ${name}!`)
+                tadaMidSound()
                 // set store's bizRevenue[index] to x4
                 setBizRevenue[index](bizRevenue[index] * 4)
             }
@@ -219,6 +222,7 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
                 quantityBefore < 4750 && quantityAfter >= 4750
             ) {
                 toast.success(`2x revenue on your ${name}!`)
+                tadaMidSound()
                 // set store's bizRevenue[index] to x2
                 setBizRevenue[index](bizRevenue[index] * 2)
             }
@@ -230,6 +234,7 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
                 quantityBefore < 5000 && quantityAfter >= 5000
             ) {
                 toast.success(`5x revenue on your ${name}!`)
+                tadaHighSound()
                 // set store's bizRevenue[index] to x5
                 setBizRevenue[index](bizRevenue[index] * 2)
             }
@@ -240,20 +245,22 @@ const BuyButton: React.FC<BuyButtonProps> = ({ id, name, cost, multiplier, quant
             toast(`Purchased ${buyQuantity} ${name}!`, {
                 icon: '🛒',
             })
+            coinSound()
 
         } catch (error) {
 
         } finally {
             setIsLoading(false)
+            setPlaybackRate(playbackRate + 0.1);
         }
-
-
 
     }
 
     return (
         <div
             onClick={isLoading ? undefined : () => purchaseHandler()}
+            onMouseEnter={() => popSound()}
+            onMouseLeave={() => stopPopSound()}
             className={`
                 border-4 border-slate-700 rounded-md flex justify-between p-[0.5rem] h-[60px]
                 ${isLoading
