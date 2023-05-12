@@ -4,11 +4,48 @@
 
 It is an idle/clicker/incremental game that educates players about investing, blockchain and cryptocurrencies.
 
+<img width="640" alt="0xVenture Capitalist Homepage" src="https://github.com/sov3333/0xVenture-Capitalist/assets/8282076/4f5f7fd1-5daa-4536-8a59-75db3b0093ac">
+
 ![0xVenture Capitalist Gameplay x1.5 speed](https://i.imgur.com/z75a3jD.gif)
 
 > _Invest in different blockchain businesses and gain revenue, starting out with a single lemonade stand. Hire managers to earn while you're away, and make as much money as possible._
 >
 > _Become a blockchain business tycoon, and **MAKE YOUR FORTUNE**!_
+
+## Overview
+
+### User Stories
+
+- As a player, I want to invest in various businesses to generate revenue.
+- As a player, I want to hire managers to earn money even when I'm not actively playing.
+- As a player, I want to track my progress and see how much money I've earned.
+- As a player, I want to upgrade my businesses to increase their revenue.
+- As a player, I want to unlock new businesses as I progress in the game.
+- As a player, I want to have an engaging and visually appealing user interface.
+- As a player, I want to experience smooth gameplay with no errors.
+- As a player, I want to learn about investing, blockchain and cryptocurrencies.
+- As a player, I want to be guided on how to play when I first start playing.
+- As a player, I want to earn rewards for playing the game.
+
+### Wireframes
+
+<img width="712" alt="0xVenture Capitalist Game" src="https://github.com/sov3333/0xVenture-Capitalist/assets/8282076/d760046f-7017-45e7-bf26-b8c32f50eac4">
+<img width="641" alt="0xVenture Capitalist About" src="https://github.com/sov3333/0xVenture-Capitalist/assets/8282076/84ccd48a-59ff-4718-bf44-81473d8df519">
+
+### Backend Routes
+
+| CRUD | Method | Endpoint                              | Description                                                                                                                                         |
+| ---- | ------ | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| C    | POST   | /api/auth/[...nextauth]               | Create new user.                                                                                                                                    |
+| R    | GET    | /api/player/[email]                   | Get a `User` by `user.email`.                                                                                                                       |
+| R    | GET    | /api/player/business/[userId]         | Get all `Business` with `userId`.                                                                                                                   |
+| U    | PUT    | /api/player/business/buy/[userId]     | Buy a `Business` for `userId`, update `user.coins`, `business.quantity`, and `business.time` or `business.revenue` from unlock bonus if any.        |
+| U    | PUT    | /api/player/business/collect/[userId] | Collect profits for `userId`, update `user.coins`.                                                                                                  |
+| U    | PUT    | /api/player/business/manager/[userId] | Purchase a manager for `Business` for `userId`, update `user.coins` and `business.managerOwned`.                                                    |
+| C    | POST   | /api/player/business/seed/[id]        | Create all `Business` and `Upgrade` for `userId`.                                                                                                   |
+| R    | GET    | /api/upgrade/[userId]                 | Get all `Upgrade` with `userId`.                                                                                                                    |
+| U    | PUT    | /api/upgrade/buy/[userId]             | Purchase an `Upgrade` for `userId`, update `user.coins`, `upgrade.purchased`, and `business.revenue`.                                               |
+| D    | DELETE | /api/admin/reset/[userId]             | If requester's `user.admin === true`, delete all `Business` and `Upgrade` with `userId`, reset `user.coins` to 0, and increment `user.resets` by 1. |
 
 ## Technologies Used
 
@@ -37,78 +74,6 @@ To provide a visually appealing user interface, an interactive and engaging expe
   - [GitHub Copilot](https://github.com/features/copilot)
   - [ChatGPT](https://chat.openai.com/)
   - [Lexica](https://lexica.art/)
-
-## Installation and Setup
-
-0. Clone the repository:
-
-```bash
-git clone https://github.com/sov3333/0xVenture-Capitalist.git
-```
-
-1. Install dependencies:
-
-```bash
-cd your-repo
-npm i
-```
-
-2. Set up the database:
-
-Create a MongoDB database and obtain the connection URL. Rename the `.env.example` file to `.env` and update the `DATABASE_URL` with your MongoDB connection URL.
-
-Sync Prisma client API with the DB:
-
-```bash
-npx prisma db push
-```
-
-Whenever Prisma schema is changed, need to manually invoke `npx prisma db push` in order to accomodate the changes in the Prisma Client API.
-
-3. Fill in remaining values in `.env`:
-
-- `NEXTAUTH_SECRET` - use random hex string e.g. https://generate-secret.now.sh/32.
-- `[AuthProvider]_ID` and `[AuthProvider]_SECRET` for Google/Twitter/Github.
-
-4. Start the development server:
-
-```bash
-npm run dev
-```
-
-5. Open your browser and visit http://localhost:3000 to see the app running.
-
-## User Stories
-
-- As a player, I want to invest in various businesses to generate revenue.
-- As a player, I want to hire managers to earn money even when I'm not actively playing.
-- As a player, I want to track my progress and see how much money I've earned.
-- As a player, I want to upgrade my businesses to increase their revenue.
-- As a player, I want to unlock new businesses as I progress in the game.
-- As a player, I want to have an engaging and visually appealing user interface.
-- As a player, I want to experience smooth gameplay with no errors.
-- As a player, I want to learn about investing, blockchain and cryptocurrencies.
-- As a player, I want to be guided on how to play when I first start playing.
-- As a player, I want to earn rewards for playing the game.
-
-## Wireframes
-
-![0xVenture Capitalist Homepage](https://github.com/sov3333/0xVenture-Capitalist/assets/8282076/38768bd7-6b09-4ea5-9a7e-aeee6170b78d)
-
-![0xVenture Capitalist Game Page](https://github.com/sov3333/0xVenture-Capitalist/assets/8282076/3550d8f8-9846-4fa2-b786-1ebb9d01c305)
-
-| CRUD | Method | Endpoint                              | Description                                                                                                                                         |
-| ---- | ------ | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| C    | POST   | /api/auth/[...nextauth]               | Create new user.                                                                                                                                    |
-| R    | GET    | /api/player/[email]                   | Get a `User` by `user.email`.                                                                                                                       |
-| R    | GET    | /api/player/business/[userId]         | Get all `Business` with `userId`.                                                                                                                   |
-| U    | PUT    | /api/player/business/buy/[userId]     | Buy a `Business` for `userId`, update `user.coins`, `business.quantity`, and `business.time` or `business.revenue` from unlock bonus if any.        |
-| U    | PUT    | /api/player/business/collect/[userId] | Collect profits for `userId`, update `user.coins`.                                                                                                  |
-| U    | PUT    | /api/player/business/manager/[userId] | Purchase a manager for `Business` for `userId`, update `user.coins` and `business.managerOwned`.                                                    |
-| C    | POST   | /api/player/business/seed/[id]        | Create all `Business` and `Upgrade` for `userId`.                                                                                                   |
-| R    | GET    | /api/upgrade/[userId]                 | Get all `Upgrade` with `userId`.                                                                                                                    |
-| U    | PUT    | /api/upgrade/buy/[userId]             | Purchase an `Upgrade` for `userId`, update `user.coins`, `upgrade.purchased`, and `business.revenue`.                                               |
-| D    | DELETE | /api/admin/reset/[userId]             | If requester's `user.admin === true`, delete all `Business` and `Upgrade` with `userId`, reset `user.coins` to 0, and increment `user.resets` by 1. |
 
 ## Motivations & Approach
 
@@ -295,6 +260,46 @@ References:
 - [My Bleeding Edge Tech Stack for 2025](https://youtu.be/rFP7rUYtOOg)
 - [5 dev trends to follow in 2023](https://youtu.be/J6lrVTrVHK4)
 
+## Installation and Setup
+
+0. Clone the repository:
+
+```bash
+git clone https://github.com/sov3333/0xVenture-Capitalist.git
+```
+
+1. Install dependencies:
+
+```bash
+cd your-repo
+npm i
+```
+
+2. Set up the database:
+
+Create a MongoDB database and obtain the connection URL. Rename the `.env.example` file to `.env` and update the `DATABASE_URL` with your MongoDB connection URL.
+
+Sync Prisma client API with the DB:
+
+```bash
+npx prisma db push
+```
+
+Whenever Prisma schema is changed, need to manually invoke `npx prisma db push` in order to accomodate the changes in the Prisma Client API.
+
+3. Fill in remaining values in `.env`:
+
+- `NEXTAUTH_SECRET` - use random hex string e.g. https://generate-secret.now.sh/32.
+- `[AuthProvider]_ID` and `[AuthProvider]_SECRET` for Google/Twitter/Github.
+
+4. Start the development server:
+
+```bash
+npm run dev
+```
+
+5. Open your browser and visit http://localhost:3000 to see the app running.
+
 ## Acknowledgments
 
 I would like to acknowledge the following resources that inspired and supported the development of 0xVenture Capitalist:
@@ -319,7 +324,7 @@ I would like to acknowledge the following resources that inspired and supported 
 
 4. Icons on Flaticon.com created by [designbydai](https://www.flaticon.com/authors/designbydai), [Taufik Ramadhan](https://www.flaticon.com/authors/taufik-ramadhan), [Freepik](https://www.flaticon.com/authors/freepik), [justicon](https://www.flaticon.com/authors/justicon), [itim2101](https://www.flaticon.com/authors/itim2101), [Flowicon](https://www.flaticon.com/authors/flowicon), [Konkapp](https://www.flaticon.com/authors/konkapp), and [iconjam](https://www.flaticon.com/authors/iconjam).
 
-5. [Next.js templates](https://vercel.com/templates/next.js) for the inspiration.
+5. Sound effects on Freesounds.org created by [yottasounds](https://freesound.org/people/yottasounds/), [JomelleJager](https://freesound.org/people/JomelleJager/), [Bertrof](https://freesound.org/people/Bertrof/), [Mr._Fritz_](https://freesound.org/people/Mr._Fritz_/), [The-Sacha-Rush](https://freesound.org/people/The-Sacha-Rush/), and [plasterbrain](https://freesound.org/people/plasterbrain/), and music on Itch.io created by [JDSherbert](https://jdsherbert.itch.io/minigame-music-pack?download).
 
 ## Conclusion
 
