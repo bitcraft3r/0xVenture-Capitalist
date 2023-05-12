@@ -30,8 +30,8 @@ const CTA: React.FC<CTAProps> = ({ currentUser }) => {
                 <Link href="/game">
                     <button className={`
                         ${commonButtonClass}
-                        bg-gradient-to-br from-emerald-400 to-green-500 
-                        hover:bg-gradient-to-br hover:from-emerald-300 hover:to-green-400
+                        bg-gradient-to-br from-green-400 to-blue-500 
+                        hover:bg-gradient-to-br hover:from-emerald-300 hover:to-blue-400
                         hover:text-white
                         hover:shadow-green10 hover:shadow-[0_0_20px]
                         focus:shadow-green7 

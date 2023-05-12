@@ -8,6 +8,8 @@ interface StartButtonProps {
     userId: string
 }
 
+const buttonStyle = "border-4 border-neutral-500 px-8 py-3 rounded-full font-semibold bg-gradient-to-br from-green-400 to-blue-500 hover:bg-gradient-to-br hover:from-emerald-300 hover:to-blue-400 hover:text-white hover:shadow-sky-400 hover:shadow-[0_0_15px] focus:shadow-blue-300 focus:border-neutral-600"
+
 const StartButton: React.FC<StartButtonProps> = ({ userId }) => {
     const router = useRouter();
 
@@ -17,16 +19,11 @@ const StartButton: React.FC<StartButtonProps> = ({ userId }) => {
     // Create inline loading UI
     const isMutating = isFetching || isPending;
 
-
     const handleStart = async () => {
-        // console.log(`userId in StartButton comp: ${userId}`)
-
         try {
             setIsFetching(true);
 
             const response = await fetch(`/api/player/business/seed/${userId}`, { method: 'GET' })
-            // console.log(`res`, response)
-
             const data = await response.json()
             // console.log(`data rcvd in StartButton comp: ${data}`)
 
@@ -37,13 +34,9 @@ const StartButton: React.FC<StartButtonProps> = ({ userId }) => {
                 // https://beta.nextjs.org/docs/data-fetching/mutating
                 router.refresh();
             })
-
-
         } catch (error) {
             console.log(error)
         }
-
-
     }
 
     return (
@@ -51,7 +44,7 @@ const StartButton: React.FC<StartButtonProps> = ({ userId }) => {
             {userId ? (
                 <button
                     onClick={() => handleStart()}
-                    className="border rounded-xl px-4 py-2 font-bold text-xl shadow-md hover:bg-emerald-500 hover:shadow-xl"
+                    className={`${buttonStyle}`}
                     disabled={isMutating}
                 >
                     Start
@@ -60,9 +53,9 @@ const StartButton: React.FC<StartButtonProps> = ({ userId }) => {
             ) : (
                 <RegisterModal>
                     <button
-                        className="border rounded-xl px-4 py-2 font-bold text-xl shadow-md hover:bg-emerald-500 hover:shadow-xl"
+                        className={`${buttonStyle}`}
                     >
-                        Sign In
+                        Sign In To Play
                     </button>
                 </RegisterModal>
             )}

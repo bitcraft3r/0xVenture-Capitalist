@@ -1,11 +1,16 @@
 import getCurrentUserFull from "../../actions/getCurrentUserFull"
 import getPlayerBusinesses from "../../actions/getPlayerBusinesses"
 import getPlayerUpgrades from "../../actions/getPlayerUpgrades"
-import StartButton from "./StartButton"
 import BusinessCard from "./BusinessCard"
 import Balances from "./Balances"
 import OfflineProfits from "./OfflineProfits"
 import OwedRevenueUpdater from "./OwedRevenueUpdater"
+import About from "./About"
+
+export const metadata = {
+    title: `0xVenture Capitalist - Play, Earn, Learn about Investing in Crypto`,
+    description: `0xVC is an idle clicker game, where players aim to become the wealthiest crypto tycoon in the world. Learn about investing in crypto, DeFi, and NFTs, while playing a fun game!`,
+}
 
 const Game = async () => {
     const currentUser = await getCurrentUserFull();
@@ -15,59 +20,44 @@ const Game = async () => {
     let totalOfflineProfits = 0;
 
     if (currentUser) {
-
         try {
-
             playerBusinesses = await getPlayerBusinesses(currentUser?.id)
             playerUpgrades = await getPlayerUpgrades(currentUser?.id)
-
-            // console.log(`player has ${playerBusinesses.length} businesses`)
-            // console.log(`player has ${playerUpgrades.length} upgrades`)
 
             // get user's last updatedAt timestamp for calculating offline profits
             const dateStr = currentUser.updatedAt
             const unixTimestampLastUpdated = Math.floor(Date.parse(dateStr))
-
-            // calculate milliseconds since last update
-            let timeSinceLastUpate = Date.now() - unixTimestampLastUpdated
-            // console.log(`milliseconds since last update`, timeSinceLastUpate)
+            let timeSinceLastUpate = Date.now() - unixTimestampLastUpdated // calculate milliseconds since last update
 
             // calculate offline profits for all businesses with managerOwned = true
             playerBusinesses.map((business: any) => {
                 if (business.managerOwned) {
-                    // console.log(`collect offline profits for ${business.name}`)
-                    // console.log(`offline profits: revenue is ${business.revenue}, quantity is ${business.quantity}, time is ${business.time}`)
-                    // console.log(`offline profits: ${business.revenue * business.quantity * timeSinceLastUpate / 1000 / business.time}`)
-
                     // add this business' offline profits to totalOfflineProfits
                     totalOfflineProfits += business.revenue * business.quantity * timeSinceLastUpate / 1000 / business.time
                 }
             })
-
-            // console.log(`totalOfflineProfits`, totalOfflineProfits)
-
         } catch (error) {
-
+            console.log(error)
         }
-
     }
-
-
 
     return (
         <div className="flex flex-col justify-center items-center text-center">
-            {/* <h1 className="text-2xl font-extrabold mb-[2rem]">Blockchain Billionaire</h1> */}
+            {/* If player is logged in and has offline profits to collect */}
             {currentUser && totalOfflineProfits > 0 ? (
                 <OfflineProfits offlineProfits={totalOfflineProfits} userId={currentUser.id} />
             ) : (<></>)}
+
+            {/* If player is logged in and has 10 exactly businesses, show the game components */}
             {currentUser && playerBusinesses?.length === 10 ? (
-                // Logged in & has all businesses
                 <div className="w-[90vw]">
-                    {/* helper function to aggregate managerOwned profits to update db every 30s instead of for every collection */}
+                    {/* helper function to aggregate managerOwned profits to update db every 30s */}
                     <OwedRevenueUpdater userId={currentUser.id} />
-                    {/* => show player's coin balances */}
+
+                    {/* show player's coin balances */}
                     <Balances coins={currentUser.coins} playerBusinesses={playerBusinesses} currentUser={currentUser} playerUpgrades={playerUpgrades} />
-                    {/* => show all businesses */}
+
+                    {/* show all businesses, split into two columns */}
                     <div className="flex justify-around">
                         <div>
                             {playerBusinesses.map((business: any) => (
@@ -84,19 +74,11 @@ const Game = async () => {
                             ))}
                         </div>
                     </div>
-
                 </div>
             ) : (
-
-                currentUser ? (
-                    // Logged in but doesn't have all businesses
-                    // => show start button
-                    <StartButton userId={currentUser?.id} />
-                ) : (
-                    // Not logged in
-                    // => show login button
-                    <StartButton userId={currentUser?.id} />
-                )
+                <div>
+                    <About userId={currentUser?.id} />
+                </div>
             )}
 
         </div>
@@ -104,22 +86,3 @@ const Game = async () => {
 }
 
 export default Game
-
-
-// {currentUser && currentUser.businesses ? (
-//     // {currentUser && playerBusinesses.length > 1 ? (
-//     <div className="w-[80vw]">
-//         <div className="border h-[5vh] mb-[1rem]">{currentUser.coins} coins</div>
-//         <div className="border h-[70vh] flex">
-//             <div className="flex-1">
-//                 BUSINESSES
-//                 {/* {playerBusinesses.map((business: any) => (
-//                     <BusinessCard {...business} currentUser={currentUser} key={business.name} />
-//                 )
-//                 )} */}
-//             </div>
-//         </div>
-//     </div>
-// ) : (
-//     <StartButton userId={currentUser?.id} />
-// )}
