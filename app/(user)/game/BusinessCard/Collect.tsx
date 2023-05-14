@@ -159,7 +159,7 @@ const Collect: React.FC<CollectProps> = ({ name, image, revenue, time, quantity,
         // // check if player has not bought any businesses yet
         if (index !== 0) return
         if (quantity !== 1) return
-        if (userCoins >= 4) setIsNewBuyer(true)
+        if (userCoins >= 4 && bizQuantities[0] === 1) setIsNewBuyer(true)
     }, [userCoins])
 
     useEffect(() => {

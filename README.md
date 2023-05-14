@@ -181,6 +181,7 @@ Possible solutions:
 - disable the button on the frontend for a longer period of time
 - implement a queue system to handle multiple requests
 - implement a random delay (0-1s) before the purchase upgrade function is executed
+- write unit tests
 
 4. **Security**:
 
