@@ -32,7 +32,7 @@ const About: React.FC<AboutProps> = ({ userId }) => {
             </div>
             {/* LAST SECTION */}
             <div className="mt-[1rem]">
-                <MadeByButton />
+                {/* <MadeByButton /> */}
             </div>
         </div>
     )
